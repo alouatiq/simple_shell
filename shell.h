@@ -22,4 +22,25 @@ void shell_non_interactive(char *filename);
 /* Task 2: Simple Shell 0.2 */
 void execute_command(char *command);
 
+/* Additional tasks declarations */
+
+/* Task 3: Simple Shell 0.3 */
+char *find_command_in_path(char *command);
+
+/* Task 4: Simple Shell 0.4 */
+void handle_exit(char *command);
+
+/* Task 5: Simple Shell 1.0 */
+void print_env(void);
+
+/* Task 6: Simple Shell 0.1.1 */
+ssize_t my_getline(char **lineptr, size_t *n, FILE *stream);
+
+/* Task 7: Simple Shell 0.2.1 */
+void my_strtok(char *str, char *delim, char **tokens);
+
+/* Task 9: setenv, unsetenv */
+int my_setenv(const char *name, const char *value, int overwrite);
+int my_unsetenv(const char *name);
+
 #endif /* SHELL_H */
