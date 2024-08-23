@@ -1,0 +1,28 @@
+simple_shell/
+│
+├── AUTHORS                      # Lists all contributors to the project
+├── LICENSE                      # License file for the project
+├── README.md                    # Project description and usage instructions
+├── Makefile                     # Makefile to automate the build process
+│
+├── main.c                       # Entry point of the shell
+├── shell.h                      # Header file with function declarations and includes
+│
+├── shell_interactive.c          # Handles interactive mode (Task 1)
+├── shell_non_interactive.c      # Handles non-interactive mode (Task 1)
+│
+├── execute_command.c            # Parses and executes commands (Task 2)
+├── find_command_in_path.c       # Finds commands in the PATH (Task 3)
+├── handle_exit.c                # Implements the exit built-in command (Tasks 4 & 8)
+├── print_env.c                  # Implements the env built-in command (Task 5)
+├── my_getline.c                 # Custom getline function (Task 6)
+├── my_strtok.c                  # Custom strtok function (Task 7)
+│
+├── setenv_unsetenv.c            # Implements setenv and unsetenv built-in commands (Task 9)
+├── cd.c                         # Implements the cd built-in command (Task 10)
+├── command_separator.c          # Handles command separators (`;`) (Task 11)
+├── logical_operators.c          # Handles logical operators (`&&` and `||`) (Task 12)
+├── alias.c                      # Implements the alias built-in command (Task 13)
+├── variable_replacement.c       # Handles variable replacement (Task 14)
+├── comments.c                   # Removes comments from commands (Task 15)
+└── file_input.c                 # Handles execution of commands from a file (Task 16)
