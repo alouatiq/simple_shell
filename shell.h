@@ -7,6 +7,8 @@
 #include <string.h>     // String handling functions
 #include <sys/types.h>  // Data types used in system calls
 #include <errno.h>      // Error number definitions
+#include <sys/types.h>  // Data types used in system calls
+#include <sys/wait.h>   // Macros related to process termination
 
 /* Function prototypes */
 
