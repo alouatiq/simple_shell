@@ -6,32 +6,20 @@
 #include <unistd.h>     // POSIX API functions (e.g., fork, exec, etc.)
 #include <string.h>     // String handling functions
 #include <sys/types.h>  // Data types used in system calls
-#include <sys/wait.h>   // Macros related to process termination
-#include <sys/stat.h>   // Data returned by the stat() function
 #include <errno.h>      // Error number definitions
 
-// Function to split a buffer into an array of arguments
-char **get_arguments(char *buffer);
+/* Function prototypes */
 
-// External environment variable pointer
-extern char **environ;
+/* Starts the shell in interactive mode */
+/* Task 1: Simple Shell 0.1 */
+void shell_interactive(void);
 
-// Function prototypes for the shell
-void prompt(void);              // Display the shell prompt
-char *read_line(void);          // Read a line of input
-char **tokenize(char *line);    // Tokenize the input line
-int execute(char **args);       // Execute a command
-int shell_cd(char **args);      // Change directory (cd built-in)
-int shell_exit(char **args);    // Exit the shell (exit built-in)
-int shell_env(char **args);     // Print environment variables (env built-in)
-int shell_setenv(char **args);  // Set environment variables (setenv built-in)
-int shell_unsetenv(char **args);// Unset environment variables (unsetenv built-in)
+/* Runs the shell in non-interactive mode */
+/* Task 1: Simple Shell 0.1 */
+void shell_non_interactive(char *filename);
 
-char *find_command(char *cmd);  // Find a command in the PATH
-int run_command(char **args);   // Fork and run a command
-char *_strdup(const char *str); // Duplicate a string
-int _strcmp(const char *s1, const char *s2); // Compare two strings
-char *_strcat(char *dest, const char *src);  // Concatenate two strings
-char *_strcpy(char *dest, const char *src);  // Copy a string
+/* Function to execute a command */
+/* Task 2: Simple Shell 0.2 */
+void execute_command(char *command);
 
 #endif /* SHELL_H */
