@@ -35,7 +35,9 @@ int main(void)
 			free(arguments);
 			continue;
 		}
-		if (arguments[0][0] == '/') // If the command is an absolute path, use it as is
+		if (arguments[0][0] == '.' && arguments[0][0] == '/') // If the command is an absolute path, use it as is
+			path = strdup(arguments[0]);
+		else if (arguments[0][0] == '/')
 			path = strdup(arguments[0]);
 		else // Otherwise, search for the command in the PATH
 		{
@@ -76,9 +78,9 @@ int main(void)
 			{
 				perror("Command not found");
 				free(buffer);
-				free(path);
 				free(arguments);
-				return (-1);
+				free(path);
+				continue;
 			}
 		}
 
@@ -98,15 +100,20 @@ int main(void)
 			printf("Executing command: %s\n", path);
 			execve(path, arguments, environ); // Execute the command
 			perror("execve failed"); // If execve returns, it must have failed
+			free(buffer);
+			free(arguments);
+			free(path);
 			exit(EXIT_FAILURE);
 		}
 		else // Parent process
 		{
 			wait(&status); // Wait for the child process to finish
 		}
+		path = strdup(arguments[0]);
 		free(arguments); // Free the arguments array
 		free(path); // Free the path string
+		buffer = NULL;// Prepare for next input
+		n = 0;
 	}
-	free(buffer); // Free the buffer before exiting
 	return (0); // Return success
 }

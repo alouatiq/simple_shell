@@ -8,8 +8,8 @@
  */
 char **get_arguments(char *buffer)
 {
-	char *str, **arguments, *token, *temp;
-	int i, count;
+	char *str, **arguments, *token;
+	int i, count, j;
 
 	if (buffer == NULL) // Check if the input buffer is NULL
 	{
@@ -23,19 +23,18 @@ char **get_arguments(char *buffer)
 		perror("strdup failed");
 		return (NULL);
 	}
-	temp = str;
-	count = 0;
 
 	// Count the number of spaces in the input to determine the number of arguments
-	while (*temp)
+	token = strtok(str, " ");
+	count = 0;
+	while (token != NULL)
 	{
-		if (*temp == ' ')
-			count++;
-		temp++;
+		count++;
+		token = strtok(NULL, " ");
 	}
 
 	// Allocate memory for the array of arguments (including NULL terminator)
-	arguments = malloc((count + 2) * sizeof(char *));
+	arguments = malloc((count + 1) * sizeof(char *));
 
 	if (arguments == NULL) // Check if malloc failed
 	{
@@ -44,20 +43,28 @@ char **get_arguments(char *buffer)
 		return (NULL);
 	}
 
-	i = 0;
+	str = strdup(buffer);
 	token = strtok(str, " "); // Tokenize the string by spaces
-	arguments[i] = token;
-
-	i++;
 
 	// Continue tokenizing the string and storing tokens in the arguments array
+	i = 0;
 	while (token != NULL)
 	{
-		arguments[i] = token;
+		arguments[i] = strdup(token);
+		if (arguments[i] == NULL)
+		{
+			perror("strdup failed");
+			for (j = 0; j < i; j++)
+				free(arguments[j]);
+			free(arguments);
+			free(str);
+			return (NULL);
+		}
 		token = strtok(NULL, " ");
 		i++;
 	}
 	arguments[i] = NULL; // Null-terminate the array of arguments
+	free(str);
 
 	return (arguments);
 }
