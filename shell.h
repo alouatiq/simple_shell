@@ -29,19 +29,49 @@ void execute_command(char *command);
 /* Task 3: Simple Shell 0.3 */
 char *find_command_in_path(char *command);
 
-/* Task 4: Simple Shell 0.4 */
+/* Task 4 and Task 8: Simple Shell 0.4 - Exit built-in command  */
 void handle_exit(char *command);
 
-/* Task 5: Simple Shell 1.0 */
+/* Task 5: Simple Shell 1.0 - Print environment*/
 void print_env(void);
 
-/* Task 6: Simple Shell 0.1.1 */
+/* Task 6: Simple Shell 0.1.1 - Custom getline*/
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream);
 
-/* Task 7: Simple Shell 0.2.1 */
+/* Task 7: Simple Shell 0.2.1 - Custom strtok*/
 void my_strtok(char *str, char *delim, char **tokens);
 
 /* Task 9: setenv, unsetenv */
+int my_setenv(const char *name, const char *value, int overwrite);
+int my_unsetenv(const char *name);
+
+/* Task 10: cd command */
+void change_directory(char *path);
+
+/* Task 11: Command Separator */
+void handle_command_separator(char *command);
+
+/* Task 12: Logical Operators */
+void handle_logical_operators(char *command);
+
+/* Task 13: Alias */
+void handle_alias(char **args);
+
+/* Task 14: Variable Replacement */
+void handle_variable_replacement(char *command);
+
+/* Task 15: Comments */
+void remove_comments(char *command);
+
+/* Task 16: File Input */
+void execute_file_commands(char *filename);
+
+/* Additional Utility Functions */
+char *find_command_in_path(char *command);
+void handle_exit(char *command);
+void print_env(void);
+ssize_t my_getline(char **lineptr, size_t *n, FILE *stream);
+void my_strtok(char *str, char *delim, char **tokens);
 int my_setenv(const char *name, const char *value, int overwrite);
 int my_unsetenv(const char *name);
 
