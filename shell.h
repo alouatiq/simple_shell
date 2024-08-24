@@ -74,5 +74,6 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream);
 void my_strtok(char *str, char *delim, char **tokens);
 int my_setenv(const char *name, const char *value, int overwrite);
 int my_unsetenv(const char *name);
+char **str_tockenise(char *buffer, char *del);
 
 #endif /* SHELL_H */
