@@ -1,54 +1,39 @@
 #include "shell.h"
 
 /**
- * get_arguments - function that transforms a sentence into an array of arguments
+ * str_tockenise - function transforms a sentence into an array of arguments
  * @buffer: the pointer to the sentence to be split
+ * @del: string used to seperate the buffer parsed
  *
  * Return: Pointer to the array of arguments
  */
-char **get_arguments(char *buffer)
+char **str_tockenise(char *buffer, char *del)
 {
-	char *str, **arguments, *token;
-	int i, count, j;
+	char *str, **arguments, *tok;
+	int i = 0, j, count = 0;
 
-	if (buffer == NULL) // Check if the input buffer is NULL
-	{
+	if (buffer == NULL || del == NULL)
 		return (NULL);
-	}
-
-	str = strdup(buffer); // Duplicate the input buffer to avoid modifying the original string
-
-	if (str == NULL) // Check if strdup failed
+	str = strdup(buffer);
+	if (str == NULL)
 	{
 		perror("strdup failed");
 		return (NULL);
 	}
-
-	// Count the number of spaces in the input to determine the number of arguments
-	token = strtok(str, " ");
-	count = 0;
-	while (token != NULL)
+	/* Count the delimeters in input to determine the number of tockens*/
+	while (str[count] != '\0')
 	{
-		count++;
-		token = strtok(NULL, " ");
+		if (str[count] == del)
+			count++;
 	}
-
-	// Allocate memory for the array of arguments (including NULL terminator)
-	arguments = malloc((count + 1) * sizeof(char *));
-
-	if (arguments == NULL) // Check if malloc failed
+	arguments = malloc((count + 2) * sizeof(char *));
+	if (arguments == NULL) /* Check if malloc failed*/
 	{
 		perror("malloc failed");
 		free(str);
 		return (NULL);
 	}
-
-	str = strdup(buffer);
-	token = strtok(str, " "); // Tokenize the string by spaces
-
-	// Continue tokenizing the string and storing tokens in the arguments array
-	i = 0;
-	while (token != NULL)
+	for (tok = strtok(str, del); tok != NULL; tok = strtok(NULL, del))
 	{
 		arguments[i] = strdup(token);
 		if (arguments[i] == NULL)
@@ -56,15 +41,12 @@ char **get_arguments(char *buffer)
 			perror("strdup failed");
 			for (j = 0; j < i; j++)
 				free(arguments[j]);
-			free(arguments);
-			free(str);
+			free_all(arguments, str, NULL);
 			return (NULL);
 		}
-		token = strtok(NULL, " ");
 		i++;
 	}
-	arguments[i] = NULL; // Null-terminate the array of arguments
+	arguments[i] = NULL; /* Null-terminate the array of arguments*/
 	free(str);
-
 	return (arguments);
 }
