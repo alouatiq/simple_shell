@@ -10,20 +10,20 @@
  *
  * Return: Exit status of the shell
  */
-int main(int argc, char **argv)
+int main(void)
 {
-    /* Placeholder for shell initialization code */
+	/* Placeholder for shell initialization code */
     
-    if (argc >= 1)
-    {
-        /* Interactive mode: If no arguments, start the shell in interactive mode */
-        shell_interactive();
-    }
-    else
-    {
-        /* Non-interactive mode: If arguments are passed, treat as a script file */
-        shell_non_interactive(argv[1]);
-    }
+	if (argc >= 1)
+	{
+		/* If no arguments, start the shell in interactive mode */
+		shell_interactive();
+	}
+	else
+	{
+		/* If arguments are passed, treat as a script file */
+		shell_non_interactive(argv[1]);
+	}
 
-    return (0);
+	return (0);
 }
