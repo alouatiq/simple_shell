@@ -11,8 +11,15 @@
 
 void remove_comments(char *command)
 {
-    char *comment_start = strchr(command, '#');
-    if (comment_start != NULL) {
-        *comment_start = '\0'; /* Terminate the command string at the comment start */
+    char *comment_start;
+
+    /* Find the position of the `#` character */
+    comment_start = strchr(command, '#');
+    
+    /* If `#` is found and it's not inside quotes, terminate the string at `#` */
+    if (comment_start != NULL)
+    {
+        /* Terminate the command string at the comment start */
+        *comment_start = '\0'; /* Replace `#` with null terminator */
     }
 }
