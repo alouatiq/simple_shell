@@ -79,5 +79,7 @@ int my_unsetenv(const char *name);
 char **str_tockenise(char *buffer, char *del);
 void free_all(char **buffer1, char **buffer2, char *buffer3);
 char *command_check(char *command, char **path_list);
+int _printf(char *buffer);
+int _strlen(char *string);
 
 #endif /* SHELL_H */

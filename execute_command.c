@@ -36,7 +36,7 @@ int execute_command(char *line)
 	if (child == -1)/*checking if fork was sucessful*/
 	{
 		free_all(arguments, path_list, found);
-		return (-1);
+		exit (-1);
 	}
 	if (child == 0)
 	{

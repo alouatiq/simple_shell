@@ -11,29 +11,29 @@
  */
 void shell_interactive(void)
 {
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t read;
+	char *line = NULL;
+	size_t len = 0;
+	ssize_t read;
 
-    while (1)
-    {
-        /* Display the prompt */
-        printf("#cisfun$ ");
-        
+	while (1)
+	{
+	/* Display the prompt */
+	_printf("#cisfun$ ");
+
         /* Read the input line */
-        read = getline(&line, &len, stdin);
-        if (read == -1)
-        {
-            /* Handle end of file or read error */
-            if (feof(stdin))
-                exit(EXIT_SUCCESS); /* Exit on EOF */
-            else
-                perror("getline");
-        }
+	read = getline(&line, &len, stdin);
+	if (read == -1)
+	{
+		/* Handle end of file or read error */
+		if (feof(stdin))
+			exit(EXIT_SUCCESS); /* Exit on EOF */
+		else
+			perror("getline");
+	}
 
-        /* Execute the command */
-        execute_command(line);
-    }
+	/* Execute the command*/
+	execute_command(line);
+	}
 
-    free(line); /* Free allocated memory */
+	free(line); /* Free allocated memory */
 }
