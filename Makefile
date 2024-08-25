@@ -1,22 +1,38 @@
+# Name of the output executable
+TARGET = hsh
+
 # Compiler to use
 CC = gcc
 
-# Compiler flags to enforce strict standards and warnings
-CFLAGS = -Wall -Werror -Wextra -pedantic
+# Compiler flags
+CFLAGS = -Wall -Werror -Wextra -pedantic -std=gnu89
 
-# Source files for the shell program
-FILES = main.c builtins.c env.c execute.c getline.c path.c shell.c string_helpers.c tokenizer.c
+# List of source files
+SRCS = main.c shell_interactive.c shell_non_interactive.c \
+       execute_command.c cd.c command_separator.c logical_operators.c \
+       alias.c variable_replacement.c comments.c file_input.c \
+       find_command_in_path.c handle_exit.c print_env.c \
+       my_getline.c my_strtok.c
 
-# Object files, which are the compiled versions of the source files
-OBJECTS = $(FILES:.c=.o)
+# List of object files (each .c file corresponds to a .o file)
+OBJS = $(SRCS:.c=.o)
 
-# Name of the final executable
-TARGET = simple_shell
+# Rule to build the final executable
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
-# Rule to create the executable from the object files
-$(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS)
+# Rule to build object files
+# This compiles each .c file into a .o file
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Rule to clean up the object files and the executable
+# Rule to clean up the directory
+# This removes all object files and the executable
 clean:
-	rm -f $(OBJECTS) $(TARGET)
+	rm -f $(OBJS) $(TARGET)
+
+# Phony targets (these are not actual files)
+.PHONY: all clean
+
+# Default target (all), which builds the executable
+all: $(TARGET)
