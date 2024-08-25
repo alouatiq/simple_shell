@@ -10,5 +10,11 @@
  */
 void handle_command_separator(char *command)
 {
-    /* Code to implement command separator */
+    char *token;
+    token = strtok(command, ";");
+
+    while (token != NULL) {
+        execute_command(token);
+        token = strtok(NULL, ";");
+    }
 }
