@@ -23,7 +23,7 @@ char **str_tockenise(char *buffer, char *del)
 	/* Count the delimeters in input to determine the number of tockens*/
 	while (str[count] != '\0')
 	{
-		if (str[count] == del)
+		if (str[count] == *del)
 			count++;
 	}
 	arguments = malloc((count + 2) * sizeof(char *));
@@ -35,13 +35,13 @@ char **str_tockenise(char *buffer, char *del)
 	}
 	for (tok = strtok(str, del); tok != NULL; tok = strtok(NULL, del))
 	{
-		arguments[i] = strdup(token);
+		arguments[i] = strdup(tok);
 		if (arguments[i] == NULL)
 		{
 			perror("strdup failed");
 			for (j = 0; j < i; j++)
 				free(arguments[j]);
-			free_all(arguments, str, NULL);
+			free_all(arguments, NULL, str);
 			return (NULL);
 		}
 		i++;
