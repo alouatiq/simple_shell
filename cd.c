@@ -10,5 +10,13 @@
  */
 void change_directory(char *path)
 {
-    /* Code to implement cd */
+    if (path == NULL)
+        path = getenv("HOME"); /* Default to home directory */
+
+    if (chdir(path) == -1) {
+        perror("cd");
+    } else {
+        /* Update PWD environment variable */
+        setenv("PWD", getcwd(NULL, 0), 1);
+    }
 }

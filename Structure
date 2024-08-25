@@ -1,7 +1,5 @@
 simple_shell/
 │
-├── AUTHORS                      # Lists all contributors to the project
-├── LICENSE                      # License file for the project
 ├── README.md                    # Project description and usage instructions
 ├── Makefile                     # Makefile to automate the build process
 │
