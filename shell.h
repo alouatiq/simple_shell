@@ -25,7 +25,7 @@ void shell_non_interactive(char *filename);
 
 /* Function to execute a command */
 /* Task 2: Simple Shell 0.2 */
-void execute_command(char *command);
+int execute_command(char *command);
 
 /* Additional tasks declarations */
 

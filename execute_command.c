@@ -1,4 +1,10 @@
 #include "shell.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <string.h>
 
 /**
  * execute_command - Parses and executes a command
@@ -8,9 +14,12 @@
  *
  * Description: This function will fork a new process and use execve
  * to run the command. It handles the parsing of the command and
- * any arguments.
+ * its arguments, assuming the command is either an absolute path
+ * or in the current directory.
+ *
+ * Return: 0 on success, or -1 on failure
  */
-void execute_command(char *command)
+int execute_command(char *command)
 {
 	char *args[100]; /* Array to hold arguments */
 	char *token;
@@ -32,15 +41,15 @@ void execute_command(char *command)
 	if (pid == -1)
 	{
 		/* Error forking */
-		perror("fork");
+		perror("fork failed");
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
 	{
 	/* Child process: Execute the command */
-		if (execvp(args[0], args) == -1)
+		if (execve(args[0], args, NULL) == -1)
 		{
-			perror("execvp");
+			perror("execve failed");
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -51,4 +60,5 @@ void execute_command(char *command)
 			waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
+	return (0);
 }
