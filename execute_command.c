@@ -1,51 +1,54 @@
 #include "shell.h"
 
 /**
- * execute_command - Function to execute a command given to shell program
- * @line: Pointer to the command to be executed
+ * execute_command - Parses and executes a command
+ * @command: The command string to be executed
  *
- * Return: 0 on sucess and -1 on failure
+ * Task 2: Simple Shell 0.2
+ *
+ * Description: This function will fork a new process and use execve
+ * to run the command. It handles the parsing of the command and
+ * any arguments.
  */
-int execute_command(char *line)
+void execute_command(char *command)
 {
-	char **arguments, **path_list, *found;
-	pid_t child;
-	int status;
+    char *args[100]; /* Array to hold arguments */
+    char *token;
+    int i = 0;
+    pid_t pid;
+    int status;
 
-	if (line == NULL)/* Checking if line has been sucessfully parsed*/
-		return (-1);
+    /* Split the command into arguments */
+    token = strtok(command, " \n");
+    while (token != NULL)
+    {
+        args[i++] = token;
+        token = strtok(NULL, " \n");
+    }
+    args[i] = NULL; /* Null-terminate the arguments array */
 
-	arguments = str_tockenise(line, " ");/*seperating input into array*/
-	path_list = str_tockenise(getenv("PATH"), ":");
-
-	if (arguments == NULL || path_list == NULL)
-	{
-		free_all(arguments, path_list, NULL);
-		return (-1);
-	}
-	found = command_check(arguments[0], path_list);/* get command */
-
-	if (found == NULL)/*checking if command is executable*/
-	{
-		free_all(arguments, path_list, NULL);
-		return (-1);
-	}
-
-	child = fork();
-
-	if (child == -1)/*checking if fork was sucessful*/
-	{
-		free_all(arguments, path_list, found);
-		exit (-1);
-	}
-	if (child == 0)
-	{
-		execve(found, arguments, environ);
-		perror("execve failed");
-		free_all(arguments, path_list, found);
-		exit(-1);/* since execve returns only when failed*/
-	}
-	waitpid(child, &status, 0);
-	free_all(arguments, path_list, found);
-	return (0);
+    /* Fork a new process */
+    pid = fork();
+    if (pid == -1)
+    {
+        /* Error forking */
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+    else if (pid == 0)
+    {
+        /* Child process: Execute the command */
+        if (execvp(args[0], args) == -1)
+        {
+            perror("execvp");
+            exit(EXIT_FAILURE);
+        }
+    }
+    else
+    {
+        /* Parent process: Wait for the child to finish */
+        do {
+            waitpid(pid, &status, WUNTRACED);
+        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+    }
 }
