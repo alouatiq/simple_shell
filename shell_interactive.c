@@ -30,6 +30,13 @@ void shell_interactive(void)
 		else
 			perror("getline failed");
 	}
+	line[strcspn(line, "\n")] = 0;
+
+	if (strcmp(line, "exit") == 0)
+	{
+		free(line);
+		exit(EXIT_SUCCESS);
+	}
 
 	/* Execute the command*/
 	execute_command(line);
