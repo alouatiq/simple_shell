@@ -13,7 +13,7 @@
  */
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
-    ssize_t num_read = 0;
+    size_t num_read = 0;
     int ch;
     size_t new_size;
     char *new_ptr;

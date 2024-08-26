@@ -33,11 +33,11 @@ int execute_command(char *command)
 		return (0);
 	}
 	/* Split the command into arguments */
-	token = strtok(command, " \n");
+	token = _strtok(command, " \n");
 	while (token != NULL)
 	{
 		args[i++] = token;
-		token = strtok(NULL, " \n");
+		token = _strtok(NULL, " \n");
 	}
 	args[i] = NULL; /* Null-terminate the arguments array */
 

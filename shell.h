@@ -42,7 +42,7 @@ void print_env(void);
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream);
 
 /* Task 7: Simple Shell 0.2.1 - Custom strtok*/
-void my_strtok(char *str, char *delim, char **tokens);
+char *_strtok(char *str, char *delim);
 
 /* Task 9: setenv, unsetenv */
 int my_setenv(const char *name, const char *value, int overwrite);

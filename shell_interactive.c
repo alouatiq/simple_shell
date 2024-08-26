@@ -21,7 +21,7 @@ void shell_interactive(void)
 	_printf("#cisfun$ ");
 
         /* Read the input line */
-	read = getline(&line, &len, stdin);
+	read = my_getline(&line, &len, stdin);
 	if (read == -1)
 	{
 		/* Handle end of file or read error */
