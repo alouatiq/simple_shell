@@ -8,92 +8,58 @@
 
 /**
  * execute_command - Parses and executes a command
- * @line: The command string to be executed
+ * @command: The command string to be executed
  *
- * Task 3: Simple Shell 0.3
+ * Task 2: Simple Shell 0.2
  *
- * Description: This function forks a new process and uses execve to run
- * the command. It manually searches for the command in the directories
- * listed in the PATH environment variable. The command string is parsed
- * into arguments, and if the command is found and executable, it is
- * executed in the child process. The parent process waits for the child
- * process to complete.
+ * Description: This function will fork a new process and use execve
+ * to run the command. It handles the parsing of the command and
+ * its arguments, assuming the command is either an absolute path
+ * or in the current directory.
  *
  * Return: 0 on success, or -1 on failure
  */
-int execute_command(char *line)
+int execute_command(char *command)
 {
-    char **arguments, **path_list;
-    char *found = NULL;
-    pid_t child;
+    char *args[100]; /* Array to hold arguments */
+    char *token;
+    int i = 0;
+    pid_t pid;
     int status;
-    int i = 0; /* Initialize an index variable for iteration */
 
-    if (line == NULL) /* Checking if line has been successfully parsed */
-        return (-1);
-
-    arguments = str_tokenize(line, " "); /* Separating input into array */
-    path_list = str_tokenize(getenv("PATH"), ":"); /* Separating PATH into array */
-
-    if (arguments == NULL || path_list == NULL) /* Check for allocation failures */
+    /* Split the command into arguments */
+    token = strtok(command, " \n");
+    while (token != NULL)
     {
-        free_all(arguments, path_list, NULL);
+        args[i++] = token;
+        token = strtok(NULL, " \n");
+    }
+    args[i] = NULL; /* Null-terminate the arguments array */
+
+    /* Fork a new process */
+    pid = fork();
+    if (pid == -1)
+    {
+        /* Error forking */
+        perror("fork");
         return (-1);
     }
-
-    /* Manually search for the command in each directory in PATH */
-    for (i = 0; path_list[i] != NULL; i++)
+    else if (pid == 0)
     {
-        found = malloc(strlen(path_list[i]) + strlen(arguments[0]) + 2); /* 2 for '/' and '\0' */
-        if (found == NULL)
+        /* Child process: Execute the command */
+        if (execve(args[0], args, NULL) == -1)
         {
-            free_all(arguments, path_list, NULL);
-            return (-1);
-        }
-
-        strcpy(found, path_list[i]);
-        strcat(found, "/");
-        strcat(found, arguments[0]);
-
-        if (access(found, X_OK) == 0) /* Check if the command is executable */
-            break;
-
-        free(found);
-        found = NULL;
-    }
-
-    if (found == NULL) /* Command not found in any PATH directory */
-    {
-        free_all(arguments, path_list, NULL);
-        perror("Command not found");
-        return (-1);
-    }
-
-    child = fork();
-
-    if (child == -1) /* Checking if fork was successful */
-    {
-        free_all(arguments, path_list, found);
-        perror("Fork failed");
-        return (-1);
-    }
-    if (child == 0) /* Child process */
-    {
-        execve(found, arguments, NULL);
-        perror("execve failed"); /* execve returns only on failure */
-        free_all(arguments, path_list, found);
-        exit(EXIT_FAILURE);
-    }
-    else /* Parent process */
-    {
-        if (wait(&status) == -1) /* Wait for the child process */
-        {
-            free_all(arguments, path_list, found);
-            perror("Wait failed");
-            return (-1);
+            perror("execve");
+            exit(EXIT_FAILURE);
         }
     }
+    else
+    {
+        /* Parent process: Wait for the child to finish */
+        do {
+            waitpid(pid, &status, WUNTRACED);
+        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+    }
 
-    free_all(arguments, path_list, found);
-    return (WIFEXITED(status) ? WEXITSTATUS(status) : -1);
+    return 0;
 }
