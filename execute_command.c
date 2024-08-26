@@ -27,6 +27,11 @@ int execute_command(char *command)
 	pid_t pid;
 	int status;
 
+	if (strcmp(command, "env") == 0)
+	{
+		print_env();
+		return (0);
+	}
 	/* Split the command into arguments */
 	token = strtok(command, " \n");
 	while (token != NULL)
