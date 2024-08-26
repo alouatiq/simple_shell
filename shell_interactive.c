@@ -28,12 +28,11 @@ void shell_interactive(void)
 		if (feof(stdin))
 			exit(EXIT_SUCCESS); /* Exit on EOF */
 		else
-			perror("getline");
+			perror("getline failed");
 	}
 
 	/* Execute the command*/
 	execute_command(line);
 	}
-
 	free(line); /* Free allocated memory */
 }

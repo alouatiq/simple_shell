@@ -10,7 +10,7 @@
  *
  * Return: Exit status of the shell
  */
-int main(void)
+int main(int argc, char **argv)
 {
 	/* Placeholder for shell initialization code */
     

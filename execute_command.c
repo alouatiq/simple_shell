@@ -12,43 +12,43 @@
  */
 void execute_command(char *command)
 {
-    char *args[100]; /* Array to hold arguments */
-    char *token;
-    int i = 0;
-    pid_t pid;
-    int status;
+	char *args[100]; /* Array to hold arguments */
+	char *token;
+	int i = 0;
+	pid_t pid;
+	int status;
 
-    /* Split the command into arguments */
-    token = strtok(command, " \n");
-    while (token != NULL)
-    {
-        args[i++] = token;
-        token = strtok(NULL, " \n");
-    }
-    args[i] = NULL; /* Null-terminate the arguments array */
+	/* Split the command into arguments */
+	token = strtok(command, " \n");
+	while (token != NULL)
+	{
+		args[i++] = token;
+		token = strtok(NULL, " \n");
+	}
+	args[i] = NULL; /* Null-terminate the arguments array */
 
-    /* Fork a new process */
-    pid = fork();
-    if (pid == -1)
-    {
-        /* Error forking */
-        perror("fork");
-        exit(EXIT_FAILURE);
-    }
-    else if (pid == 0)
-    {
-        /* Child process: Execute the command */
-        if (execvp(args[0], args) == -1)
-        {
-            perror("execvp");
-            exit(EXIT_FAILURE);
-        }
-    }
-    else
-    {
-        /* Parent process: Wait for the child to finish */
-        do {
-            waitpid(pid, &status, WUNTRACED);
-        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-    }
+	/* Fork a new process */
+	pid = fork();
+	if (pid == -1)
+	{
+		/* Error forking */
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+	/* Child process: Execute the command */
+		if (execvp(args[0], args) == -1)
+		{
+			perror("execvp");
+			exit(EXIT_FAILURE);
+		}
+	}
+	else
+	{
+		/* Parent process: Wait for the child to finish */
+		do {
+			waitpid(pid, &status, WUNTRACED);
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+	}
 }

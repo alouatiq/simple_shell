@@ -9,6 +9,7 @@
 #include <errno.h>      /* Error number definitions*/
 #include <sys/types.h>  /* Data types used in system calls*/
 #include <sys/wait.h>   /* Macros related to process termination*/
+#include <fcntl.h>
 
 extern char **environ;
 
@@ -24,7 +25,7 @@ void shell_non_interactive(char *filename);
 
 /* Function to execute a command */
 /* Task 2: Simple Shell 0.2 */
-int execute_command(char *command);
+void execute_command(char *command);
 
 /* Additional tasks declarations */
 
