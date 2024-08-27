@@ -27,20 +27,24 @@ int execute_command(char *command)
 	pid_t pid;
 	int status;
 
-	if (strcmp(command, "env") == 0)
-	{
-		print_env();
-		return (0);
-	}
 	/* Split the command into arguments */
 	token = _strtok(command, " \n");
-	while (token != NULL)
+	while (token != NULL && i < 99)
 	{
 		args[i++] = token;
 		token = _strtok(NULL, " \n");
 	}
 	args[i] = NULL; /* Null-terminate the arguments array */
 
+	if (strcmp(args[0], "env") == 0)
+	{
+		print_env();
+		return (0);
+	}
+	else if (strcmp(args[0], "setenv") == 0 && i == 3)
+		return (my_setenv(args[1], args[2], 1));
+	else if (strcmp(args[0], "unsetenv") == 0 && i == 2)
+		return (my_unsetenv(args[1]));
 	/* Fork a new process */
 	pid = fork();
 	if (pid == -1)

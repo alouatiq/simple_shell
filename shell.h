@@ -44,6 +44,9 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream);
 /* Task 7: Simple Shell 0.2.1 - Custom strtok*/
 char *_strtok(char *str, char *delim);
 
+/* Task 8: Exit with arguments*/
+void _exiting(char *command);
+
 /* Task 9: setenv, unsetenv */
 int my_setenv(const char *name, const char *value, int overwrite);
 int my_unsetenv(const char *name);

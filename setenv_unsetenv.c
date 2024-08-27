@@ -12,7 +12,19 @@
  */
 int my_setenv(const char *name, const char *value, int overwrite)
 {
-    /* Code to implement setenv */
+	/* Code to implement setenv */
+	if (name == NULL || value == NULL)
+	{
+		perror("No arguments");
+		return (-1);
+	}
+	if (setenv(name, value, overwrite) != 0)
+	{
+		perror("setenv failed");
+		return (-1);
+	}
+	return (0);
+
 }
 
 /**
@@ -25,5 +37,17 @@ int my_setenv(const char *name, const char *value, int overwrite)
  */
 int my_unsetenv(const char *name)
 {
-    /* Code to implement unsetenv */
+	/* Code to implement unsetenv */
+	if (name == NULL)
+	{
+		perror("Wrong arguments");
+		return (-1);
+	}
+	
+	if (unsetenv(name) != 0)
+	{
+		perror("unsetenv failed");
+		return (-1);
+	}
+	return (0);
 }

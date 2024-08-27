@@ -1,7 +1,51 @@
 #include "shell.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+
+/**
+ * validate_int - Checks if a string represents a valid int
+ * @str: String to be checcked
+ *
+ * Return:1 if valid int, else 0
+ */
+int validate_int(char *str)
+{
+	if (str == NULL)
+		return (0);
+	if (*str == '-')
+		str++;
+
+	while(*str != '\0')
+	{
+		if (*str < '0' || *str > '9')
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
+/**
+ * _atoi - Converts a string to an int
+ * @str: The string to convert
+ *
+ * Return: The converted int.
+ */
+int _atoi(char *str)
+{
+	int number, sign;
+
+	sign = 1;
+
+	if (*str == '-')
+	{
+		sign = -1;
+		str++;
+	}
+	while (*str)
+	{
+		number = number * 10 + (*str - '0');
+		str++;
+	}
+	return (sign * number);
+}
 
 /**
  * handle_exit - Implements the exit built-in command
@@ -14,18 +58,45 @@
  * status argument is provided, the shell exits with that status. If no
  * status is provided, the shell exits with the status 0.
  */
-void handle_exit(char *command)
+void _exiting(char *command)
 {
-    char *args = strtok(command, " ");
-    char *status_str = strtok(NULL, " ");
-    int status;
+	char *status_str, *tocken;
+	int status;
 
-    if (status_str != NULL) {
-        /* Convert the status argument to an integer */
-        status = atoi(status_str);
-        exit(status);
-    } else {
-        /* If no status is provided, exit with 0 */
-        exit(EXIT_SUCCESS);
-    }
+	if (strcmp(command, "exit") == 0)
+	{
+		free(command);
+		exit(EXIT_SUCCESS);
+	}
+	tocken = _strtok(command, " ");
+
+	if (strcmp(tocken, "exit") != 0)
+	{
+		free(command);
+		exit(EXIT_SUCCESS);
+	}
+	status_str = _strtok(NULL, " ");
+
+	if (status_str != NULL)
+	{
+		if (validate_int(status_str) == 1)
+		{
+			/* Convert the status argument to an integer */
+			status = _atoi(status_str);
+			free(command);
+			exit(status);
+		}
+		else
+		{
+			perror("exit needs a numerical argument");
+			free(command);
+			exit(EXIT_SUCCESS);
+		}
+	}
+	else
+	{
+		/* If no status is provided, exit with 0 */
+		free(command);
+		exit(EXIT_SUCCESS);
+	}
 }
