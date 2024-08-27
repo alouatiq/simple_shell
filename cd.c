@@ -10,13 +10,45 @@
  */
 void change_directory(char *path)
 {
-    if (path == NULL)
-        path = getenv("HOME"); /* Default to home directory */
+	static char *formal_working_dir = NULL;
+	char *wd;
 
-    if (chdir(path) == -1) {
-        perror("cd");
-    } else {
-        /* Update PWD environment variable */
-        setenv("PWD", getcwd(NULL, 0), 1);
-    }
+	if (path == NULL)
+		path = getenv("HOME"); /* Default to home directory */
+
+	else if (strcmp(path, "-") == 0)
+	{
+		if (formal_working_dir != NULL) /*never been changed*/
+			path = formal_working_dir;
+		else
+		{
+			perror("cd failed: Your are in the root");
+			return;
+		}
+	}
+	else
+	{
+		/*updating the formal_working_dir with pwd before cd*/
+		wd = getcwd(NULL, 0);
+
+		if (wd != NULL)
+		{
+			if (formal_working_dir != NULL)
+				free(formal_working_dir);
+			formal_working_dir = wd;
+		}
+	}
+	if (chdir(path) == -1)
+		perror("cd failed");
+	else
+	{
+		wd = getcwd(NULL, 0);
+
+		if (wd != NULL)
+		{
+			setenv("PWD", wd, 1);
+			free(wd);
+		}
+	}
+
 }

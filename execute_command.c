@@ -45,6 +45,12 @@ int execute_command(char *command)
 		return (my_setenv(args[1], args[2], 1));
 	else if (strcmp(args[0], "unsetenv") == 0 && i == 2)
 		return (my_unsetenv(args[1]));
+	else if (strcmp(args[0], "cd") == 0)
+	{
+		change_directory(args[1]);
+		return (0);
+	}
+
 	/* Fork a new process */
 	pid = fork();
 	if (pid == -1)
