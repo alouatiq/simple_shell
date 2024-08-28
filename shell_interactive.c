@@ -32,7 +32,7 @@ void shell_interactive(void)
 	}
 	line[strcspn(line, "\n")] = 0;
 
-	if (strcmp(line, "exit") == 0)
+	if (_strcmp(line, "exit") == 0)
 	{
 		free(line);
 		exit(EXIT_SUCCESS);
