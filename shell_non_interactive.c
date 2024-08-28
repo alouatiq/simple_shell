@@ -11,43 +11,41 @@
  */
 void shell_non_interactive(char *filename)
 {
-	int file;
-	char *line;
-	ssize_t r;
+	FILE *file;
+	char *line = NULL;
+	size_t len = 0;
+	ssize_t read;
 
-	file = open(filename, O_RDONLY);
-	if (file == -1)
+	file = fopen(filename, "r");
+	if (file == NULL)
 	{
-		perror("fopen failed");
+		perror("Error opening file");
 		exit(EXIT_FAILURE);
 	}
 
-	while (1)
+	while ((read = getline(&line, &len, file)) != -1)
 	{
-		line = malloc(100);
-		if (line == NULL)
+		if (read > 0 && line[read - 1] == '\n')
 		{
-			perror("malloc failed");
-			close(file);
-			exit(-1);
+			line[read - 1] = '\0';  /* Remove newline character */
 		}
-		r = read(file, line, 100);
-		if (r == -1)
+
+		/* Skip empty lines */
+		if (line[0] == '\0')
 		{
-			perror("read failed");
-			free(line);
-			close(file);
-			exit(-1);
+			continue;
 		}
-		if (r == 0)
+
+		/* Execute the command */
+		if (execute_command(line) == -1)
 		{
-			free(line);
-			break;
+			fprintf(stderr, "Error executing command: %s\n", line);
 		}
-		line[r] = '\0';
-		/* Execute each line as a command */
-		execute_command(line);
+	}
+
+	if (line)
+	{
 		free(line);
 	}
-	close(file); /* Close the file */
+	fclose(file);
 }
