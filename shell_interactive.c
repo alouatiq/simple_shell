@@ -17,22 +17,21 @@ int process_input(char **line, size_t *len)
 	{
 		if (feof(stdin))
 			write(STDOUT_FILENO, "\n", 1);
-		free(*line);
 		return (1);
 	}
 
-	(*line)[read - 1] = '\0';
+	if (read > 0 && (*line)[read - 1] == '\n')
+		(*line)[read - 1] = '\0';
+
 	if ((*line)[0] == '\0')
 		return (0);
 
 	result = execute_command(*line);
 	if (result == -1)
-		fprintf(stderr, "Error executing command\n");
+		perror("./hsh");
 	else if (result == 2)
-	{
-		free(*line);
 		return (1);
-	}
+
 	return (0);
 }
 
@@ -50,8 +49,11 @@ void shell_interactive(void)
 
 	while (1)
 	{
-		write(STDOUT_FILENO, "#cisfun$ ", 9);
+		write(STDOUT_FILENO, "$ ", 2);
 		if (process_input(&line, &len))
-			exit(EXIT_SUCCESS);
+			break;
 	}
+
+	free(line);
+	exit(EXIT_SUCCESS);
 }
