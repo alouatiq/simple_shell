@@ -29,5 +29,5 @@ size_t _strcspn(const char *line, const char *reject)
 			break;
 		length++;
 	}
-	return length;
+	return (length);
 }
