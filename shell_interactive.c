@@ -1,9 +1,43 @@
 #include "shell.h"
 
 /**
- * shell_interactive - Runs the shell in interactive mode
+ * process_input - Processes user input in interactive mode
+ * @line: Pointer to the input line
+ * @len: Pointer to the size of the buffer for getline
  *
- * Task 1: Simple Shell 0.1
+ * Return: 0 to continue, 1 to exit the shell
+ */
+int process_input(char **line, size_t *len)
+{
+	ssize_t read;
+	int result;
+
+	read = getline(line, len, stdin);
+	if (read == -1)
+	{
+		if (feof(stdin))
+			write(STDOUT_FILENO, "\n", 1);
+		free(*line);
+		return (1);
+	}
+
+	(*line)[read - 1] = '\0';
+	if ((*line)[0] == '\0')
+		return (0);
+
+	result = execute_command(*line);
+	if (result == -1)
+		fprintf(stderr, "Error executing command\n");
+	else if (result == 2)
+	{
+		free(*line);
+		return (1);
+	}
+	return (0);
+}
+
+/**
+ * shell_interactive - Runs the shell in interactive mode
  *
  * Description: This function handles the main loop of the shell
  * in interactive mode, where it displays a prompt, waits for input,
@@ -11,43 +45,13 @@
  */
 void shell_interactive(void)
 {
-    char *line = NULL;  /* Pointer to store the input line */
-    size_t len = 0;     /* Size of the buffer for getline */
-    ssize_t read;       /* Number of characters read by getline */
-    char *args[2];      /* Array to hold the command and NULL terminator */
+	char *line = NULL;
+	size_t len = 0;
 
-    while (1)  /* Infinite loop to continuously prompt and execute commands */
-    {
-        /* Display the prompt */
-        write(STDOUT_FILENO, "#cisfun$ ", 9);
-
-        /* Read the input line from stdin */
-        read = getline(&line, &len, stdin);
-        
-        if (read == -1)  /* Check if getline encountered an error or EOF */
-        {
-            free(line);  /* Free the allocated memory for line */
-            exit(EXIT_SUCCESS);  /* Exit the shell on EOF */
-        }
-        
-        /* Remove the newline character */
-        line[read - 1] = '\0';
-
-        if (_strcmp(line, "exit") == 0)  /* Check if the user entered "exit" */
-        {
-            free(line);
-            exit(EXIT_SUCCESS);
-        }
-
-        args[0] = line;  /* The command to execute */
-        args[1] = NULL;  /* Null terminator for execve */
-
-        /* Execute the command */
-        if (execve(args[0], args, NULL) == -1)  /* Command execution */
-        {
-            perror(args[0]);  /* Print error message if command not found */
-        }
-    }
-
-    free(line);  /* Free allocated memory (this line is not actually reached) */
+	while (1)
+	{
+		write(STDOUT_FILENO, "#cisfun$ ", 9);
+		if (process_input(&line, &len))
+			exit(EXIT_SUCCESS);
+	}
 }
