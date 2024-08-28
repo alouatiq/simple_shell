@@ -224,3 +224,24 @@ int execute_external_command(char **args)
 	free(full_path);
 	return (ret_val);
 }
+
+/**
+ * free_args - Frees memory allocated for command arguments
+ * @args: Array of command arguments
+ *
+ * Description: This function frees the memory allocated for each argument
+ * in the array and then frees the array itself.
+ */
+void free_args(char **args)
+{
+	int i;
+
+	if (args == NULL)
+		return;
+
+	for (i = 0; args[i] != NULL; i++)
+	{
+		free(args[i]);
+	}
+	free(args);
+}
