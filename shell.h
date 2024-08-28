@@ -90,4 +90,7 @@ size_t _strcspn(const char *line, const char *reject);
 void free_args(char **args);
 int execute_external_command(char **args);
 
+/* New function for processing input in shell_interactive */
+int process_input(char **line, size_t *len);
+
 #endif /* SHELL_H */
