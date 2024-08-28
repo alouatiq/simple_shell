@@ -103,38 +103,40 @@ char **tokenise(char *command, int *arg_count)
  * _executing - Function calls fork and executes commands
  * @args: array of arguments
  *
- * Return: 0 if sucess and -1 otherwise
+ * Return: 0 if success and -1 otherwise
  */
 int _executing(char **args)
 {
-	int status;
-	pid_t pid;
+    int status;
+    pid_t pid;
 
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork failed");
-		free(args);
-		exit(EXIT_FAILURE);
-	}
-	else if (pid == 0)
-	{
-		if (execve(args[0], args, NULL) == -1)
-		{
-			perror("execve failed");
-			free(args);
-			exit(EXIT_FAILURE);
-		}
-	}
-	else
-	{
-		do {
-		waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
-	}
-	free(args);
-	return (0);
+    pid = fork();
+    if (pid == -1)
+    {
+        perror("fork failed");
+        free(args);
+        exit(EXIT_FAILURE);
+    }
+    else if (pid == 0)
+    {
+        if (execve(args[0], args, NULL) == -1)
+        {
+            /* Print error in the required format */
+            dprintf(STDERR_FILENO, "%s: 1: %s: not found\n", "hsh", args[0]);
+            free(args);
+            exit(EXIT_FAILURE);
+        }
+    }
+    else
+    {
+        do {
+            waitpid(pid, &status, WUNTRACED);
+        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+    }
+    free(args);
+    return (0);
 }
+
 /**
  * execute_command - Parses and executes a command
  * @command: The command string to be executed
