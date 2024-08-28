@@ -87,5 +87,7 @@ int _printf(char *buffer);
 int _strlen(char *string);
 int _strcmp(char *first, char *second);
 size_t _strcspn(const char *line, const char *reject);
+void free_args(char **args);
+int execute_external_command(char **args);
 
 #endif /* SHELL_H */
