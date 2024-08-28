@@ -23,7 +23,7 @@ void handle_command_separator(char *command)
 			token = _strtok(NULL, ";");
 			continue;
 		}
-		end = token + strlen(token) - 1;
+		end = token + _strlen(token) - 1;
 
 		while (end > token && (*end == '\n' || *end == '\t' || *end == ' '))
 			end--;
@@ -32,8 +32,8 @@ void handle_command_separator(char *command)
 		execute_command(token);
 		token = _strtok(NULL, ";");
 	}
-	if (token == NULL && strlen(command) > 0 &&
-	command[strlen(command) - 1] == ';')
+	if (token == NULL && _strlen(command) > 0 &&
+	command[_strlen(command) - 1] == ';')
 	{
 		execute_command("");
 	}
