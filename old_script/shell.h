@@ -32,8 +32,7 @@ int execute_command(char *command);
 /* Task 3: Simple Shell 0.3 */
 char *find_command_in_path(char *command);
 
-/* Task 4 and Task 8: Simple Shell 0.4 - Exit built-in command  */
-void handle_exit(char *command);
+/* Task 4: Simple Shell 0.4 - Exit built-in command handled in execute_command */
 
 /* Task 5: Simple Shell 1.0 - Print environment*/
 void print_env(void);
@@ -87,7 +86,15 @@ int _printf(char *buffer);
 int _strlen(char *string);
 int _strcmp(char *first, char *second);
 size_t _strcspn(const char *line, const char *reject);
+<<<<<<< HEAD:old_script/shell.h
 int resize_buffer(char **lineptr, size_t *n, size_t new_size);
 int read_characters(char **lineptr, size_t *n, FILE *stream, size_t *num_read);
+=======
+void free_args(char **args);
+int execute_external_command(char **args);
+
+/* New function for processing input in shell_interactive */
+int process_input(char **line, size_t *len);
+>>>>>>> 52b3d925e408b5350ab8a5b0026751ff645e1626:shell.h
 
 #endif /* SHELL_H */
