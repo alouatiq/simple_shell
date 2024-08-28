@@ -14,6 +14,7 @@ void shell_interactive(void)
     char *line = NULL;  /* Pointer to store the input line */
     size_t len = 0;     /* Size of the buffer for getline */
     ssize_t read;       /* Number of characters read by getline */
+    char *args[2];      /* Array to hold the command and NULL terminator */
 
     while (1)  /* Infinite loop to continuously prompt and execute commands */
     {
@@ -25,33 +26,28 @@ void shell_interactive(void)
         
         if (read == -1)  /* Check if getline encountered an error or EOF */
         {
-            if (read == -1)  /* If read is -1, it could be EOF or an error */
-            {
-                free(line);  /* Free the allocated memory for line */
-                exit(EXIT_SUCCESS);  /* Exit the shell on EOF */
-            }
-            else
-            {
-                perror("getline failed");  /* Print an error message if getline fails */
-                free(line);  /* Free the allocated memory for line */
-                exit(EXIT_FAILURE);  /* Exit with a failure status */
-            }
+            free(line);  /* Free the allocated memory for line */
+            exit(EXIT_SUCCESS);  /* Exit the shell on EOF */
         }
         
-        /* Remove the newline character from the input */
+        /* Remove the newline character */
         line[read - 1] = '\0';
 
-        /* Check if the user entered "exit" */
-        if (_strcmp(line, "exit") == 0)
+        if (_strcmp(line, "exit") == 0)  /* Check if the user entered "exit" */
         {
-            free(line);  /* Free the allocated memory for line */
-            exit(EXIT_SUCCESS);  /* Exit the shell */
+            free(line);
+            exit(EXIT_SUCCESS);
         }
 
-        /* Execute the command entered by the user */
-        execute_command(line);
+        args[0] = line;  /* The command to execute */
+        args[1] = NULL;  /* Null terminator for execve */
+
+        /* Execute the command */
+        if (execve(args[0], args, NULL) == -1)  /* Command execution */
+        {
+            perror(args[0]);  /* Print error message if command not found */
+        }
     }
 
-    /* Free allocated memory for line (although this will never be reached) */
-    free(line);
+    free(line);  /* Free allocated memory (this line is not actually reached) */
 }
