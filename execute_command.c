@@ -162,7 +162,7 @@ int _executing(char **args)
  * Description: This function handles the parsing of the command and
  * its arguments, and executes the command.
  *
- * Return: 0 on success, -1 on failure
+ * Return: 0 on success, -1 on failure, 2 for exit
  */
 int execute_command(char *command)
 {
@@ -178,8 +178,23 @@ int execute_command(char *command)
 	{
 		if (_strcmp(args[0], "exit") == 0)
 		{
-			free_args(args);
-			exit(0);
+			if (i > 2)
+			{
+				fprintf(stderr, "./hsh: 1: exit: too many arguments\n");
+				ret_val = -1;
+			}
+			else if (i == 2)
+			{
+				int status = atoi(args[1]);
+
+				free_args(args);
+				exit(status);
+			}
+			else
+			{
+				free_args(args);
+				return (2);  /* Signal to main loop to exit */
+			}
 		}
 		else if (_strcmp(args[0], "env") == 0)
 		{

@@ -32,8 +32,7 @@ int execute_command(char *command);
 /* Task 3: Simple Shell 0.3 */
 char *find_command_in_path(char *command);
 
-/* Task 4 and Task 8: Simple Shell 0.4 - Exit built-in command  */
-void handle_exit(char *command);
+/* Task 4: Simple Shell 0.4 - Exit built-in command handled in execute_command */
 
 /* Task 5: Simple Shell 1.0 - Print environment*/
 void print_env(void);
