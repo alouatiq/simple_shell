@@ -47,22 +47,22 @@ int contains_seperator(char *command, char *sep)
  */
 int built_ins(char *args[], int i)
 {
-	if (strcmp(args[0], "env") == 0)
+	if (_strcmp(args[0], "env") == 0)
 	{
 		print_env();
 		return (0);
 	}
-	else if (strcmp(args[0], "setenv") == 0 && i == 3)
+	else if (_strcmp(args[0], "setenv") == 0 && i == 3)
 	{
 		my_setenv(args[1], args[2], 1);
 		return (0);
 	}
-	else if (strcmp(args[0], "unsetenv") == 0 && i == 2)
+	else if (_strcmp(args[0], "unsetenv") == 0 && i == 2)
 	{
 		my_unsetenv(args[1]);
 		return (0);
 	}
-	else if (strcmp(args[0], "cd") == 0)
+	else if (_strcmp(args[0], "cd") == 0)
 	{
 		change_directory(args[1]);
 		return (0);
