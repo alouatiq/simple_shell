@@ -122,7 +122,7 @@ int _executing(char **args)
         if (execve(args[0], args, NULL) == -1)
         {
             /* Print error in the required format */
-            dprintf(STDERR_FILENO, "%s: 1: %s: not found\n", "hsh", args[0]);
+            dprintf(STDERR_FILENO, "./hsh: 1: %s: not found\n", args[0]);
             free(args);
             exit(EXIT_FAILURE);
         }
