@@ -11,35 +11,47 @@
  */
 void shell_interactive(void)
 {
-	char *line = NULL;
-	size_t len = 0;
-	ssize_t read;
+    char *line = NULL;  /* Pointer to store the input line */
+    size_t len = 0;     /* Size of the buffer for getline */
+    ssize_t read;       /* Number of characters read by getline */
 
-	while (1)
-	{
-	/* Display the prompt */
-	_printf("#cisfun$ ");
+    while (1)  /* Infinite loop to continuously prompt and execute commands */
+    {
+        /* Display the prompt */
+        write(STDOUT_FILENO, "#cisfun$ ", 9);
 
-	/* Read the input line */
-	read = my_getline(&line, &len, stdin);
-	if (read == -1)
-	{
-		/* Handle end of file or read error */
-		if (feof(stdin))
-			exit(EXIT_SUCCESS); /* Exit on EOF */
-		else
-			perror("getline failed");
-	}
-	line[_strcspn(line, "\n")] = 0;
+        /* Read the input line from stdin */
+        read = getline(&line, &len, stdin);
+        
+        if (read == -1)  /* Check if getline encountered an error or EOF */
+        {
+            if (read == -1)  /* If read is -1, it could be EOF or an error */
+            {
+                free(line);  /* Free the allocated memory for line */
+                exit(EXIT_SUCCESS);  /* Exit the shell on EOF */
+            }
+            else
+            {
+                perror("getline failed");  /* Print an error message if getline fails */
+                free(line);  /* Free the allocated memory for line */
+                exit(EXIT_FAILURE);  /* Exit with a failure status */
+            }
+        }
+        
+        /* Remove the newline character from the input */
+        line[read - 1] = '\0';
 
-	if (_strcmp(line, "exit") == 0)
-	{
-		free(line);
-		exit(EXIT_SUCCESS);
-	}
+        /* Check if the user entered "exit" */
+        if (_strcmp(line, "exit") == 0)
+        {
+            free(line);  /* Free the allocated memory for line */
+            exit(EXIT_SUCCESS);  /* Exit the shell */
+        }
 
-	/* Execute the command*/
-	execute_command(line);
-	}
-	free(line); /* Free allocated memory */
+        /* Execute the command entered by the user */
+        execute_command(line);
+    }
+
+    /* Free allocated memory for line (although this will never be reached) */
+    free(line);
 }
