@@ -28,12 +28,3 @@ int _strcmp(char *first, char *second)
 		return (-1);
 	return (0);
 }
-int main(void)
-{
-	printf("%d", _strcmp("vasitha", "vasitha"));
-	printf("%d", _strcmp("vasitha", "vasitha123"));
-	printf("%d", _strcmp("vasitha123", "vasitha"));
-	printf("%d", _strcmp("vasitha", "Felsimbom"));
-	printf("%d", _strcmp("vasitha", "vasiros"));
-	return (0);
-}
