@@ -160,66 +160,56 @@ int _executing(char **args)
  * @command: The command string to be executed
  *
  * Description: This function handles the parsing of the command and
- * its arguments, and executes the command.
+ * executes it. It only handles simple, one-word commands without arguments.
  *
  * Return: 0 on success, -1 on failure, 2 for exit
  */
 int execute_command(char *command)
 {
-	char **args = NULL;
-	int i = 0, ret_val = -1;
-	char *full_path = NULL;
+	char *args[2];
+	pid_t pid;
+	int status;
 
-	args = tokenise(command, &i);
-	if (args == NULL)
-		return (-1);
+	/* Remove leading and trailing whitespace */
+	while (*command == ' ' || *command == '\t')
+		command++;
 
-	if (args[0] != NULL)
+	if (*command == '\0')
+		return (0);  /* Empty command, do nothing */
+
+	/* Check for the exit command */
+	if (_strcmp(command, "exit") == 0)
+		return (2);  /* Signal to main loop to exit */
+
+	/* Set up arguments for execve */
+	args[0] = command;
+	args[1] = NULL;
+
+	pid = fork();
+	if (pid == -1)
 	{
-		if (_strcmp(args[0], "exit") == 0)
+		perror("fork");
+		return (-1);
+	}
+	else if (pid == 0)
+	{
+		/* Child process */
+		if (execve(args[0], args, NULL) == -1)
 		{
-			if (i > 2)
-			{
-				fprintf(stderr, "./hsh: 1: exit: too many arguments\n");
-				ret_val = -1;
-			}
-			else if (i == 2)
-			{
-				int status = atoi(args[1]);
-
-				free_args(args);
-				exit(status);
-			}
-			else
-			{
-				free_args(args);
-				return (2);  /* Signal to main loop to exit */
-			}
-		}
-		else if (_strcmp(args[0], "env") == 0)
-		{
-			print_env();
-			ret_val = 0;
-		}
-		else
-		{
-			full_path = find_command_in_path(args[0]);
-			if (full_path != NULL)
-			{
-				free(args[0]);
-				args[0] = full_path;
-				ret_val = _executing(args);
-			}
-			else
-			{
-				fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-				ret_val = -1;
-			}
+			/* Print error in the required format */
+			dprintf(STDERR_FILENO, "./hsh: 1: %s: not found\n", args[0]);
+			exit(EXIT_FAILURE);
 		}
 	}
+	else
+	{
+		/* Parent process */
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
+	}
 
-	free_args(args);
-	return (ret_val);
+	return (0);
 }
 
 /**
