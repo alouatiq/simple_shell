@@ -10,7 +10,7 @@
  */
 void change_directory(char *path)
 {
-	static char *formal_working_dir = NULL;
+	static char *formal_working_dir;
 	char *wd;
 
 	if (path == NULL)
@@ -50,5 +50,4 @@ void change_directory(char *path)
 			free(wd);
 		}
 	}
-
 }

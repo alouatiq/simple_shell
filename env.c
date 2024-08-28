@@ -14,4 +14,5 @@ void print_env(void)
 		_printf(*env);
 		env++;
 	}
+	_printf("\n");
 }

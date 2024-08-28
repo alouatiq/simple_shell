@@ -6,15 +6,35 @@
  *
  * Task 11: Command Separator (`;`)
  *
- * Description: This function will split the command on `;` and execute each one.
+ * Description: function will split the command on `;` and execute each one.
  */
 void handle_command_separator(char *command)
 {
-    char *token;
-    token = strtok(command, ";");
+	char *token, *end;
 
-    while (token != NULL) {
-        execute_command(token);
-        token = strtok(NULL, ";");
-    }
+	token = _strtok(command, ";");
+
+	while (token != NULL)
+	{
+		while (*token == '\n' || *token == '\t' || *token == ' ')
+			token++;
+		if (*token == '\0')
+		{
+			token = _strtok(NULL, ";");
+			continue;
+		}
+		end = token + strlen(token) - 1;
+
+		while (end > token && (*end == '\n' || *end == '\t' || *end == ' '))
+			end--;
+		 *(end + 1) = '\0';
+
+		execute_command(token);
+		token = _strtok(NULL, ";");
+	}
+	if (token == NULL && strlen(command) > 0 &&
+	command[strlen(command) - 1] == ';')
+	{
+		execute_command("");
+	}
 }

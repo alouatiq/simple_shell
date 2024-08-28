@@ -13,7 +13,7 @@ char *_strtok(char *str, char *delim)
 {
 	int i;
 	char *tocken;
-	static char *input = NULL;
+	static char *input;
 
 	i = 0;
 

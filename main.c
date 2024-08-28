@@ -13,7 +13,6 @@
 int main(int argc, char **argv)
 {
 	/* Placeholder for shell initialization code */
-    
 	if (argc >= 1)
 	{
 		/* If no arguments, start the shell in interactive mode */
