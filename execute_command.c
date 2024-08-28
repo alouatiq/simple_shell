@@ -160,34 +160,47 @@ int _executing(char **args)
  * @command: The command string to be executed
  *
  * Description: This function handles the parsing of the command and
- * its arguments, and delegates execution to appropriate functions.
+ * its arguments, and executes the command.
  *
- * Return: 0 on success, -1 on failure, or 2 to signal shell exit
+ * Return: 0 on success, -1 on failure
  */
 int execute_command(char *command)
 {
 	char **args = NULL;
-	int i = 0, ret_val = 0;
-	int built_in_result;
-
-	if (contains_separator(command, ";") == 0)
-	{
-		handle_command_separator(command);
-		return (0);
-	}
+	int i = 0, ret_val = -1;
+	char *full_path = NULL;
 
 	args = tokenise(command, &i);
 	if (args == NULL)
 		return (-1);
 
-	built_in_result = built_ins(args, i);
-	if (built_in_result == 0 || built_in_result == 2)
+	if (args[0] != NULL)
 	{
-		ret_val = built_in_result;
-	}
-	else
-	{
-		ret_val = execute_external_command(args);
+		if (_strcmp(args[0], "exit") == 0)
+		{
+			free_args(args);
+			exit(0);
+		}
+		else if (_strcmp(args[0], "env") == 0)
+		{
+			print_env();
+			ret_val = 0;
+		}
+		else
+		{
+			full_path = find_command_in_path(args[0]);
+			if (full_path != NULL)
+			{
+				free(args[0]);
+				args[0] = full_path;
+				ret_val = _executing(args);
+			}
+			else
+			{
+				fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+				ret_val = -1;
+			}
+		}
 	}
 
 	free_args(args);
