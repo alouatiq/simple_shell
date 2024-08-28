@@ -8,6 +8,7 @@
  * Description: This function tokenizes a string by splitting it into tokens
  * based on the specified delimiters. It stores the tokens in the provided
  * array. This implementation does not use the standard library's strtok.
+ * Return: Pointer to array of tockens
  */
 char *_strtok(char *str, char *delim)
 {
@@ -37,6 +38,6 @@ char *_strtok(char *str, char *delim)
 		i++;
 	}
 	input = NULL;
-	
+
 	return (tocken);
 }

@@ -42,7 +42,7 @@ int my_unsetenv(const char *name)
 	{
 		perror("Wrong arguments");
 		return (-1);
-	}	
+	}
 	if (unsetenv(name) != 0)
 	{
 		perror("unsetenv failed");

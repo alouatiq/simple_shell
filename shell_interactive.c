@@ -20,7 +20,7 @@ void shell_interactive(void)
 	/* Display the prompt */
 	_printf("#cisfun$ ");
 
-        /* Read the input line */
+	/* Read the input line */
 	read = my_getline(&line, &len, stdin);
 	if (read == -1)
 	{
