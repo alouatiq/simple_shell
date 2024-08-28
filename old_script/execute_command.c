@@ -119,7 +119,7 @@ int _executing(char **args)
 	}
 	else if (pid == 0)
 	{
-		if (execve(args[0], args, NULL) == -1)
+		if (execve(args[0], args, environ) == -1)
 		{
 			perror("execve failed");
 			free(args);

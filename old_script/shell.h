@@ -87,5 +87,7 @@ int _printf(char *buffer);
 int _strlen(char *string);
 int _strcmp(char *first, char *second);
 size_t _strcspn(const char *line, const char *reject);
+int resize_buffer(char **lineptr, size_t *n, size_t new_size);
+int read_characters(char **lineptr, size_t *n, FILE *stream, size_t *num_read);
 
 #endif /* SHELL_H */

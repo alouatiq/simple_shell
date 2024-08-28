@@ -17,28 +17,36 @@ void shell_interactive(void)
 
 	while (1)
 	{
-	/* Display the prompt */
 	_printf("#cisfun$ ");
-
-	/* Read the input line */
+	errno = 0;
 	read = my_getline(&line, &len, stdin);
 	if (read == -1)
 	{
-		/* Handle end of file or read error */
-		if (feof(stdin))
-			exit(EXIT_SUCCESS); /* Exit on EOF */
+		if (errno == EINTR || errno == EAGAIN)
+			continue;
+		else if (errno == 0)
+		{
+			free(line);
+			exit(EXIT_FAILURE);
+		}
 		else
+		{
 			perror("getline failed");
+			free(line);
+			exit(EXIT_FAILURE);
+		}
+	}
+	if (read == 0)
+	{
+		free(line);
+		exit(EXIT_SUCCESS);
 	}
 	line[_strcspn(line, "\n")] = 0;
-
 	if (_strcmp(line, "exit") == 0)
 	{
 		free(line);
 		exit(EXIT_SUCCESS);
 	}
-
-	/* Execute the command*/
 	execute_command(line);
 	}
 	free(line); /* Free allocated memory */
