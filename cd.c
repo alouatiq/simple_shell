@@ -16,7 +16,7 @@ void change_directory(char *path)
 	if (path == NULL)
 		path = getenv("HOME"); /* Default to home directory */
 
-	else if (strcmp(path, "-") == 0)
+	else if (_strcmp(path, "-") == 0)
 	{
 		if (formal_working_dir != NULL) /*never been changed*/
 			path = formal_working_dir;
