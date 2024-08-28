@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <errno.h>
 
 /**
  * my_getline - Custom implementation of the getline function
@@ -52,7 +53,7 @@ int read_characters(char **lineptr, size_t *n, FILE *stream, size_t *num_read)
 	while ((ch = fgetc(stream)) != EOF)
 	{
 		/* Resize buffer if necessary */
-		if (num_read + 1 >= *n)
+		if (*num_read + 1 >= *n)
 		{
 			new_size = *n * 2;
 			if (resize_buffer(lineptr, n, new_size) == -1)
@@ -60,17 +61,17 @@ int read_characters(char **lineptr, size_t *n, FILE *stream, size_t *num_read)
 				return (-1);
 			}
 		}
-		(*lineptr)[num_read++] = ch;
+		(*lineptr)[(*num_read)++] = ch;
 
 		if (ch == '\n')
 			break;
 	}
-	if (num_read == 0 && ch == EOF)
+	if (*num_read == 0 && ch == EOF)
 	{
 		errno = 0;
 		return (-1); /* End of file with no characters read */
 	}
-	return (num_read);
+	return (0);
 }
 
 /**
