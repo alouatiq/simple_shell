@@ -30,7 +30,7 @@ void shell_interactive(void)
 		else
 			perror("getline failed");
 	}
-	line[strcspn(line, "\n")] = 0;
+	line[_strcspn(line, "\n")] = 0;
 
 	if (_strcmp(line, "exit") == 0)
 	{

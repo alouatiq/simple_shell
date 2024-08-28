@@ -86,5 +86,6 @@ char *command_check(char *command, char **path_list);
 int _printf(char *buffer);
 int _strlen(char *string);
 int _strcmp(char *first, char *second);
+size_t _strcspn(const char *line, const char *reject);
 
 #endif /* SHELL_H */
