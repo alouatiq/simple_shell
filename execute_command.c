@@ -119,7 +119,9 @@ int _executing(char **args)
     }
     else if (pid == 0)
     {
-        if (execve(args[0], args, NULL) == -1)
+        extern char **environ;
+
+        if (execve(args[0], args, environ) == -1)
         {
             /* Print error in the required format */
             dprintf(STDERR_FILENO, "./hsh: 1: %s: not found\n", args[0]);
