@@ -1,52 +1,30 @@
 #include "shell.h"
 
-/* Task 1: Basic Shell Implementation */
-/* Task 2: Handle Command Line Arguments */
-/* Task 4: Implement Built-in exit */
-/* Task 5: Implement Built-in env */
-
+/**
+ * main - Entry point of the shell program.
+ *
+ * Return: Always 0.
+ */
 int main(void)
 {
-char *command;
-char **args;
+	char *command = NULL;
+	size_t len = 0;
+	ssize_t nread;
 
-while (1)
-{
-prompt();  /* Display the prompt */
-command = read_command();  /* Read the command from stdin */
+	while (1)
+	{
+		_puts("#cisfun$ ");
+		nread = _getline(&command, &len);
+		if (nread == -1)
+		{
+			_puts("\n");
+			break;
+		}
+		if (_strcmp(command, "exit\n") == 0)
+			break;
+		execute_command(command);
+	}
 
-if (command == NULL)  /* Handle EOF (Ctrl+D) */
-{
-write(STDOUT_FILENO, "\n", 1);
-break;
-}
-
-args = tokenize(command);  /* Task 2: Tokenize the input command */
-if (args == NULL)
-{
-free(command);
-continue;
-}
-
-if (strcmp(args[0], "exit") == 0)  /* Task 4: Implement exit */
-{
-free(args);
-free(command);
-exit(0);
-}
-
-if (strcmp(args[0], "env") == 0)  /* Task 5: Implement env */
-{
-print_env();
-}
-else
-{
-execute_command(args);  /* Task 1: Execute the command */
-}
-
-free(args);
-free(command);
-}
-
-return 0;
+	free(command);
+	return (0);
 }

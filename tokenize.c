@@ -1,28 +1,41 @@
 #include "shell.h"
 
-/* Task 2: Handle Command Line Arguments */
-/* Task 7: Implement Tokenization Without strtok */
-
+/**
+ * tokenize - Splits a command string into tokens.
+ * @command: The command string to tokenize.
+ *
+ * Return: An array of tokens.
+ */
 char **tokenize(char *command)
 {
-char **tokens;
-size_t i = 0;
-char *token;
+	int bufsize = 64, i = 0;
+	char **tokens = malloc(bufsize * sizeof(char *));
+	char *token;
 
-tokens = malloc(64 * sizeof(char *));
-if (tokens == NULL)
-{
-perror("malloc");
-return NULL;
-}
+	if (!tokens)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
 
-token = strtok(command, " ");
-while (token != NULL)
-{
-tokens[i++] = token;
-token = strtok(NULL, " ");
-}
-tokens[i] = NULL;
+	token = strtok(command, " \t\r\n\a");
+	while (token != NULL)
+	{
+		tokens[i++] = token;
 
-return tokens;
+		if (i >= bufsize)
+		{
+			bufsize += 64;
+			tokens = realloc(tokens, bufsize * sizeof(char *));
+			if (!tokens)
+			{
+				perror("realloc");
+				exit(EXIT_FAILURE);
+			}
+		}
+
+		token = strtok(NULL, " \t\r\n\a");
+	}
+	tokens[i] = NULL;
+	return (tokens);
 }

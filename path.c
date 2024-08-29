@@ -1,41 +1,32 @@
 #include "shell.h"
 
-/* Task 3: Handle PATH */
-
+/**
+ * find_command - Finds the full path of a command.
+ * @command: The command to find.
+ *
+ * Return: The full path if found, otherwise NULL.
+ */
 char *find_command(char *command)
 {
-char *path = getenv("PATH");
-char *token;
-char *full_path;
-struct stat st;
+	char *path = getenv("PATH");
+	char *token;
+	char full_path[1024];
 
-if (stat(command, &st) == 0)  /* If command is an absolute path */
-{
-return command;
-}
+	if (command[0] == '/')
+		return (command);
 
-token = strtok(path, ":");
-while (token != NULL)
-{
-full_path = malloc(strlen(token) + strlen(command) + 2);
-if (full_path == NULL)
-{
-perror("malloc");
-return NULL;
-}
+	token = strtok(path, ":");
+	while (token != NULL)
+	{
+		_strcpy(full_path, token);
+		_strcat(full_path, "/");
+		_strcat(full_path, command);
 
-strcpy(full_path, token);
-strcat(full_path, "/");
-strcat(full_path, command);
+		if (access(full_path, X_OK) == 0)
+			return (full_path);
 
-if (stat(full_path, &st) == 0)  /* If command is found in PATH */
-{
-return full_path;
-}
+		token = strtok(NULL, ":");
+	}
 
-free(full_path);
-token = strtok(NULL, ":");
-}
-
-return NULL;  /* Command not found in PATH */
+	return (NULL);
 }

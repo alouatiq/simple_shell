@@ -1,48 +1,55 @@
 #include "shell.h"
 
-/* Task 6: Implement Custom getline */
+/**
+ * _getline - Custom implementation of getline function.
+ * @buffer: A pointer to the buffer where the line will be stored.
+ * @bufsize: The size of the buffer.
+ *
+ * Return: The number of characters read, or -1 on failure or EOF.
+ */
+ssize_t _getline(char **buffer, size_t *bufsize)
+{
+	ssize_t len = 0;
+	char *buf = NULL;
 
-int _getline(char **buffer, size_t *bufsize)
-{
-static char temp_buf[1024];
-static size_t pos;
-static size_t len;
-size_t i = 0;
+	if (buffer == NULL || bufsize == NULL)
+		return (-1);
 
-if (*buffer == NULL)
-{
-*buffer = malloc(1024);
-if (*buffer == NULL)
-{
-perror("malloc");
-return -1;
-}
-*bufsize = 1024;
-}
+	buf = malloc(1024);
+	if (buf == NULL)
+		return (-1);
 
-while (1)
-{
-if (pos == len)
-{
-ssize_t read_len = read(STDIN_FILENO, temp_buf, 1024);  /* Use ssize_t for read result */
-pos = 0;
+	while (1)
+	{
+		ssize_t r = read(STDIN_FILENO, buf + len, 1);
 
-if (read_len == 0)  /* EOF */
-return -1;
-else if (read_len == -1)
-{
-perror("read");
-return -1;
-}
-len = (size_t)read_len;  /* Assign the ssize_t result to size_t */
-}
+		if (r == -1)
+		{
+			free(buf);
+			return (-1);
+		}
+		else if (r == 0)
+		{
+			if (len == 0)
+			{
+				free(buf);
+				return (-1);
+			}
+			break;
+		}
+		else
+		{
+			if (buf[len] == '\n')
+			{
+				buf[len + 1] = '\0';
+				break;
+			}
+			len++;
+		}
+	}
 
-(*buffer)[i++] = temp_buf[pos++];
+	*buffer = buf;
+	*bufsize = len + 1;
 
-if ((*buffer)[i - 1] == '\n')
-{
-(*buffer)[i] = '\0';
-return i;
-}
-}
+	return (len);
 }

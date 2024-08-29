@@ -3,26 +3,25 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <sys/stat.h>
-#include <errno.h>
 
-/* Task 1: Basic Shell Implementation */
-/* Task 2: Handle Command Line Arguments */
-/* Task 3: Handle PATH */
-/* Task 4: Implement Built-in exit */
-/* Task 5: Implement Built-in env */
+extern char **environ;
 
-/* Function Prototypes */
 void prompt(void);
 char *read_command(void);
-char **tokenize(char *command);  /* Task 2 */
-void execute_command(char **args);
-void print_env(void);  /* Task 5 */
-char *find_command(char *command);  /* Task 3 */
-int _getline(char **buffer, size_t *bufsize);  /* Task 6 */
+char **tokenize(char *command);
+int execute_command(char *command);
+void print_env(void);
+char *find_command(char *command);
+ssize_t _getline(char **buffer, size_t *bufsize);
+
+char *_strcat(char *dest, const char *src);
+int _strlen(const char *s);
+int _strcmp(const char *s1, const char *s2);
+char *_strcpy(char *dest, const char *src);
+char *_strdup(const char *s);
 
 #endif /* SHELL_H */
