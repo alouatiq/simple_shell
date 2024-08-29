@@ -1,28 +1,28 @@
 #include "shell.h"
 
-/**
- * main - Entry point for the shell program
- * @argc: Argument count
- * @argv: Argument vector
- *
- * Task 1: Simple Shell 0.1
- * Task 2: Simple Shell 0.2
- *
- * Return: Exit status of the shell
- */
-int main(int argc, char **argv)
+int main(void)
 {
-	/* Placeholder for shell initialization code */
-	if (argc >= 1)
-	{
-		/* If no arguments, start the shell in interactive mode */
-		shell_interactive();
-	}
-	else
-	{
-		/* If arguments are passed, treat as a script file */
-		shell_non_interactive(argv[1]);
-	}
+    char *command;
+    
+    while (1)
+    {
+        prompt();  // Display the prompt
+        command = read_command();  // Read the command from stdin
 
-	return (0);
+        if (command == NULL)  // Handle EOF (Ctrl+D)
+        {
+            write(STDOUT_FILENO, "\n", 1);
+            break;
+        }
+        if (strlen(command) == 0)
+        {
+            free(command);
+            continue;  // Ignore empty commands
+        }
+
+        execute_command(command);  // Execute the command
+        free(command);  // Free the command buffer
+    }
+
+    return 0;
 }
