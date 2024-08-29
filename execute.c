@@ -1,35 +1,46 @@
 #include "shell.h"
 
-/**
- * execute_command - Executes a command in a child process.
- * @command: The command to execute.
- *
- * Return: 1 on success, 0 on failure.
- */
-int execute_command(char *command)
+extern char **environ;  /* Declare environ to pass it to execve */
+
+/* Task 1: Basic Shell Implementation */
+/* Task 2: Handle Command Line Arguments */
+/* Task 3: Handle PATH */
+/* Task 5: Implement Built-in env */
+
+void execute_command(char **args)
 {
-	pid_t pid;
-	int status;
+    pid_t pid;
+    int status;
+    char *command = args[0];
 
-	if (command == NULL)
-		return (0);
+    command = find_command(command);  /* Task 3: Find command in PATH */
 
-	pid = fork();
-	if (pid == 0)
-	{
-		char *argv[] = {command, NULL};
-		execve(command, argv, environ);
-		_exit(EXIT_FAILURE);
-	}
-	else if (pid < 0)
-	{
-		perror("fork");
-		return (0);
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-	}
+    if (command == NULL)  /* Command not found */
+    {
+        fprintf(stderr, "%s: Command not found\n", args[0]);
+        return;
+    }
 
-	return (1);
+    pid = fork();  /* Create a new process */
+
+    if (pid == -1)  /* Error during fork */
+    {
+        perror("Error during fork");
+        return;
+    }
+    else if (pid == 0)  /* Child process */
+    {
+        if (execve(command, args, environ) == -1)  /* Pass the environment to execve */
+        {
+            perror(args[0]);  /* Print an error if execve fails */
+            exit(EXIT_FAILURE);  /* Exit the child process */
+        }
+    }
+    else  /* Parent process */
+    {
+        wait(&status);  /* Wait for the child process to finish */
+    }
+
+    if (command != args[0])
+        free(command);  /* Free the command path if it was dynamically allocated */
 }

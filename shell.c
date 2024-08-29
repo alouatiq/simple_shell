@@ -1,30 +1,28 @@
 #include "shell.h"
 
-/**
- * prompt - Displays the shell prompt.
- */
+/* Task 1: Basic Shell Implementation */
+/* Task 2: Handle Command Line Arguments */
+
 void prompt(void)
 {
-	_puts("#cisfun$ ");
+    write(STDOUT_FILENO, "#cisfun$ ", 9);  /* Display the shell prompt */
 }
 
-/**
- * read_command - Reads a command from the user input.
- *
- * Return: The command entered by the user.
- */
 char *read_command(void)
 {
-	char *command = NULL;
-	size_t len = 0;
-	ssize_t nread;
+    char *buffer = NULL;
+    size_t bufsize = 0;
+    ssize_t characters;
 
-	nread = _getline(&command, &len);
-	if (nread == -1)
-	{
-		free(command);
-		return (NULL);
-	}
+    /* Task 6: Use custom getline function with the correct arguments */
+    characters = _getline(&buffer, &bufsize, stdin);  /* Use stdin as the input stream */
 
-	return (command);
+    if (characters == -1)  /* Handle EOF (Ctrl+D) */
+    {
+        free(buffer);
+        return NULL;
+    }
+
+    buffer[characters - 1] = '\0';  /* Remove the newline character */
+    return buffer;
 }

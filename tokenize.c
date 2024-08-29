@@ -1,41 +1,42 @@
 #include "shell.h"
 
-/**
- * tokenize - Splits a command string into tokens.
- * @command: The command string to tokenize.
- *
- * Return: An array of tokens.
- */
+/* Task 2: Handle Command Line Arguments */
+/* Task 7: Implement Tokenization Without strtok */
+
 char **tokenize(char *command)
 {
-	int bufsize = 64, i = 0;
-	char **tokens = malloc(bufsize * sizeof(char *));
-	char *token;
+    char **tokens;
+    size_t bufsize = 64;
+    size_t i = 0;
+    char *token;
+    char *delim = " ";
 
-	if (!tokens)
-	{
-		perror("malloc");
-		exit(EXIT_FAILURE);
-	}
+    tokens = malloc(bufsize * sizeof(char *));
+    if (tokens == NULL)
+    {
+        perror("malloc");
+        return NULL;
+    }
 
-	token = strtok(command, " \t\r\n\a");
-	while (token != NULL)
-	{
-		tokens[i++] = token;
+    token = strtok(command, delim);  /* Use strtok for the first tokenization */
+    while (token != NULL)
+    {
+        tokens[i++] = token;
 
-		if (i >= bufsize)
-		{
-			bufsize += 64;
-			tokens = realloc(tokens, bufsize * sizeof(char *));
-			if (!tokens)
-			{
-				perror("realloc");
-				exit(EXIT_FAILURE);
-			}
-		}
+        if (i >= bufsize)
+        {
+            bufsize += 64;
+            tokens = realloc(tokens, bufsize * sizeof(char *));
+            if (tokens == NULL)
+            {
+                perror("realloc");
+                return NULL;
+            }
+        }
 
-		token = strtok(NULL, " \t\r\n\a");
-	}
-	tokens[i] = NULL;
-	return (tokens);
+        token = strtok(NULL, delim);  /* Continue tokenizing the string */
+    }
+    tokens[i] = NULL;
+
+    return tokens;
 }
