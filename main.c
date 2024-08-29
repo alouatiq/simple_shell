@@ -3,18 +3,8 @@
 /**
 * main - Entry point of the shell program.
 *
-* This function sets up the shell environment,
-* enters the main loop to
-* read and execute commands, and handles any
-* necessary cleanup.
-*
 * Return: 0 on success, or an error code on failure.
 */
-
-/* Task 1: Basic Shell Implementation */
-/* Task 2: Handle Command Line Arguments */
-/* Task 4: Implement Built-in exit */
-/* Task 5: Implement Built-in env */
 
 int main(void)
 {
@@ -32,27 +22,27 @@ write(STDOUT_FILENO, "\n", 1);
 break;
 }
 
-args = tokenize(command); /* Task 2: Tokenize the input command */
+args = tokenize(command);  /* Tokenize the input command */
 if (args == NULL)
 {
 free(command);
 continue;
 }
 
-if (strcmp(args[0], "exit") == 0)  /* Task 4: Implement exit */
+if (strcmp(args[0], "exit") == 0)  /* Implement exit */
 {
 free(args);
 free(command);
 exit(0);
 }
 
-if (strcmp(args[0], "env") == 0)  /* Task 5: Implement env */
+if (strcmp(args[0], "env") == 0)  /* Implement env */
 {
 print_env();
 }
 else
 {
-execute_command(args);  /* Task 1: Execute the command */
+execute_command(args);  /* Execute the command */
 }
 
 free(args);

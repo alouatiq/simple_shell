@@ -11,12 +11,9 @@
 * is executed; otherwise, an error is printed.
 */
 
-extern char **environ;  /* Declare environ to pass it to execve */
+#include "shell.h"
 
-/* Task 1: Basic Shell Implementation */
-/* Task 2: Handle Command Line Arguments */
-/* Task 3: Handle PATH */
-/* Task 5: Implement Built-in env */
+extern char **environ;
 
 void execute_command(char **args)
 {
@@ -24,7 +21,7 @@ pid_t pid;
 int status;
 char *command = args[0];
 
-command = find_command(command);  /* Task 3: Find command in PATH */
+command = find_command(command);  /* Find command in PATH */
 
 if (command == NULL)  /* Command not found */
 {
@@ -41,10 +38,10 @@ return;
 }
 else if (pid == 0)  /* Child process */
 {
-if (execve(command, args, environ) == -1)  /* Pass the environment to execve */
+if (execve(command, args, environ) == -1)  /* Execute the command */
 {
-perror(args[0]);  /* Print an error if execve fails */
-exit(EXIT_FAILURE);  /* Exit the child process */
+perror(args[0]);
+exit(EXIT_FAILURE);
 }
 }
 else  /* Parent process */
