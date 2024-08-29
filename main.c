@@ -1,5 +1,17 @@
 #include "shell.h"
 
+/**
+ * main - Entry point of the shell program.
+ * @argc: The number of arguments passed to the program.
+ * @argv: An array of strings containing the arguments.
+ *
+ * This function sets up the shell environment, enters the main loop to
+ * read and execute commands, and handles any necessary cleanup.
+ *
+ * Return: 0 on success, or an error code on failure.
+ */
+
+
 /* Task 1: Basic Shell Implementation */
 /* Task 2: Handle Command Line Arguments */
 /* Task 4: Implement Built-in exit */

@@ -1,5 +1,9 @@
 #include "shell.h"
 
+/**
+ * print_env - Prints the environment variables to the standard output.
+ */
+
 /* Task 4: Implement Built-in exit */
 /* Task 5: Implement Built-in env */
 /* Task 9: Implement setenv and unsetenv */
