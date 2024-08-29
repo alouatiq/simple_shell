@@ -3,17 +3,13 @@
 /**
  * tokenize - Splits a command string into tokens.
  * @command: The command string to tokenize.
- *
- * This function splits the command string into individual tokens (arguments)
- * using space as a delimiter. It returns an array of tokens, with the last
+ * This function splits the command
+ * string into individual tokens (arguments)
+ * using space as a delimiter.
+ * It returns an array of tokens, with the last
  * element set to NULL.
- *
  * Return: An array of tokens, or NULL on failure.
  */
-
-
-/* Task 2: Handle Command Line Arguments */
-/* Task 7: Implement Tokenization Without strtok */
 
 char **tokenize(char *command)
 {
@@ -26,29 +22,29 @@ char **tokenize(char *command)
 	tokens = malloc(bufsize * sizeof(char *));
 	if (tokens == NULL)
 	{
-	    perror("malloc");
-	    return NULL;
+		perror("malloc");
+		return (NULL);
 	}
 
-	token = strtok(command, delim);  /* Use strtok for the first tokenization */
+	token = strtok(command, delim);
 	while (token != NULL)
 	{
-	    tokens[i++] = token;
+		tokens[i++] = token;
 
-	    if (i >= bufsize)
-	    {
-	        bufsize += 64;
-	        tokens = realloc(tokens, bufsize * sizeof(char *));
-	        if (tokens == NULL)
-	        {
-	            perror("realloc");
-	            return NULL;
-	        }
-	    }
+		if (i >= bufsize)
+		{
+			bufsize += 64;
+			tokens = realloc(tokens, bufsize * sizeof(char *));
+			if (tokens == NULL)
+			{
+				perror("realloc");
+				return (NULL);
+			}
+		}
 
-	    token = strtok(NULL, delim);  /* Continue tokenizing the string */
+		token = strtok(NULL, delim);
 	}
 	tokens[i] = NULL;
 
-	return tokens;
+	return (tokens);
 }

@@ -1,17 +1,22 @@
 #include "shell.h"
 
+/* Declaration of utility functions */
+size_t _strlen(const char *s);  /* Declare _strlen before its use */
+char *_strcpy(char *dest, const char *src);  /* Declare _strcpy before its use */
+
 /**
 * _strdup - Duplicates a string.
 * @s: The string to duplicate.
+*
 * This function allocates memory for and
-* returns a copy of the given string.
+* returns a copy of the string.
 * Return: A pointer to the duplicated string,
 * or NULL if memory allocation fails.
 */
 char *_strdup(const char *s)
 {
 char *dup;
-size_t len = _strlen(s);
+size_t len = _strlen(s);  /* Use _strlen instead of strlen */
 
 dup = malloc(len + 1);
 if (dup == NULL)
@@ -19,15 +24,16 @@ if (dup == NULL)
 perror("malloc");
 return (NULL);
 }
-_strcpy(dup, s);
+_strcpy(dup, s);  /* Use _strcpy instead of strcpy */
 return (dup);
 }
 
 /**
 * _strlen - Returns the length of a string.
 * @s: The string to measure.
-* This function returns the number of characters
-* in the string, excluding
+*
+* This function returns the number of
+* characters in the string, excluding
 * the null-terminator.
 * Return: The length of the string.
 */
@@ -46,12 +52,11 @@ return (len);
 * _strcmp - Compares two strings.
 * @s1: The first string.
 * @s2: The second string.
-* This function compares two strings
-* lexicographically.
+*
+* This function compares two strings lexicographically.
 * Return: An integer less than, equal to,
 * or greater than zero if s1 is found,
-* respectively, to be less than, to match,
-* or be greater than s2.
+* respectively, to be less than, to match, or be greater than s2.
 */
 int _strcmp(const char *s1, const char *s2)
 {
@@ -67,6 +72,7 @@ return (*(unsigned char *)s1 - *(unsigned char *)s2);
 * _strcpy - Copies a string to a destination buffer.
 * @dest: The destination buffer.
 * @src: The source string.
+*
 * This function copies the string pointed
 * to by src, including the null-terminator,
 * to the buffer pointed to by dest.

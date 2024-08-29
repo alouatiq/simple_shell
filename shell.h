@@ -24,7 +24,8 @@ char *read_command(void);
  * tokenize - Splits a command string into tokens.
  * @command: The command string to tokenize.
  *
- * This function splits the command string into individual tokens (arguments)
+ * This function splits the command string
+ * into individual tokens (arguments)
  * using space as a delimiter.
  *
  * Return: An array of tokens, or NULL on failure.
@@ -35,19 +36,23 @@ char **tokenize(char *command);  /* Task 2 */
 void execute_command(char **args);
 
 /**
- * print_env - Prints the environment variables to the standard output.
+ * print_env - Prints the environment variables
+ * to the standard output.
  */
 
 void print_env(void);  /* Task 5 */
 
 /**
- * find_command - Searches for a command in the system PATH.
+ * find_command - Searches for a command in
+ * the system PATH.
  * @command: The name of the command to search for.
  *
- * This function searches for the specified command in the directories listed
+ * This function searches for the specified
+ * command in the directories listed
  * in the system PATH environment variable.
  *
- * Return: The full path to the command, or NULL if not found.
+ * Return: The full path to the command, or
+ * NULL if not found.
  */
 
 
@@ -59,10 +64,11 @@ char *find_command(char *command);  /* Task 3 */
  * @bufsize: The size of the buffer.
  * @stream: The input stream to read from.
  *
- * This function reads a line of input from the specified stream and stores it
+ * This function reads a line of input from
+ * the specified stream and stores it
  * in the buffer.
  *
- * Return: The number of characters read, or -1 on failure or EOF.
+ * Return: The number of characters read, or-1 on failure or EOF.
  */
 
 int _getline(char **buffer, size_t *bufsize, FILE *stream);  /* Task 6 */
