@@ -1,0 +1,33 @@
+/simple_shell
+├── error_cd.c            # Task 8: Error handling for `cd` command.
+├── error_builtin.c       # Task 8: Error handling for built-in commands like `env`, `exit`, and `alias`.
+├── help_builtin1.c       # Task 10: Provides help information for `env`, `setenv`, `unsetenv`, `exit`.
+├── help_builtin2.c       # Task 10: Additional help functions for `cd`, `alias`.
+├── list_management.c     # Task 11: Linked list management for separators and command lines.
+├── list_variable.c       # Task 11: Linked list management for variables.
+├── memory_management.c   # Task 13: Functions for memory allocation and copying.
+├── stdlib_helpers.c      # Task 13: Standard library helpers like integer parsing and string conversion.
+├── string_utils.c        # Task 12: Basic string manipulation functions (concatenation, comparison, etc.).
+├── string_utils2.c       # Task 12: Additional string functions (duplication, length calculation, etc.).
+├── string_utils3.c       # Task 12: Reverse string functions.
+├── builtin_cd.c          # Task 5: Implementation of the `cd` command.
+├── builtin_cd_helpers.c  # Task 5: Helper functions for `cd` command.
+├── syntax_error_check.c  # Task 9: Check for syntax errors in user input.
+├── command_exec.c        # Task 6: Functions for executing commands and handling execution errors.
+├── env_management.c      # Task 7: Functions to retrieve and print environment variables.
+├── env_set_unset.c       # Task 7: Functions to set and unset environment variables.
+├── command_line_exec.c   # Task 1: Execute a command line by invoking the appropriate command.
+├── builtin_exit.c        # Task 3: Implementation of the `exit` command.
+├── builtin_lookup.c      # Task 4: Retrieves and executes built-in commands.
+├── error_handling.c      # Task 8: Main function to handle errors based on error codes.
+├── help_system.c         # Task 10: Provides help information to the user for different commands.
+├── line_reading.c        # Task 2: Functions for reading a line of input from the user.
+├── signal_handling.c     # Task 14: Handle SIGINT (Ctrl+C) to prevent shell exit.
+├── shell_main.c          # Task 1: Entry point of the shell, containing the main loop.
+├── shell.h               # Main header file with all function prototypes, structures, and macros.
+├── command_input.c       # Task 2: Reads the command line from the user input.
+├── variable_replacement.c # Task 15: Handles replacement of variables in the command line input.
+├── shell_loop.c          # Task 1: Main loop of the shell to prompt for and process user commands.
+├── input_splitting.c     # Task 11: Splits the command line into tokens.
+├── AUTHORS     	      # AUTHORS
+└── README.md             # Documentation
