@@ -11,7 +11,7 @@ int execute_command(char **args)
     if (strcmp(args[0], "exit") == 0)
         handle_exit(args);
     else if (strcmp(args[0], "env") == 0)
-        handle_env();
+        handle_env(); /* This line now correctly refers to the function */
     else if (strcmp(args[0], "setenv") == 0)
         return handle_setenv(args[1], args[2], 1);
     else if (strcmp(args[0], "unsetenv") == 0)
