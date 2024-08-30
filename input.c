@@ -1,6 +1,6 @@
 #include "shell.h"
-#include <string.h>
-#include <stdlib.h>
+#include <string.h>  /* Include this to use strdup */
+#include <stdlib.h>  /* Include this to use malloc, free, realloc */
 
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
@@ -41,7 +41,7 @@ char **custom_tokenize(char *line)
     token = strtok(line, " \t\r\n\a");
     while (token != NULL)
     {
-        tokens[i++] = strdup(token);
+        tokens[i++] = strdup(token);  /* strdup needs <string.h> */
         token = strtok(NULL, " \t\r\n\a");
     }
     tokens[i] = NULL;
