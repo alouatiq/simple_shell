@@ -11,47 +11,52 @@
  */
 
 
+extern char **environ;
+
 int _setenv(const char *name, const char *value, int overwrite) {
-    char *env_var;
     size_t name_len = strlen(name);
     size_t value_len = strlen(value);
-    size_t len = name_len + value_len + 2; /* +2 for '=' and null terminator */
+    size_t len = name_len + value_len + 2;  /* +2 for '=' and null terminator */
+    char *env_var = malloc(len);
+    char **envp;
 
-    /* Check if the variable exists */
-    env_var = getenv(name);
-    if (env_var != NULL && !overwrite) {
-        return 0; /* Do not overwrite existing variable */
-    }
-
-    /* Allocate memory for the new environment variable */
-    env_var = malloc(len);
     if (env_var == NULL) {
-        return -1; /* Memory allocation failed */
+        return -1;  /* Memory allocation failed */
     }
 
-    /* Create the environment variable */
-    strcpy(env_var, name);
-    strcat(env_var, "=");
-    strcat(env_var, value);
-
-    /* Add or modify the environment variable */
-    if (putenv(env_var) != 0) {
-        free(env_var);
-        return -1; /* putenv failed */
+    /* Check if the variable already exists */
+    for (envp = environ; *envp != NULL; ++envp) {
+        if (strncmp(*envp, name, name_len) == 0 && (*envp)[name_len] == '=') {
+            if (!overwrite) {
+                free(env_var);
+                return 0;
+            }
+            strcpy(*envp + name_len + 1, value);  /* Overwrite existing value */
+            free(env_var);
+            return 0;
+        }
     }
+
+    /* Create new environment variable */
+    snprintf(env_var, len, "%s=%s", name, value);
+
+    /* Add the new environment variable to environ */
+    for (envp = environ; *envp != NULL; ++envp);
+    *envp = env_var;
+    *(envp + 1) = NULL;
 
     return 0;
 }
 
 int _unsetenv(const char *name) {
-    char **envp = environ;
+    char **envp;
     size_t name_len = strlen(name);
 
-    while (*envp != NULL) {
+    /* Locate the environment variable and remove it */
+    for (envp = environ; *envp != NULL; ++envp) {
         if (strncmp(*envp, name, name_len) == 0 && (*envp)[name_len] == '=') {
+            /* Shift the rest of the environment variables down */
             char **next_envp = envp;
-
-            /* Shift remaining environment variables down */
             do {
                 *next_envp = *(next_envp + 1);
                 next_envp++;
@@ -59,7 +64,6 @@ int _unsetenv(const char *name) {
 
             break;
         }
-        envp++;
     }
 
     return 0;
@@ -81,7 +85,7 @@ int handle_setenv(const char *name, const char *value, int overwrite) {
         return (-1);
     }
 
-    return (_setenv(name, value, overwrite)); /* Use custom _setenv */
+    return (_setenv(name, value, overwrite));
 }
 
 int handle_unsetenv(const char *name) {
@@ -90,5 +94,5 @@ int handle_unsetenv(const char *name) {
         return (-1);
     }
 
-    return (_unsetenv(name)); /* Use custom _unsetenv */
+    return (_unsetenv(name));
 }
