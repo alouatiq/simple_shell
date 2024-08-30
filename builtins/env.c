@@ -3,17 +3,26 @@
 /**
  * builtin_env - Implements the env builtin command
  * @args: Arguments (unused)
- * Return: Always returns 1 to continue executing
+ * @info: Pointer to the shell info structure
+ * Return: 0 on success, 1 on error
  */
-int builtin_env(char **args)
+int builtin_env(char **args, info_t *info)
 {
     char **env;
-    (void)args;  // Unused parameter
+    (void)args;  /* Unused parameter */
 
-    for (env = environ; *env != NULL; env++)
+    if (!info->env)
     {
-        printf("%s\n", *env);
+        print_error(info, "Environment not set");
+        return (1);
     }
 
-    return (1);
+    for (env = info->env; *env != NULL; env++)
+    {
+        _eputs(*env);
+        _eputchar('\n');
+    }
+
+    info->exit_status = 0;
+    return (0);
 }

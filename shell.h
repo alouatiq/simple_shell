@@ -7,56 +7,89 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <errno.h>
 
+/* Constants */
+#define MAX_COMMAND 100
+#define MAX_COMMAND_LENGTH 1024
+#define MAX_VAR_NAME 100
 #define MAX_ARGS 64
 #define MAX_PATH 1024
-
-/* helpers constants and structures */
 #define WRITE_BUF_SIZE 1024
 #define BUF_FLUSH -1
 
-/* Structure for the info_t type used in error handling */
+/* Structure for the info_t type used in error handling and state management */
 typedef struct {
     char *fname;
     char **argv;
     int line_count;
-    /* Add other fields as needed */
+    int exit_status;
+    char *input_line;
+    char **env;
 } info_t;
 
-/* input_handlers */
+/* Function prototypes */
+
+/* Input handlers */
 char *read_line(void);
 char **parse_input(char *input);
 
-/* execution */
-int execute_command(char **args);
+/* Execution */
+int execute_command(char **args, info_t *info);
 char *find_command(char *command);
-int fork_command(char **args);
+int fork_command(char **args, info_t *info);
 
-/* builtins */
-int builtin_handler(char **args);
-int builtin_exit(char **args);
-int builtin_env(char **args);
-int builtin_setenv(char **args);
-int builtin_unsetenv(char **args);
-int builtin_cd(char **args);
-int builtin_alias(char **args);
+/* Builtins */
+int builtin_exit(char **args, info_t *info);
+int builtin_env(char **args, info_t *info);
+int builtin_setenv(char **args, info_t *info);
+int builtin_unsetenv(char **args, info_t *info);
+int builtin_cd(char **args, info_t *info);
+int builtin_alias(char **args, info_t *info);
+int builtin_handler(char **args, info_t *info);
 
-/* helpers */
-/* string_helpers.c */
+/* Helpers */
+/* String helpers */
 int _strlen(const char *s);
 int _strcmp(const char *s1, const char *s2);
 char *_strdup(const char *str);
 char *_strcat(char *dest, const char *src);
+char *_strchr(char *s, char c);
 
-/* memory_helpers.c */
+/* Memory helpers */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void *_memset(void *s, int b, unsigned int n);
 void ffree(char **pp);
 
-/* error_handlers.c */
+/* Error handlers */
 void _eputs(char *str);
 int _eputchar(char c);
 void print_error(info_t *info, char *estr);
 int print_d(int input, int fd);
+
+
+/* Advanced features */
+/* Logical operators */
+int execute_logical_ops(char **commands, int num_commands, info_t *info);
+char **split_logical_ops(char *input, int *num_commands);
+
+/* Variable expansion */
+char *expand_variables(char *command, info_t *info);
+
+/* Comment handler */
+char *remove_comments(char *command);
+
+/* File input */
+int execute_file(const char *filename, info_t *info);
+
+/* Environment variable handlers */
+char *_getenv(const char *name, char **env);
+int _setenv(char **env, const char *name, const char *value, int overwrite);
+int _unsetenv(char **env, const char *name);
+
+/* Main loop */
+void shell_loop(info_t *info);
 
 #endif /* SHELL_H */

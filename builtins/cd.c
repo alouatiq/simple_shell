@@ -1,49 +1,68 @@
 #include "../shell.h"
 
 /**
- * builtin_cd - Implements the cd builtin command
+ * builtin_cd - Change the current directory
  * @args: Arguments (directory)
- * Return: Always returns 1 to continue executing
+ * @info: Shell info structure
+ * Return: 0 on success, 1 on failure
  */
-int builtin_cd(char **args)
+int builtin_cd(char **args, info_t *info)
 {
     char *dir = args[1];
     char cwd[1024];
-    char *home = getenv("HOME");
+    char *home;
 
-    if (!dir)
-        dir = home ? home : "/";
-    else if (strcmp(dir, "-") == 0)
+    if (dir == NULL)
     {
-        dir = getenv("OLDPWD");
-        if (!dir)
+        home = _getenv("HOME", info->env);
+        if (home == NULL)
         {
-            fprintf(stderr, "cd: OLDPWD not set\n");
+            print_error(info, "cd: HOME not set");
             return (1);
         }
-        printf("%s\n", dir);
+        dir = home;
+    }
+    else if (_strcmp(dir, "-") == 0)
+    {
+        dir = _getenv("OLDPWD", info->env);
+        if (dir == NULL)
+        {
+            print_error(info, "cd: OLDPWD not set");
+            return (1);
+        }
+        _eputs(dir);
+        _eputchar('\n');
     }
 
     if (getcwd(cwd, sizeof(cwd)) == NULL)
     {
-        perror("getcwd");
+        print_error(info, "cd: couldn't get current directory");
         return (1);
     }
 
-    if (chdir(dir) == 0)
+    if (chdir(dir) == -1)
     {
-        setenv("OLDPWD", cwd, 1);
-        if (getcwd(cwd, sizeof(cwd)) == NULL)
-        {
-            perror("getcwd");
-            return (1);
-        }
-        setenv("PWD", cwd, 1);
-    }
-    else
-    {
-        perror("cd");
+        print_error(info, "cd: couldn't change directory");
+        return (1);
     }
 
-    return (1);
+    if (_setenv(info->env, "OLDPWD", cwd, 1) == -1)
+    {
+        print_error(info, "cd: couldn't set OLDPWD");
+        return (1);
+    }
+
+    if (getcwd(cwd, sizeof(cwd)) == NULL)
+    {
+        print_error(info, "cd: couldn't get new directory");
+        return (1);
+    }
+
+    if (_setenv(info->env, "PWD", cwd, 1) == -1)
+    {
+        print_error(info, "cd: couldn't set PWD");
+        return (1);
+    }
+
+    return (0);
 }

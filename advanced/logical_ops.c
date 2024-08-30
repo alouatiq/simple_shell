@@ -44,7 +44,7 @@ int execute_logical_ops(char **commands, int num_commands)
         }
     }
 
-    return status;
+    return (status);
 }
 
 /**
@@ -61,7 +61,7 @@ char **split_logical_ops(char *input, int *num_commands)
 
     commands = malloc(sizeof(char *) * MAX_COMMAND);
     if (!commands)
-        return NULL;
+        return (NULL);
 
     token = strtok(input, " \t\n");
     while (token != NULL)
@@ -83,5 +83,5 @@ char **split_logical_ops(char *input, int *num_commands)
     commands[i] = NULL;
     *num_commands = i;
 
-    return commands;
+    return (commands);
 }

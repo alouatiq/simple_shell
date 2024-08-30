@@ -16,7 +16,7 @@ int execute_file(const char *filename)
     if (file == NULL)
     {
         perror("Error opening file");
-        return -1;
+        return (-1);
     }
 
     while ((read = getline(&line, &len, file)) != -1)
@@ -45,5 +45,5 @@ int execute_file(const char *filename)
 
     free(line);
     fclose(file);
-    return status;
+    return (status);
 }

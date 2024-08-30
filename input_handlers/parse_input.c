@@ -48,7 +48,7 @@ char **parse_input(char *input)
 
     if (!tokens)
     {
-        perror("malloc");
+        print_error(NULL, "allocation error");
         exit(EXIT_FAILURE);
     }
 
@@ -56,15 +56,24 @@ char **parse_input(char *input)
     while (token != NULL)
     {
         tokens[position] = _strdup(token);
+        if (!tokens[position])
+        {
+            print_error(NULL, "allocation error");
+            /* Free previously allocated memory */
+            for (int i = 0; i < position; i++)
+                free(tokens[i]);
+            free(tokens);
+            exit(EXIT_FAILURE);
+        }
         position++;
 
         if (position >= bufsize)
         {
             bufsize += MAX_ARGS;
-            tokens = realloc(tokens, bufsize * sizeof(char*));
+            tokens = _realloc(tokens, bufsize * sizeof(char*), (bufsize - MAX_ARGS) * sizeof(char*));
             if (!tokens)
             {
-                perror("realloc");
+                print_error(NULL, "allocation error");
                 exit(EXIT_FAILURE);
             }
         }

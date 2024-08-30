@@ -1,22 +1,24 @@
 #include "../shell.h"
 
 /**
- * builtin_unsetenv - Implements the unsetenv builtin command
+ * builtin_unsetenv - Unset an environment variable
  * @args: Arguments (variable name)
- * Return: Always returns 1 to continue executing
+ * @info: Shell info structure
+ * Return: 0 on success, 1 on failure
  */
-int builtin_unsetenv(char **args)
+int builtin_unsetenv(char **args, info_t *info)
 {
-    if (!args[1])
+    if (args[1] == NULL)
     {
-        fprintf(stderr, "Usage: unsetenv VARIABLE\n");
+        print_error(info, "Usage: unsetenv VARIABLE");
         return (1);
     }
 
-    if (unsetenv(args[1]) != 0)
+    if (_unsetenv(info->env, args[1]) == -1)
     {
-        perror("unsetenv");
+        print_error(info, "Failed to unset environment variable");
+        return (1);
     }
 
-    return (1);
+    return (0);
 }

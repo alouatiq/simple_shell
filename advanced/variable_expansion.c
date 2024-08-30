@@ -47,5 +47,5 @@ char *expand_variables(char *command, int status)
     }
     expanded[i] = '\0';
 
-    return expanded;
+    return (expanded);
 }

@@ -16,5 +16,5 @@ char *remove_comments(char *command)
             *comment_start = '\0';
         }
     }
-    return command;
+    return (command);
 }

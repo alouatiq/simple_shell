@@ -7,17 +7,8 @@ typedef struct {
     char *value;
 } alias_t;
 
-static alias_t aliases[MAX_ALIASES];
-static int alias_count = 0;
-
-/**
- * print_alias - Print a single alias
- * @alias: Alias to print
- */
-void print_alias(alias_t *alias)
-{
-    printf("%s='%s'\n", alias->name, alias->value);
-}
+alias_t aliases[MAX_ALIASES];
+int alias_count = 0;
 
 /**
  * find_alias - Find an alias by name
@@ -26,70 +17,108 @@ void print_alias(alias_t *alias)
  */
 alias_t *find_alias(const char *name)
 {
-    for (int i = 0; i < alias_count; i++)
+    int i;
+    for (i = 0; i < alias_count; i++)
     {
-        if (strcmp(aliases[i].name, name) == 0)
+        if (_strcmp(aliases[i].name, name) == 0)
+        {
             return &aliases[i];
+        }
     }
-    return NULL;
+    return (NULL);
 }
 
 /**
- * set_alias - Set or update an alias
+ * print_alias - Print an alias
+ * @alias: Pointer to the alias to print
+ */
+void print_alias(const alias_t *alias)
+{
+    printf("%s='%s'\n", alias->name, alias->value);
+}
+
+/**
+ * add_alias - Add or update an alias
  * @name: Name of the alias
  * @value: Value of the alias
+ * Return: 0 on success, -1 on failure
  */
-void set_alias(const char *name, const char *value)
+int add_alias(const char *name, const char *value)
 {
     alias_t *existing = find_alias(name);
     if (existing)
     {
+        /* Update existing alias */
         free(existing->value);
-        existing->value = strdup(value);
+        existing->value = _strdup(value);
+        return (existing->value ? 0 : -1);
     }
     else if (alias_count < MAX_ALIASES)
     {
-        aliases[alias_count].name = strdup(name);
-        aliases[alias_count].value = strdup(value);
-        alias_count++;
+        /* Add new alias */
+        aliases[alias_count].name = _strdup(name);
+        aliases[alias_count].value = _strdup(value);
+        if (aliases[alias_count].name && aliases[alias_count].value)
+        {
+            alias_count++;
+            return (0);
+        }
+        /* Clean up if allocation failed */
+        free(aliases[alias_count].name);
+        free(aliases[alias_count].value);
     }
-    else
-    {
-        fprintf(stderr, "alias: too many aliases\n");
-    }
+    return (-1);
 }
 
 /**
- * builtin_alias - Implements the alias builtin command
- * @args: Arguments
- * Return: Always returns 1 to continue executing
+ * builtin_alias - Handle the alias builtin command
+ * @args: Arguments passed to the alias command
+ * @info: Shell info structure
+ * Return: 0 on success, 1 on failure
  */
-int builtin_alias(char **args)
+int builtin_alias(char **args, info_t *info)
 {
-    if (!args[1])
+    int i;
+    char *equals_sign;
+
+    if (args[1] == NULL)
     {
-        for (int i = 0; i < alias_count; i++)
+        /* Print all aliases */
+        for (i = 0; i < alias_count; i++)
+        {
             print_alias(&aliases[i]);
+        }
     }
     else
     {
-        for (int i = 1; args[i]; i++)
+        for (i = 1; args[i]; i++)
         {
-            char *equals = strchr(args[i], '=');
-            if (equals)
+            equals_sign = _strchr(args[i], '=');
+            if (equals_sign)
             {
-                *equals = '\0';
-                set_alias(args[i], equals + 1);
+                /* Define a new alias */
+                *equals_sign = '\0';
+                if (add_alias(args[i], equals_sign + 1) == -1)
+                {
+                    print_error(info, "Failed to add alias");
+                    return (1);
+                }
             }
             else
             {
+                /* Print specific alias */
                 alias_t *alias = find_alias(args[i]);
                 if (alias)
+                {
                     print_alias(alias);
+                }
                 else
-                    fprintf(stderr, "alias: %s not found\n", args[i]);
+                {
+                    print_error(info, "Alias not found");
+                    return (1);
+                }
             }
         }
     }
-    return (1);
+    return (0);
 }
