@@ -8,49 +8,37 @@
  *
  * Return: 0 on success, -1 on failure.
  */
-int handle_command_separators(char *line)
-{
-	char *command;
-	int status = 0;
 
-	command = strtok(line, ";");
-	while (command != NULL)
-	{
-	    status = process_command(command);  /* Assume process_command handles individual commands */
-	    if (status == -1)
-	        return (-1);
+int process_command(char *command);
 
-	    command = strtok(NULL, ";");
-	}
+int handle_command_separators(char *line) {
+    char *command;
+    int status = 0;
 
-	return (0);
+    command = strtok(line, ";");
+    while (command != NULL) {
+        status = process_command(command);  /* Call to process individual commands */
+        command = strtok(NULL, ";");
+    }
+
+    return status;
 }
 
-/**
- * handle_logical_operators - Handles logical operators `&&` and `||`.
- * @line: The input line containing the commands.
- *
- * Task 1.0: Handles logical operators `&&` and `||`.
- *
- * Return: 0 on success, -1 on failure.
- */
-int handle_logical_operators(char *line)
-{
-	char *command;
-	int status = 0;
+void handle_logical_operators(char *line) {
+    char *command;
+    int status = 0;
+    int execute_next = 1;  /* Flag to indicate whether the next command should be executed */
 
-	command = strtok(line, "&& ||");
-	while (command != NULL)
-	{
-	    status = process_command(command);
-	    if (status == -1 && strstr(line, "&&"))
-	        return (-1);  /* If command fails and using `&&`, stop execution */
-
-	    if (status == 0 && strstr(line, "||"))
-	        return (0);  /* If command succeeds and using `||`, stop execution */
-
-	    command = strtok(NULL, "&& ||");
-	}
-
-	return (0);
+    command = strtok(line, "&&||");
+    while (command != NULL) {
+        if (execute_next) {
+            status = process_command(command);  /* Process the command */
+            if (strstr(line, "&&") != NULL) {
+                execute_next = (status == 0);  /* Continue only if last command was successful */
+            } else if (strstr(line, "||") != NULL) {
+                execute_next = (status != 0);  /* Continue only if last command failed */
+            }
+        }
+        command = strtok(NULL, "&&||");
+    }
 }
