@@ -15,7 +15,7 @@ char *remove_comments(char *line)
     comment_start = strchr(line, '#');
     if (comment_start != NULL)
     {
-        *comment_start = '\0';  // Truncate the line at the start of the comment
+        *comment_start = '\0';  /* Truncate the line at the start of the comment */
     }
 
     return (line);
