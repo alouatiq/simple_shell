@@ -13,7 +13,7 @@ int handle_cd(char **args)
     char *dir;
     char cwd[1024];
 
-    if (args[1] == NULL)  // No argument provided, go to HOME
+    if (args[1] == NULL)  /* No argument provided, go to HOME */
     {
         dir = getenv("HOME");
         if (dir == NULL)
@@ -22,7 +22,7 @@ int handle_cd(char **args)
             return (-1);
         }
     }
-    else if (strcmp(args[1], "-") == 0)  // Change to previous directory
+    else if (strcmp(args[1], "-") == 0)  /* Change to previous directory */
     {
         dir = getenv("OLDPWD");
         if (dir == NULL)
@@ -43,7 +43,7 @@ int handle_cd(char **args)
         return (-1);
     }
 
-    if (chdir(dir) != 0)  // Change directory
+    if (chdir(dir) != 0)  /* Change directory */
     {
         perror("cd");
         return (-1);
