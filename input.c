@@ -1,11 +1,23 @@
 #include "shell.h"
-#include <string.h>  /* Include this line to resolve the strdup issue */
+#include <string.h>  /* Ensure this is included for strdup */
+#include <stdlib.h>  /* Standard library for memory allocation functions */
 
+/* Temporary implementation of my_getline to avoid warnings */
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
-    // Your existing code
+    if (lineptr == NULL || n == NULL || stream == NULL)
+    {
+        return -1;
+    }
+
+    /* Dummy implementation just to avoid warnings for now */
+    *lineptr = NULL;
+    *n = 0;
+
+    return 0;
 }
 
+/* Custom tokenization function */
 char **custom_tokenize(char *line)
 {
     char **tokens = NULL;
@@ -23,7 +35,7 @@ char **custom_tokenize(char *line)
     token = strtok(line, " \t\r\n\a");
     while (token != NULL)
     {
-        tokens[i++] = strdup(token);  /* Ensure strdup is declared by including <string.h> */
+        tokens[i++] = strdup(token);  /* strdup function is provided by <string.h> */
         if (i >= buffer_size)
         {
             buffer_size *= 2;
