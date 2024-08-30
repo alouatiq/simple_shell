@@ -1,4 +1,6 @@
 #include "shell.h"
+#include <stdlib.h>  /* Required for custom _setenv */
+#include <string.h>  /* Required for strlen, strcpy */
 
 /**
  * handle_cd - Handles the built-in `cd` command.
@@ -8,53 +10,45 @@
  *
  * Return: 0 on success, -1 on failure.
  */
-int handle_cd(char **args)
-{
-	char *dir;
-	char cwd[1024];
 
-	if (args[1] == NULL)  /* No argument provided, go to HOME */
-	{
-	    dir = getenv("HOME");
-	    if (dir == NULL)
-	    {
-	        perror("cd");
-	        return (-1);
-	    }
-	}
-	else if (strcmp(args[1], "-") == 0)  /* Change to previous directory */
-	{
-	    dir = getenv("OLDPWD");
-	    if (dir == NULL)
-	    {
-	        perror("cd");
-	        return (-1);
-	    }
-	    printf("%s\n", dir);
-	}
-	else
-	{
-	    dir = args[1];
-	}
+extern char **environ;
 
-	if (getcwd(cwd, sizeof(cwd)) == NULL)
-	{
-	    perror("getcwd");
-	    return (-1);
-	}
+int handle_cd(char **args) {
+    char *dir;
+    char cwd[1024];
 
-	if (chdir(dir) != 0)  /* Change directory */
-	{
-	    perror("cd");
-	    return (-1);
-	}
+    if (args[1] == NULL) {  /* No argument provided, go to HOME */
+        dir = getenv("HOME");
+        if (dir == NULL) {
+            perror("cd");
+            return (-1);
+        }
+    } else if (strcmp(args[1], "-") == 0) {  /* Change to previous directory */
+        dir = getenv("OLDPWD");
+        if (dir == NULL) {
+            perror("cd");
+            return (-1);
+        }
+        printf("%s\n", dir);
+    } else {
+        dir = args[1];
+    }
 
-	/* Update environment variables */
-	setenv("OLDPWD", cwd, 1);
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-	{
-	    setenv("PWD", cwd, 1);
-	}
+    if (getcwd(cwd, sizeof(cwd)) == NULL) {
+        perror("getcwd");
+        return (-1);
+    }
 
-	return (0);
+    if (chdir(dir) != 0) {  /* Change directory */
+        perror("cd");
+        return (-1);
+    }
+
+    /* Update environment variables */
+    _setenv("OLDPWD", cwd, 1);
+    if (getcwd(cwd, sizeof(cwd)) != NULL) {
+        _setenv("PWD", cwd, 1);
+    }
+
+    return (0);
 }
