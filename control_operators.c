@@ -16,7 +16,7 @@ int handle_command_separators(char *line)
     command = strtok(line, ";");
     while (command != NULL)
     {
-        status = process_command(command);  // Assume process_command handles individual commands
+        status = process_command(command);  /* Assume process_command handles individual commands */
         if (status == -1)
             return (-1);
 
@@ -44,10 +44,10 @@ int handle_logical_operators(char *line)
     {
         status = process_command(command);
         if (status == -1 && strstr(line, "&&"))
-            return (-1);  // If command fails and using `&&`, stop execution
+            return (-1);  /* If command fails and using `&&`, stop execution */
 
         if (status == 0 && strstr(line, "||"))
-            return (0);  // If command succeeds and using `||`, stop execution
+            return (0);  /* If command succeeds and using `||`, stop execution */
 
         command = strtok(NULL, "&& ||");
     }
