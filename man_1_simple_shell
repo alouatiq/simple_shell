@@ -1,0 +1,48 @@
+.TH HSH 1 "August 2024" "1.0" "HSH Manual"
+
+.SH NAME
+hsh \- simple shell
+
+.SH SYNOPSIS
+.B hsh
+[file]
+
+.SH DESCRIPTION
+.B hsh
+is a simple UNIX command language interpreter that executes commands read from standard input or from a file.
+
+.SH ARGUMENTS
+If arguments remain after option processing, the first argument is assumed to be the name of a file containing shell commands. HSH reads and executes commands from this file, then exits. HSH exit status is the exit status of the last command executed in the script.
+
+.SH INVOCATION
+If no arguments are present and if the standard input of the shell is connected to a terminal, the shell is considered an interactive shell.
+
+.SH DEFINITIONS
+The following definitions are used throughout the rest of this document.
+
+.B blank
+A space or tab.
+
+.B word
+A sequence of characters considered as a single unit by the shell. Also known as a token.
+
+.B name
+A word consisting only of alphanumeric characters and underscores, and beginning with an alphabetic character or an underscore.
+
+.SH EXIT STATUS
+Errors that are detected by the shell, such as a syntax error, will cause the shell to exit with a non-zero exit status. If the shell is not an interactive shell, the execution of the shell file will be aborted. Otherwise the shell will return the exit status of the last command executed, or if the exit builtin is used with a numeric argument, it will return the argument.
+
+.SH ENVIRONMENT
+Environment variables affect the execution of
+
+ .B hsh
+
+.SH PROMPTING
+When executing interactively, .B hsh
+displays the primary prompt PS1 when it is ready to read a command.
+
+.SH AUTHORS
+[Your Name] and [Partner's Name]
+
+.SH SEE ALSO
+sh(1)
