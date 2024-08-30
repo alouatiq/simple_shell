@@ -1,8 +1,16 @@
 #include "shell.h"
-#include <string.h>  /* Ensure this is included for strdup */
-#include <stdlib.h>  /* Standard library for memory allocation functions */
+#include <stdlib.h>  /* Required for malloc, realloc */
+#include <string.h>  /* Required for strlen, strcpy */
 
-/* Temporary implementation of my_getline to avoid warnings */
+/* Custom strdup implementation */
+char *my_strdup(const char *s)
+{
+    char *d = malloc(strlen(s) + 1);  /* Allocate memory for the duplicate string */
+    if (d == NULL) return NULL;       /* Return NULL if memory allocation fails */
+    strcpy(d, s);                     /* Copy the string to the allocated memory */
+    return d;                         /* Return the duplicate string */
+}
+
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
     if (lineptr == NULL || n == NULL || stream == NULL)
@@ -10,7 +18,6 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
         return -1;
     }
 
-    /* Dummy implementation just to avoid warnings for now */
     *lineptr = NULL;
     *n = 0;
 
@@ -35,7 +42,7 @@ char **custom_tokenize(char *line)
     token = strtok(line, " \t\r\n\a");
     while (token != NULL)
     {
-        tokens[i++] = strdup(token);  /* strdup function is provided by <string.h> */
+        tokens[i++] = my_strdup(token);  /* Use custom strdup function */
         if (i >= buffer_size)
         {
             buffer_size *= 2;
