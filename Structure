@@ -1,0 +1,99 @@
+# simple_shell/
+
+## Documentation and Metadata:
+simple_shell/
+├── README.md                      # (Initial Setup) Project overview, instructions, and documentation.
+├── AUTHORS                        # (Initial Setup) List of contributors to the project.
+
+## Build System:
+simple_shell/
+├── Makefile                       # (Initial Setup) Automates the compilation of the shell program.
+│                                  # 3. (Task 0.3) Includes `path.c` in the compilation process.
+│                                  # 6. (Task 0.1.1) Includes `input.c` in the compilation process.
+│                                  # 9. (Task 1.0) Includes `env.c` in the compilation process.
+│                                  # 10. (Task 1.0) Includes `cd.c` in the compilation process.
+│                                  # 12. (Task 1.0) Includes `logic.c` in the compilation process.
+│                                  # 13. (Task 1.0) Includes `alias.c` in the compilation process.
+│                                  # 14. (Task 1.0) Includes `variables.c` in the compilation process.
+│                                  # 15. (Task 1.0) Includes `comments.c` in the compilation process.
+
+
+## Core Shell Functionality:
+simple_shell/
+├── main.c                         # 1. (Task 0.1) Entry point of the shell. Manages the shell loop, handles input, and integrates all functionalities.
+│                                  # 2. (Task 0.2) Modified to handle command lines with arguments.
+│                                  # 3. (Task 0.3) Further modified to handle `PATH` and avoid unnecessary forking.
+│                                  # 4. (Task 0.4) Update to check for the `exit` command and call `handle_exit`.
+│                                  # 5. (Task 1.0) Update to check for the `env` command and call `handle_env`.
+│                                  # 6. (Task 0.1.1) Replace the standard `getline` call with `my_getline`.
+│                                  # 7. (Task 0.2.1) Replace `strtok` with custom tokenization logic.
+│                                  # 8. (Task 0.4.1) Update to handle `exit` with status.
+│                                  # 9. (Task 1.0) Update to handle `setenv` and `unsetenv`.
+│                                  # 10. (Task 1.0) Update to handle `cd` command.
+│                                  # 11. (Task 1.0) Update to handle command separators `;`.
+│                                  # 12. (Task 1.0) Update to handle logical operators `&&` and `||`.
+│                                  # 13. (Task 1.0) Update to handle aliases.
+│                                  # 14. (Task 1.0) Update to handle variable replacement (`$?`, `$$`).
+│                                  # 15. (Task 1.0) Update to handle comments `#`.
+│                                  # 16. (Task 1.0) Update to handle file input as command source.
+├── prompt.c                       # 1. (Task 0.1) Displays the prompt to the user.
+├── shell.h                        # 1. (Initial Setup) Header file with function prototypes and necessary includes.
+│                                  # 4. (Task 0.4) Prototypes for `handle_exit`.
+│                                  # 5. (Task 1.0) Prototypes for `handle_env`.
+│                                  # 6. (Task 0.1.1) Prototypes for `my_getline`.
+│                                  # 7. (Task 0.2.1) Prototypes for custom tokenization.
+│                                  # 8. (Task 0.4.1) Prototypes for `handle_exit_with_status`.
+│                                  # 9. (Task 1.0) Prototypes for `setenv`, `unsetenv`.
+│                                  # 10. (Task 1.0) Prototypes for `cd`.
+│                                  # 11. (Task 1.0) Prototypes for command separators `;`.
+│                                  # 12. (Task 1.0) Prototypes for logical operators `&&`, `||`.
+│                                  # 13. (Task 1.0) Prototypes for aliases.
+│                                  # 14. (Task 1.0) Prototypes for variable replacement (`$?`, `$$`).
+│                                  # 15. (Task 1.0) Prototypes for comments `#`.
+│                                  # 16. (Task 1.0) Prototypes for file input.
+
+## Command Execution:
+simple_shell/
+├── execute.c                      # 1. (Task 0.1) Executes commands.
+│                                  # 2. (Task 0.2) Executes commands with arguments.
+│                                  # 3. (Task 0.3) Checks command existence before forking.
+│                                  # 4. (Task 0.4) Minor updates for `exit` built-in.
+│                                  # 7. (Task 0.2.1) Uses custom tokenization.
+│                                  # 8. (Task 0.4.1) Handles `exit` with status.
+│                                  # 9. (Task 1.0) Handles `setenv`, `unsetenv`.
+│                                  # 10. (Task 1.0) Handles `cd` command.
+│                                  # 11. (Task 1.0) Handles command separators `;`.
+│                                  # 12. (Task 1.0) Handles logical operators `&&`, `||`.
+│                                  # 13. (Task 1.0) Handles aliases.
+│                                  # 14. (Task 1.0) Handles variable replacement (`$?`, `$$`).
+│                                  # 15. (Task 1.0) Handles comments `#`.
+│                                  # 16. (Task 1.0) Handles file input.
+├── path.c                         # 3. (Task 0.3) Searches for commands in `PATH`.
+
+## Input Handling
+simple_shell/
+├── input.c                        # 6. (Task 0.1.1) Handles input-related functions.
+│                                  # 6. (Task 0.1.1) Implements `my_getline`.
+│                                  # 7. (Task 0.2.1) Implements custom tokenization.
+
+## Built-in Commands:
+simple_shell/
+├── builtins.c                     # 4. (Task 0.4) Handles built-in commands.
+│                                  # 8. (Task 0.4.1) Handles `exit` with status.
+│                                  # 9. (Task 1.0) Handles `setenv`, `unsetenv`.
+│                                  # 10. (Task 1.0) Handles `cd`.
+├── env.c                          # 9. (Task 1.0) Handles `setenv`, `unsetenv`.
+│                                  # 10. (Task 1.0) Additional handling for `cd`.
+├── cd.c                           # 10. (Task 1.0) Handles the `cd` command.
+
+## Advanced Command Handling:
+simple_shell/
+├── control_operators.c            # 11. (Task 1.0) Handles command separators `;`.
+│                                  # 12. (Task 1.0) Handles logical operators `&&`, `||`.
+├── alias.c                        # 13. (Task 1.0) Handles aliases.
+├── variables.c                    # 14. (Task 1.0) Handles variable replacement (`$?`, `$$`, etc.).
+├── comments.c                     # 15. (Task 1.0) Handles comments `#`.
+
+## Non-Interactive Mode:
+simple_shell/
+├── file_input.c                   # 16. (Task 1.0) Handles file input as a command source.
