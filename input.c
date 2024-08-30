@@ -22,7 +22,7 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 
     if (*lineptr == NULL || *n == 0)
     {
-        *n = 128;  // Default initial buffer size
+        *n = 128;  /* Default initial buffer size */
         *lineptr = malloc(*n);
         if (*lineptr == NULL)
             return (-1);
@@ -32,7 +32,7 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
     {
         if (pos >= *n - 1)
         {
-            *n *= 2;  // Double the buffer size
+            *n *= 2;  /* Double the buffer size */
             *lineptr = realloc(*lineptr, *n);
             if (*lineptr == NULL)
                 return (-1);
@@ -48,7 +48,7 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
     if (num_read == 0 || ferror(stream))
         return (-1);
 
-    (*lineptr)[pos] = '\0';  // Null-terminate the string
+    (*lineptr)[pos] = '\0';  /* Null-terminate the string */
 
     return (num_read);
 }
