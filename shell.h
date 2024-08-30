@@ -23,6 +23,7 @@ void handle_exit(char **args);
 int handle_setenv(const char *name, const char *value, int overwrite);
 int handle_unsetenv(const char *name);
 int handle_cd(char **args);
+void handle_env(void); /* Add this line */
 int handle_command_separators(char *line);
 void handle_logical_operators(char *line);
 int process_command(char *command);
