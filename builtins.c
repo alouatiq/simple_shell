@@ -1,6 +1,6 @@
 #include "shell.h"
-#include <string.h>
-#include <stdlib.h> /* Required for setenv and unsetenv */
+#include <stdlib.h>  /* Required for putenv, malloc, free */
+#include <string.h>  /* Required for strlen, strcpy, strcat */
 
 /**
  * handle_exit - Handles the built-in `exit` command.
