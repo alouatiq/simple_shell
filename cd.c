@@ -49,7 +49,7 @@ int handle_cd(char **args)
         return (-1);
     }
 
-    // Update environment variables
+    /* Update environment variables */
     setenv("OLDPWD", cwd, 1);
     if (getcwd(cwd, sizeof(cwd)) != NULL)
     {
