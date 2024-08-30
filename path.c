@@ -1,50 +1,25 @@
 #include "shell.h"
 
-/**
- * find_command_in_path - Searches for a command in the directories listed in `PATH`.
- * @command: The command to search for.
- *
- * Task 0.3: Searches for commands in `PATH`.
- *
- * Return: The full path to the command if found, otherwise NULL.
- */
 char *find_command_in_path(char *command)
 {
-	char *path, *path_copy, *dir;
-	char full_path[1024];
-	struct stat st;
+    char *path = getenv("PATH");
+    char *token, *full_path;
+    struct stat st;
 
-	if (command == NULL)
-	    return (NULL);
+    token = strtok(path, ":");
+    while (token != NULL)
+    {
+        full_path = malloc(strlen(token) + strlen(command) + 2);
+        strcpy(full_path, token);
+        strcat(full_path, "/");
+        strcat(full_path, command);
 
-	/* Check if command is an absolute or relative path */
-	if (command[0] == '/' || command[0] == '.')
-	{
-	    if (stat(command, &st) == 0 && (st.st_mode & S_IXUSR))
-	        return (strdup(command));
-	    return (NULL);
-	}
+        if (stat(full_path, &st) == 0)
+            return full_path;
 
-	path = getenv("PATH");
-	if (path == NULL)
-	    return (NULL);
+        free(full_path);
+        token = strtok(NULL, ":");
+    }
 
-	path_copy = strdup(path);
-	if (path_copy == NULL)
-	    return (NULL);
-
-	dir = strtok(path_copy, ":");
-	while (dir != NULL)
-	{
-	    snprintf(full_path, sizeof(full_path), "%s/%s", dir, command);
-	    if (stat(full_path, &st) == 0 && (st.st_mode & S_IXUSR))
-	    {
-	        free(path_copy);
-	        return (strdup(full_path));
-	    }
-	    dir = strtok(NULL, ":");
-	}
-
-	free(path_copy);
-	return (NULL);
+    return NULL;
 }
