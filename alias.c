@@ -22,7 +22,7 @@ int handle_alias(char **args)
 
     if (args[1] == NULL)
     {
-        // Print all aliases
+        /* Print all aliases */
         while (temp != NULL)
         {
             printf("%s='%s'\n", temp->name, temp->value);
@@ -36,7 +36,7 @@ int handle_alias(char **args)
 
         if (value == NULL)
         {
-            // Print specific alias
+            /* Print specific alias */
             while (temp != NULL)
             {
                 if (strcmp(temp->name, name) == 0)
@@ -50,7 +50,7 @@ int handle_alias(char **args)
         }
         else
         {
-            // Set or update alias
+            /* Set or update alias */
             alias_t *new_alias = malloc(sizeof(alias_t));
             if (new_alias == NULL)
                 return (-1);
