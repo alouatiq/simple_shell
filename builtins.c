@@ -9,14 +9,14 @@
  */
 void handle_exit(char **args)
 {
-    int status = 0;
+	int status = 0;
 
-    if (args[1] != NULL)  /* If there's an argument, convert it to an exit status */
-    {
-        status = atoi(args[1]);
-    }
+	if (args[1] != NULL)  /* If there's an argument, convert it to an exit status */
+	{
+	    status = atoi(args[1]);
+	}
 
-    exit(status);
+	exit(status);
 }
 
 /**
@@ -31,13 +31,13 @@ void handle_exit(char **args)
  */
 int handle_setenv(const char *name, const char *value, int overwrite)
 {
-    if (name == NULL || value == NULL)
-    {
-        perror("setenv");
-        return (-1);
-    }
+	if (name == NULL || value == NULL)
+	{
+	    perror("setenv");
+	    return (-1);
+	}
 
-    return (setenv(name, value, overwrite));
+	return (setenv(name, value, overwrite));
 }
 
 /**
@@ -50,11 +50,11 @@ int handle_setenv(const char *name, const char *value, int overwrite)
  */
 int handle_unsetenv(const char *name)
 {
-    if (name == NULL)
-    {
-        perror("unsetenv");
-        return (-1);
-    }
+	if (name == NULL)
+	{
+	    perror("unsetenv");
+	    return (-1);
+	}
 
-    return (unsetenv(name));
+	return (unsetenv(name));
 }

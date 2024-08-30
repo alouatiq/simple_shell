@@ -13,44 +13,44 @@
  */
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
-    ssize_t num_read = 0;
-    size_t pos = 0;
-    char ch;
+	ssize_t num_read = 0;
+	size_t pos = 0;
+	char ch;
 
-    if (lineptr == NULL || n == NULL || stream == NULL)
-        return (-1);
+	if (lineptr == NULL || n == NULL || stream == NULL)
+	    return (-1);
 
-    if (*lineptr == NULL || *n == 0)
-    {
-        *n = 128;  /* Default initial buffer size */
-        *lineptr = malloc(*n);
-        if (*lineptr == NULL)
-            return (-1);
-    }
+	if (*lineptr == NULL || *n == 0)
+	{
+	    *n = 128;  /* Default initial buffer size */
+	    *lineptr = malloc(*n);
+	    if (*lineptr == NULL)
+	        return (-1);
+	}
 
-    while ((ch = fgetc(stream)) != EOF)
-    {
-        if (pos >= *n - 1)
-        {
-            *n *= 2;  /* Double the buffer size */
-            *lineptr = realloc(*lineptr, *n);
-            if (*lineptr == NULL)
-                return (-1);
-        }
+	while ((ch = fgetc(stream)) != EOF)
+	{
+	    if (pos >= *n - 1)
+	    {
+	        *n *= 2;  /* Double the buffer size */
+	        *lineptr = realloc(*lineptr, *n);
+	        if (*lineptr == NULL)
+	            return (-1);
+	    }
 
-        (*lineptr)[pos++] = ch;
-        num_read++;
+	    (*lineptr)[pos++] = ch;
+	    num_read++;
 
-        if (ch == '\n')
-            break;
-    }
+	    if (ch == '\n')
+	        break;
+	}
 
-    if (num_read == 0 || ferror(stream))
-        return (-1);
+	if (num_read == 0 || ferror(stream))
+	    return (-1);
 
-    (*lineptr)[pos] = '\0';  /* Null-terminate the string */
+	(*lineptr)[pos] = '\0';  /* Null-terminate the string */
 
-    return (num_read);
+	return (num_read);
 }
 
 /**
@@ -63,32 +63,32 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
  */
 char **custom_tokenize(char *line)
 {
-    char **tokens = NULL;
-    char *token;
-    size_t i = 0;
-    size_t buffer_size = 10;
+	char **tokens = NULL;
+	char *token;
+	size_t i = 0;
+	size_t buffer_size = 10;
 
-    if (line == NULL)
-        return (NULL);
+	if (line == NULL)
+	    return (NULL);
 
-    tokens = malloc(buffer_size * sizeof(char *));
-    if (tokens == NULL)
-        return (NULL);
+	tokens = malloc(buffer_size * sizeof(char *));
+	if (tokens == NULL)
+	    return (NULL);
 
-    token = strtok(line, " \t\r\n\a");
-    while (token != NULL)
-    {
-        tokens[i++] = strdup(token);
-        if (i >= buffer_size)
-        {
-            buffer_size *= 2;
-            tokens = realloc(tokens, buffer_size * sizeof(char *));
-            if (tokens == NULL)
-                return (NULL);
-        }
-        token = strtok(NULL, " \t\r\n\a");
-    }
-    tokens[i] = NULL;
+	token = strtok(line, " \t\r\n\a");
+	while (token != NULL)
+	{
+	    tokens[i++] = strdup(token);
+	    if (i >= buffer_size)
+	    {
+	        buffer_size *= 2;
+	        tokens = realloc(tokens, buffer_size * sizeof(char *));
+	        if (tokens == NULL)
+	            return (NULL);
+	    }
+	    token = strtok(NULL, " \t\r\n\a");
+	}
+	tokens[i] = NULL;
 
-    return (tokens);
+	return (tokens);
 }

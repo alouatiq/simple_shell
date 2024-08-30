@@ -13,31 +13,31 @@
  */
 void execute_command(char **args)
 {
-    pid_t pid;
-    int status;
+	pid_t pid;
+	int status;
 
-    if (args == NULL || args[0] == NULL)
-        return;
+	if (args == NULL || args[0] == NULL)
+	    return;
 
-    pid = fork();
-    if (pid == 0)  /* Child process */
-    {
-        if (execve(args[0], args, environ) == -1)
-        {
-            perror("hsh");
-            exit(EXIT_FAILURE);
-        }
-    }
-    else if (pid < 0)  /* Forking error */
-    {
-        perror("hsh");
-    }
-    else  /* Parent process */
-    {
-        do {
-            waitpid(pid, &status, WUNTRACED);
-        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-    }
+	pid = fork();
+	if (pid == 0)  /* Child process */
+	{
+	    if (execve(args[0], args, environ) == -1)
+	    {
+	        perror("hsh");
+	        exit(EXIT_FAILURE);
+	    }
+	}
+	else if (pid < 0)  /* Forking error */
+	{
+	    perror("hsh");
+	}
+	else  /* Parent process */
+	{
+	    do {
+	        waitpid(pid, &status, WUNTRACED);
+	    } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+	}
 }
 
 /* Task 7: Replace strtok with custom tokenization logic */
