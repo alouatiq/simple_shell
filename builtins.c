@@ -11,7 +11,7 @@ void handle_exit(char **args)
 {
     int status = 0;
 
-    if (args[1] != NULL)  // If there's an argument, convert it to an exit status
+    if (args[1] != NULL)  /* If there's an argument, convert it to an exit status */
     {
         status = atoi(args[1]);
     }
