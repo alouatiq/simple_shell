@@ -1,66 +1,94 @@
 #include "shell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-typedef struct alias {
-	char *name;
-	char *value;
-	struct alias *next;
+/* Simple structure to store aliases */
+typedef struct alias_s
+{
+    char *name;
+    char *value;
+    struct alias_s *next;
 } alias_t;
 
-alias_t *alias_list = NULL;
+static alias_t *alias_list = NULL;
 
-/**
- * handle_alias - Handles the alias command.
- * @args: An array of arguments.
- *
- * Task 1.0: Handles aliases.
- *
- * Return: 0 on success, -1 on failure.
- */
+/* Function to add or update an alias */
 int handle_alias(char **args)
 {
-	alias_t *temp = alias_list;
+    alias_t *new_alias, *temp;
+    char *name, *value;
 
-	if (args[1] == NULL)
-	{
-	    /* Print all aliases */
-	    while (temp != NULL)
-	    {
-	        printf("%s='%s'\n", temp->name, temp->value);
-	        temp = temp->next;
-	    }
-	}
-	else
-	{
-	    char *name = strtok(args[1], "=");
-	    char *value = strtok(NULL, "=");
+    if (args[1] == NULL) /* If no arguments are given, print all aliases */
+    {
+        temp = alias_list;
+        while (temp)
+        {
+            printf("%s='%s'\n", temp->name, temp->value);
+            temp = temp->next;
+        }
+        return (0);
+    }
 
-	    if (value == NULL)
-	    {
-	        /* Print specific alias */
-	        while (temp != NULL)
-	        {
-	            if (strcmp(temp->name, name) == 0)
-	            {
-	                printf("%s='%s'\n", temp->name, temp->value);
-	                return (0);
-	            }
-	            temp = temp->next;
-	        }
-	        return (-1);
-	    }
-	    else
-	    {
-	        /* Set or update alias */
-	        alias_t *new_alias = malloc(sizeof(alias_t));
-	        if (new_alias == NULL)
-	            return (-1);
+    for (int i = 1; args[i] != NULL; i++)
+    {
+        name = strtok(args[i], "=");
+        value = strtok(NULL, "=");
 
-	        new_alias->name = strdup(name);
-	        new_alias->value = strdup(value);
-	        new_alias->next = alias_list;
-	        alias_list = new_alias;
-	    }
-	}
+        if (value == NULL) /* If only the alias name is given, print its value */
+        {
+            temp = alias_list;
+            while (temp)
+            {
+                if (strcmp(temp->name, name) == 0)
+                {
+                    printf("%s='%s'\n", temp->name, temp->value);
+                    break;
+                }
+                temp = temp->next;
+            }
+        }
+        else /* Add or update the alias */
+        {
+            temp = alias_list;
+            while (temp)
+            {
+                if (strcmp(temp->name, name) == 0)
+                {
+                    free(temp->value);
+                    temp->value = strdup(value);
+                    return (0);
+                }
+                temp = temp->next;
+            }
 
-	return (0);
+            new_alias = malloc(sizeof(alias_t));
+            if (!new_alias)
+                return (-1);
+
+            new_alias->name = strdup(name);
+            new_alias->value = strdup(value);
+            new_alias->next = alias_list;
+            alias_list = new_alias;
+        }
+    }
+
+    return (0);
+}
+
+/* Function to replace an alias with its value in a command */
+char *replace_alias(char *command)
+{
+    alias_t *temp = alias_list;
+
+    while (temp)
+    {
+        if (strcmp(temp->name, command) == 0)
+        {
+            return (strdup(temp->value));
+        }
+        temp = temp->next;
+    }
+
+    return (command);
 }
