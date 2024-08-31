@@ -3,44 +3,51 @@
 /**
  * execute_file - Execute commands from a file
  * @filename: Name of the file to execute
+ * @info: Pointer to the info_t structure
  * Return: Status of the last executed command
  */
-int execute_file(const char *filename)
+int execute_file(const char *filename, info_t *info)
 {
-    FILE *file = fopen(filename, "r");
+    FILE *file;
     char *line = NULL;
     size_t len = 0;
     ssize_t read;
     int status = 0;
+    char **args;
 
+    file = fopen(filename, "r");
     if (file == NULL)
     {
-        perror("Error opening file");
+        print_error(info, "Error opening file");
         return (-1);
     }
 
     while ((read = getline(&line, &len, file)) != -1)
     {
-        // Remove trailing newline
-        if (line[read - 1] == '\n')
+        /* Remove trailing newline */
+        if (read > 0 && line[read - 1] == '\n')
             line[read - 1] = '\0';
 
-        // Remove comments
-        line = remove_comments(line);
+        /* Remove comments */
+        remove_comments(line);
 
-        // Skip empty lines
-        if (strlen(line) == 0)
+        /* Skip empty lines */
+        if (_strlen(line) == 0)
             continue;
 
-        // Expand variables
-        char *expanded = expand_variables(line, status);
+        /* Expand variables */
+        line = expand_variables(line, info);
 
-        // Execute the command
-        char **args = parse_input(expanded);
-        status = execute_command(args);
+        /* Execute the command */
+        args = parse_input(line);
+        if (args != NULL)
+        {
+            status = execute_command(args, info);
+            free(args);
 
-        free(args);
-        free(expanded);
+            if (status == -2) /* Exit command was called */
+                break;
+        }
     }
 
     free(line);

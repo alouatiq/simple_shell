@@ -7,14 +7,25 @@
  */
 char *remove_comments(char *command)
 {
-    char *comment_start = strchr(command, '#');
-    if (comment_start)
+    int i;
+    int in_quotes = 0;
+
+    for (i = 0; command[i] != '\0'; i++)
     {
-        // Check if # is at the start or has a space before it
-        if (comment_start == command || *(comment_start - 1) == ' ')
+        /* Check if # is at the start or has a space before it */
+        if (command[i] == '#' && (i == 0 || command[i - 1] == ' '))
         {
-            *comment_start = '\0';
+            if (!in_quotes)
+            {
+                command[i] = '\0';
+                break;
+            }
+        }
+        else if (command[i] == '"')
+        {
+            in_quotes = !in_quotes;
         }
     }
+
     return (command);
 }

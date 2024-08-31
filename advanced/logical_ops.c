@@ -4,9 +4,10 @@
  * execute_logical_ops - Execute commands with logical operators
  * @commands: Array of commands separated by logical operators
  * @num_commands: Number of commands
+ * @info: Pointer to the info_t structure
  * Return: Status of the last executed command
  */
-int execute_logical_ops(char **commands, int num_commands)
+int execute_logical_ops(char **commands, int num_commands, info_t *info)
 {
     int i, status = 0;
     int execute_next = 1;
@@ -15,16 +16,24 @@ int execute_logical_ops(char **commands, int num_commands)
     {
         if (execute_next)
         {
-            status = execute_command(commands[i]);
+            char **args = parse_input(commands[i]);
+            if (args != NULL)
+            {
+                status = execute_command(args, info);
+                free(args);
+
+                if (status == -2) /* Exit command was called */
+                    return (status);
+            }
 
             if (i < num_commands - 1)
             {
-                if (strcmp(commands[i + 1], "&&") == 0)
+                if (_strcmp(commands[i + 1], "&&") == 0)
                 {
                     execute_next = (status == 0);
                     i++;
                 }
-                else if (strcmp(commands[i + 1], "||") == 0)
+                else if (_strcmp(commands[i + 1], "||") == 0)
                 {
                     execute_next = (status != 0);
                     i++;
@@ -33,11 +42,11 @@ int execute_logical_ops(char **commands, int num_commands)
         }
         else
         {
-            if (strcmp(commands[i], "&&") == 0)
+            if (_strcmp(commands[i], "&&") == 0)
             {
                 execute_next = (status == 0);
             }
-            else if (strcmp(commands[i], "||") == 0)
+            else if (_strcmp(commands[i], "||") == 0)
             {
                 execute_next = (status != 0);
             }
@@ -56,28 +65,28 @@ int execute_logical_ops(char **commands, int num_commands)
 char **split_logical_ops(char *input, int *num_commands)
 {
     char **commands = NULL;
-    char *token;
+    char *token, *saveptr;
     int i = 0;
 
     commands = malloc(sizeof(char *) * MAX_COMMAND);
     if (!commands)
         return (NULL);
 
-    token = strtok(input, " \t\n");
+    token = _strtok_r(input, " \t\n", &saveptr);
     while (token != NULL)
     {
-        if (strcmp(token, "&&") == 0 || strcmp(token, "||") == 0)
+        if (_strcmp(token, "&&") == 0 || _strcmp(token, "||") == 0)
         {
-            commands[i++] = strdup(token);
-            token = strtok(NULL, " \t\n");
+            commands[i++] = _strdup(token);
+            token = _strtok_r(NULL, " \t\n", &saveptr);
             if (token)
-                commands[i++] = strdup(token);
+                commands[i++] = _strdup(token);
         }
         else
         {
-            commands[i++] = strdup(token);
+            commands[i++] = _strdup(token);
         }
-        token = strtok(NULL, " \t\n");
+        token = _strtok_r(NULL, " \t\n", &saveptr);
     }
 
     commands[i] = NULL;

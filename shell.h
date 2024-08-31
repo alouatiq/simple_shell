@@ -11,6 +11,13 @@
 #include <fcntl.h>
 #include <errno.h>
 
+/* Error types for cd command */
+#define ERR_NO_DIR 1
+#define ERR_PERMISSION 2
+#define ERR_HOME_NOT_SET 3
+#define ERR_OLDPWD_NOT_SET 4
+#define ERR_TOO_MANY_ARGS 5
+
 /* Constants */
 #define MAX_COMMAND 100
 #define MAX_COMMAND_LENGTH 1024
@@ -31,6 +38,17 @@ typedef struct {
 } info_t;
 
 /* Function prototypes */
+char **parse_input(char *input);
+int execute_command(char **args, info_t *info);
+int _strcmp(const char *s1, const char *s2);
+char *_strdup(const char *str);
+char *_strtok_r(char *str, const char *delim, char **saveptr);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char *expand_variables(char *command, info_t *info);
+char *_getenv(const char *name, char **env);
+int _strlen(const char *s);
+char *_itoa(int value, char *str, int base);
+void print_error(info_t *info, char *estr);
 
 /* Input handlers */
 char *read_line(void);
@@ -63,11 +81,12 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void *_memset(void *s, int b, unsigned int n);
 void ffree(char **pp);
 
-/* Error handlers */
-void _eputs(char *str);
+/* Error handling functions */
+int error_cd(info_t *info, int error_type, const char *dir);
+void _eputs(const char *str);  /* Updated to use const char * */
 int _eputchar(char c);
-void print_error(info_t *info, char *estr);
 int print_d(int input, int fd);
+void print_error(info_t *info, char *estr);  /* Added print_error prototype */
 
 
 /* Advanced features */

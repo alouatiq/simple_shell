@@ -1,67 +1,51 @@
-#include "main.h"
+#include "shell.h"
 
 /**
- * cd_error_no_dir - Handles error when directory doesn't exist
- * @dir: The directory that was not found
+ * error_cd - Handles various cd command errors
+ * @info: The parameter & return info struct
+ * @error_type: The type of error encountered
+ * @dir: The directory involved in the error (can be NULL)
  *
- * This function prints an error message when the specified directory
- * for the cd command does not exist or is not accessible.
+ * Return: Always returns 0
  */
-void cd_error_no_dir(const char *dir)
+int error_cd(info_t *info, int error_type, const char *dir)
 {
-    char *error_msg = "cd: can't cd to ";
-    write(STDERR_FILENO, error_msg, _strlen(error_msg));
-    write(STDERR_FILENO, dir, _strlen(dir));
-    write(STDERR_FILENO, "\n", 1);
-}
+    char *error_msg;
 
-/**
- * cd_error_permission - Handles error when user lacks permission
- * @dir: The directory that the user can't access
- *
- * This function prints an error message when the user doesn't have
- * permission to access the specified directory for the cd command.
- */
-void cd_error_permission(const char *dir)
-{
-    char *error_msg = "cd: permission denied: ";
-    write(STDERR_FILENO, error_msg, _strlen(error_msg));
-    write(STDERR_FILENO, dir, _strlen(dir));
-    write(STDERR_FILENO, "\n", 1);
-}
+    _eputs(info->fname);
+    _eputs(": ");
+    print_d(info->line_count, STDERR_FILENO);
+    _eputs(": cd: ");
 
-/**
- * cd_error_home_not_set - Handles error when HOME is not set
- *
- * This function prints an error message when the cd command is used
- * without arguments and the HOME environment variable is not set.
- */
-void cd_error_home_not_set(void)
-{
-    char *error_msg = "cd: HOME not set\n";
-    write(STDERR_FILENO, error_msg, _strlen(error_msg));
-}
+    switch (error_type)
+    {
+        case ERR_NO_DIR:
+            error_msg = "can't cd to ";
+            _eputs(error_msg);
+            _eputs(dir); /* dir is already const char *, no need for casting */
+            break;
+        case ERR_PERMISSION:
+            error_msg = "Permission denied";
+            _eputs(error_msg);
+            break;
+        case ERR_HOME_NOT_SET:
+            error_msg = "HOME not set";
+            _eputs(error_msg);
+            break;
+        case ERR_OLDPWD_NOT_SET:
+            error_msg = "OLDPWD not set";
+            _eputs(error_msg);
+            break;
+        case ERR_TOO_MANY_ARGS:
+            error_msg = "too many arguments";
+            _eputs(error_msg);
+            break;
+        default:
+            error_msg = "Unknown error";
+            _eputs(error_msg);
+    }
 
-/**
- * cd_error_oldpwd_not_set - Handles error when OLDPWD is not set
- *
- * This function prints an error message when the cd - command is used
- * and the OLDPWD environment variable is not set.
- */
-void cd_error_oldpwd_not_set(void)
-{
-    char *error_msg = "cd: OLDPWD not set\n";
-    write(STDERR_FILENO, error_msg, _strlen(error_msg));
-}
+    _eputchar('\n');
 
-/**
- * cd_error_too_many_args - Handles error when too many arguments are provided
- *
- * This function prints an error message when the cd command is used
- * with too many arguments.
- */
-void cd_error_too_many_args(void)
-{
-    char *error_msg = "cd: too many arguments\n";
-    write(STDERR_FILENO, error_msg, _strlen(error_msg));
+    return (0);
 }

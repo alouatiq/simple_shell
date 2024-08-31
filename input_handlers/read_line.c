@@ -35,10 +35,10 @@ char *read_line(void)
         if (line_pos >= line_size)
         {
             line_size += 32;
-            line = realloc(line, line_size);
+            line = _realloc(line, line_size, line_size - 32);
             if (!line)
             {
-                perror("realloc");
+                print_error(NULL, "realloc");
                 exit(EXIT_FAILURE);
             }
         }
@@ -47,7 +47,7 @@ char *read_line(void)
 
         if (c == '\n')
         {
-            line[line_pos - 1] = '\0';  // Replace newline with null terminator
+            line[line_pos - 1] = '\0'; /* Replace newline with null terminator */
             return (line);
         }
     }

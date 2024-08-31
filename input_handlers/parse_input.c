@@ -1,20 +1,6 @@
 #include "../shell.h"
 
 /**
- * is_delim - Check if character is a delimiter
- * @c: Character to check
- * @delims: String of delimiter characters
- * Return: 1 if true, 0 if false
- */
-static int is_delim(char c, const char *delims)
-{
-    while (*delims)
-        if (c == *delims++)
-            return (1);
-    return (0);
-}
-
-/**
  * _strtok - Custom strtok function
  * @str: String to tokenize
  * @delims: String of delimiter characters
@@ -45,6 +31,7 @@ char **parse_input(char *input)
     int bufsize = MAX_ARGS, position = 0;
     char **tokens = malloc(bufsize * sizeof(char*));
     char *token;
+    int i;
 
     if (!tokens)
     {
@@ -60,7 +47,7 @@ char **parse_input(char *input)
         {
             print_error(NULL, "allocation error");
             /* Free previously allocated memory */
-            for (int i = 0; i < position; i++)
+            for (i = 0; i < position; i++)
                 free(tokens[i]);
             free(tokens);
             exit(EXIT_FAILURE);
