@@ -9,11 +9,11 @@ NAME = hsh
 
 # Source files
 SRC = $(wildcard *.c) \
-      $(wildcard builtins/*.c) \
-      $(wildcard execution/*.c) \
-      $(wildcard helpers/*.c) \
-      $(wildcard advanced/*.c) \
-      $(wildcard input_handlers/*.c)
+	  $(wildcard builtins/*.c) \
+	  $(wildcard execution/*.c) \
+	  $(wildcard helpers/*.c) \
+	  $(wildcard advanced/*.c) \
+	  $(wildcard input_handlers/*.c)
 
 # Object files
 OBJ = $(SRC:.c=.o)

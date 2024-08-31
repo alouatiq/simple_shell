@@ -8,17 +8,17 @@
  */
 int builtin_setenv(char **args, info_t *info)
 {
-    if (args[1] == NULL || args[2] == NULL)
-    {
-        print_error(info, "Usage: setenv VARIABLE VALUE");
-        return (1);
-    }
+	if (args[1] == NULL || args[2] == NULL)
+	{
+	    print_error(info, "Usage: setenv VARIABLE VALUE");
+	    return (1);
+	}
 
-    if (_setenv(info->env, args[1], args[2], 1) == -1)
-    {
-        print_error(info, "Failed to set environment variable");
-        return (1);
-    }
+	if (_setenv(info->env, args[1], args[2], 1) == -1)
+	{
+	    print_error(info, "Failed to set environment variable");
+	    return (1);
+	}
 
-    return (0);
+	return (0);
 }

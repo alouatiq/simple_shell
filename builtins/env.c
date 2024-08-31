@@ -8,21 +8,21 @@
  */
 int builtin_env(char **args, info_t *info)
 {
-    char **env;
-    (void)args;  /* Unused parameter */
+	char **env;
+	(void)args;  /* Unused parameter */
 
-    if (!info->env)
-    {
-        print_error(info, "Environment not set");
-        return (1);
-    }
+	if (!info->env)
+	{
+	    print_error(info, "Environment not set");
+	    return (1);
+	}
 
-    for (env = info->env; *env != NULL; env++)
-    {
-        _eputs(*env);
-        _eputchar('\n');
-    }
+	for (env = info->env; *env != NULL; env++)
+	{
+	    _eputs(*env);
+	    _eputchar('\n');
+	}
 
-    info->exit_status = 0;
-    return (0);
+	info->exit_status = 0;
+	return (0);
 }

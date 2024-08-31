@@ -29,12 +29,12 @@
 
 /* Structure for the info_t type used in error handling and state management */
 typedef struct {
-    char *fname;
-    char **argv;
-    int line_count;
-    int exit_status;
-    char *input_line;
-    char **env;
+	char *fname;
+	char **argv;
+	int line_count;
+	int exit_status;
+	char *input_line;
+	char **env;
 } info_t;
 
 /* Function prototypes */

@@ -37,5 +37,5 @@ simple_shell/
 │   └── file_input.c       # Task 16: Handle file as input
 │
 └── tests/                 # Test files for various functionalities
-    ├── test_main.c
-    └── ...
+	├── test_main.c
+	└── ...
