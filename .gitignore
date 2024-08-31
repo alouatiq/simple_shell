@@ -1,0 +1,4 @@
+# Ignore the .vscode directory
+.vscode/
+# Ignore the object files generated during the compilation process
+*.o
