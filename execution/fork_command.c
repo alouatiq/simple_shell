@@ -6,43 +6,54 @@
  * @info: Shell info structure
  * Return: 1 if the shell should continue, 0 if it should terminate
  */
-int fork_command(char **args, info_t *info)
+int
+fork_command (char **args, info_t *info)
 {
 	pid_t pid;
+
 	int status;
+
 	char *command_path;
 
-	command_path = find_command(args[0]);
+	command_path = find_command (args[0]);
+
 	if (command_path == NULL)
 	{
-	    print_error(info, "command not found");
-	    return (1);
+		print_error (info, "command not found");
+
+		return (((1)));
 	}
 
-	pid = fork();
+	pid = fork ();
+
 	if (pid == 0)
 	{
-	    /* Child process */
-	    if (execve(command_path, args, info->env) == -1)
-	    {
-	        print_error(info, "execve failed");
-	        free(command_path);
-	        exit(EXIT_FAILURE);
-	    }
+		/* Child process */
+		if (execve (command_path, args, info->env) == -1)
+		{
+			print_error (info, "execve failed");
+
+			free (command_path);
+
+			exit (EXIT_FAILURE);
+		}
 	}
 	else if (pid < 0)
 	{
-	    /* Error forking */
-	    print_error(info, "fork failed");
+		/* Error forking */
+		print_error (info, "fork failed");
 	}
 	else
 	{
-	    /* Parent process */
-	    do {
-	        waitpid(pid, &status, WUNTRACED);
-	    } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		/* Parent process */
+		do
+		{
+			waitpid (pid, &status, WUNTRACED);
+
+		} while (!WIFEXITED (status) && !WIFSIGNALED (status));
 	}
 
-	free(command_path);
-	return (1);
+	free (command_path);
+
+	return (((1)));
 }

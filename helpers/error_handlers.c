@@ -7,37 +7,44 @@
  * @new_size: New size of the new memory block
  * Return: Pointer to the newly allocated memory, or NULL if it fails
  */
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+void *
+_realloc (void *ptr, unsigned int old_size, unsigned int new_size)
 {
 	char *new_ptr;
+
 	unsigned int i;
 
 	if (new_size == old_size)
-	    return (ptr);
+		return (((ptr)));
 
 	if (ptr == NULL)
 	{
-	    new_ptr = malloc(new_size);
-	    if (new_ptr == NULL)
-	        return (NULL);
-	    return (new_ptr);
+		new_ptr = malloc (new_size);
+
+		if (new_ptr == NULL)
+			return (((NULL)));
+
+		return (((new_ptr)));
 	}
 
 	if (new_size == 0 && ptr != NULL)
 	{
-	    free(ptr);
-	    return (NULL);
+		free (ptr);
+
+		return (((NULL)));
 	}
 
-	new_ptr = malloc(new_size);
+	new_ptr = malloc (new_size);
+
 	if (new_ptr == NULL)
-	    return (NULL);
+		return (((NULL)));
 
 	for (i = 0; i < old_size && i < new_size; i++)
-	    new_ptr[i] = ((char *)ptr)[i];
+		new_ptr[i] = ((char *)ptr)[i];
 
-	free(ptr);
-	return (new_ptr);
+	free (ptr);
+
+	return (((new_ptr)));
 }
 
 /**
@@ -47,24 +54,31 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
  * @n: Number of bytes to fill
  * Return: Pointer to the memory area s
  */
-void *_memset(void *s, int b, unsigned int n)
+void *
+_memset (void *s, int b, unsigned int n)
 {
 	unsigned char *p = s;
+
 	while (n--)
-	    *p++ = (unsigned char)b;
-	return (s);
+		*p++ = (unsigned char)b;
+
+	return (((s)));
 }
 
 /**
  * ffree - Free a string of strings
  * @pp: String of strings
  */
-void ffree(char **pp)
+void
+ffree (char **pp)
 {
 	char **a = pp;
+
 	if (!pp)
-	    return;
+		return;
+
 	while (*pp)
-	    free(*pp++);
-	free(a);
+		free (*pp++);
+
+	free (a);
 }
