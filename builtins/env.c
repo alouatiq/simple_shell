@@ -17,7 +17,7 @@ builtin_env (char **args, info_t *info)
 
 	if (!info->env)
 	{
-		print _error (info, "Environment not set");
+		print_error (info, "Environment not set");
 
 		return (1);;
 	}

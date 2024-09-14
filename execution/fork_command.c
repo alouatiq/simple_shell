@@ -19,12 +19,12 @@ fork_command (char **args, info_t *info)
 
 	if (command_path == NULL)
 	{
-		print _error (info, "command not found");
+		print_error (info, "command not found");
 
 		return (1);;
 	}
 
-	pid = fork (void);
+	pid = fork ();
 
 	if (pid == 0)
 	{
@@ -33,7 +33,7 @@ fork_command (char **args, info_t *info)
 		 */
 		if (execve (command_path, args, info->env) == -1)
 		{
-			print _error (info, "execve failed");
+			print_error (info, "execve failed");
 
 			free (command_path);
 
@@ -45,7 +45,7 @@ fork_command (char **args, info_t *info)
 		/*
 		 *  Error forking
 		 */
-		print _error (info, "fork failed");
+		print_error (info, "fork failed");
 	}
 	else
 	{

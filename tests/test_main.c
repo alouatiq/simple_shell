@@ -6,44 +6,44 @@
 /*
  *   Function prototypes for test functions
  */
-void test_string_helpers (void);
+void test_string_helpers ();
 
-void test_memory_helpers (void);
+void test_memory_helpers ();
 
-void test_input_handlers (void);
+void test_input_handlers ();
 
-void test_execution (void);
+void test_execution ();
 
-void test_builtins (void);
+void test_builtins ();
 
-void test_advanced_features (void);
+void test_advanced_features ();
 
 int
-main (void)
+main ()
 {
-	print f ("Running tests for Simple Shell...\n\n");
+	printf ("Running tests for Simple Shell...\n\n");
 
-	test_string_helpers (void);
+	test_string_helpers ();
 
-	test_memory_helpers (void);
+	test_memory_helpers ();
 
-	test_input_handlers (void);
+	test_input_handlers ();
 
-	test_execution (void);
+	test_execution ();
 
-	test_builtins (void);
+	test_builtins ();
 
-	test_advanced_features (void);
+	test_advanced_features ();
 
-	print f ("\nAll tests completed.\n");
+	printf ("\nAll tests completed.\n");
 
 	return ((0));
 }
 
 void
-test_string_helpers (void)
+test_string_helpers ()
 {
-	print f ("Testing string helpers...\n");
+	printf ("Testing string helpers...\n");
 
 	/*
 	 *   Add specific tests for string helper functions
@@ -54,21 +54,21 @@ test_string_helpers (void)
 	char *str = "Hello";
 
 	if (_strlen (str) == 5)
-		print f ("  _strlen: PASS\n");
+		printf ("  _strlen: PASS\n");
 
 	else
-		print f ("  _strlen: FAIL\n");
+		printf ("  _strlen: FAIL\n");
 
 	/*
 	 *   Add more tests...
 	 */
-	print f ("\n");
+	printf ("\n");
 }
 
 void
-test_memory_helpers (void)
+test_memory_helpers ()
 {
-	print f ("Testing memory helpers...\n");
+	printf ("Testing memory helpers...\n");
 
 	/*
 	 *   Add specific tests for memory helper functions
@@ -81,23 +81,23 @@ test_memory_helpers (void)
 	void *new_ptr = _realloc (ptr, 10, 20);
 
 	if (new_ptr != NULL && new_ptr != ptr)
-		print f ("  _realloc: PASS\n");
+		printf ("  _realloc: PASS\n");
 
 	else
-		print f ("  _realloc: FAIL\n");
+		printf ("  _realloc: FAIL\n");
 
 	free (new_ptr);
 
 	/*
 	 *   Add more tests...
 	 */
-	print f ("\n");
+	printf ("\n");
 }
 
 void
-test_input_handlers (void)
+test_input_handlers ()
 {
-	print f ("Testing input handlers...\n");
+	printf ("Testing input handlers...\n");
 
 	/*
 	 *   Add tests for input handling functions
@@ -111,10 +111,10 @@ test_input_handlers (void)
 
 	if (args != NULL && strcmp (args[0], "ls") == 0
 	    && strcmp (args[1], "-l") == 0 && strcmp (args[2], "/tmp") == 0)
-		print f ("  parse_input: PASS\n");
+		printf ("  parse_input: PASS\n");
 
 	else
-		print f ("  parse_input: FAIL\n");
+		printf ("  parse_input: FAIL\n");
 
 	/*
 	 *   Free allocated memory
@@ -127,13 +127,13 @@ test_input_handlers (void)
 	/*
 	 *   Add more tests...
 	 */
-	print f ("\n");
+	printf ("\n");
 }
 
 void
-test_execution (void)
+test_execution ()
 {
-	print f ("Testing execution functions...\n");
+	printf ("Testing execution functions...\n");
 
 	/*
 	 *   Add tests for execution functions
@@ -146,21 +146,21 @@ test_execution (void)
 	int status = execute_command (args);
 
 	if (status == 0)
-		print f ("  execute_command: PASS\n");
+		printf ("  execute_command: PASS\n");
 
 	else
-		print f ("  execute_command: FAIL\n");
+		printf ("  execute_command: FAIL\n");
 
 	/*
 	 *   Add more tests...
 	 */
-	print f ("\n");
+	printf ("\n");
 }
 
 void
-test_builtins (void)
+test_builtins ()
 {
-	print f ("Testing builtin commands...\n");
+	printf ("Testing builtin commands...\n");
 
 	/*
 	 *   Add tests for builtin commands
@@ -173,21 +173,21 @@ test_builtins (void)
 	int status = builtin_cd (args);
 
 	if (status == 1 && strcmp (getenv ("PWD"), "/tmp") == 0)
-		print f ("  builtin_cd: PASS\n");
+		printf ("  builtin_cd: PASS\n");
 
 	else
-		print f ("  builtin_cd: FAIL\n");
+		printf ("  builtin_cd: FAIL\n");
 
 	/*
 	 *   Add more tests...
 	 */
-	print f ("\n");
+	printf ("\n");
 }
 
 void
-test_advanced_features (void)
+test_advanced_features ()
 {
-	print f ("Testing advanced features...\n");
+	printf ("Testing advanced features...\n");
 
 	/*
 	 *   Add tests for advanced features
@@ -202,10 +202,10 @@ test_advanced_features (void)
 	char **commands = split_logical_ops (input, &num_commands);
 
 	if (num_commands == 3 && strcmp (commands[1], "&&") == 0)
-		print f ("  split_logical_ops: PASS\n");
+		printf ("  split_logical_ops: PASS\n");
 
 	else
-		print f ("  split_logical_ops: FAIL\n");
+		printf ("  split_logical_ops: FAIL\n");
 
 	/*
 	 *   Free allocated memory
@@ -218,5 +218,5 @@ test_advanced_features (void)
 	/*
 	 *   Add more tests...
 	 */
-	print f ("\n");
+	printf ("\n");
 }

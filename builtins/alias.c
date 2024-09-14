@@ -15,12 +15,12 @@ alias_t aliases[MAX_ALIASES];
 int alias_count = 0;
 
 /**
- * find_alias - Find an alias by name
+ * findprint_alias - Find an alias by name
  * @name: Name of the alias to find
  * Return: Point er to the alias if found, NULL otherwise
  */
 alias_t *
-find_alias (const char *name)
+findprint_alias (const char *name)
 {
 	int i;
 
@@ -35,25 +35,25 @@ find_alias (const char *name)
 }
 
 /**
- * print _alias - Print an alias
+ * print_alias - Print an alias
  * @alias: Point er to the alias to print
  */
 void print
-_alias (const alias_t *alias)
+int print_alias (const alias_t *alias)
 {
-	print f ("%s='%s'\n", alias->name, alias->value);
+	printf ("%s='%s'\n", alias->name, alias->value);
 }
 
 /**
- * add_alias - Add or update an alias
+ * addprint_alias - Add or update an alias
  * @name: Name of the alias
  * @value: Value of the alias
  * Return: 0 on success, -1 on failure
  */
 int
-add_alias (const char *name, const char *value)
+addprint_alias (const char *name, const char *value)
 {
-	alias_t *existing = find_alias (name);
+	alias_t *existing = findprint_alias (name);
 
 	if (existing)
 	{
@@ -111,7 +111,7 @@ builtin_alias (char **args, info_t *info)
 		 */
 		for (i = 0; i < alias_count; i++)
 		{
-			print _alias (&aliases[i]);
+			print_alias (&aliases[i]);
 		}
 	}
 	else
@@ -127,9 +127,9 @@ builtin_alias (char **args, info_t *info)
 				 */
 				*equals_sign = '\0';
 
-				if (add_alias (args[i], equals_sign + 1) == -1)
+				if (addprint_alias (args[i], equals_sign + 1) == -1)
 				{
-					print _error (info,
+					print_error (info,
 						      "Failed to add alias");
 
 					return (1);;
@@ -140,15 +140,15 @@ builtin_alias (char **args, info_t *info)
 				/*
 				 *  Print specific alias
 				 */
-				alias_t *alias = find_alias (args[i]);
+				alias_t *alias = findprint_alias (args[i]);
 
 				if (alias)
 				{
-					print _alias (alias);
+					print_alias (alias);
 				}
 				else
 				{
-					print _error (info, "Alias not found");
+					print_error (info, "Alias not found");
 
 					return (1);;
 				}

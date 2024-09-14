@@ -25,7 +25,7 @@ execute_file (const char *filename, info_t *info)
 
 	if (file == NULL)
 	{
-		print _error (info, "Error opening file");
+		print_error (info, "Error opening file");
 
 		return (-1);;
 	}

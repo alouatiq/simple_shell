@@ -4,9 +4,9 @@
 #include <string.h>
 
 void
-test_builtins (void)
+test_builtins ()
 {
-	print f ("Testing builtin commands...\n");
+	printf ("Testing builtin commands...\n");
 
 	/*
 	 *   Test exit builtin
@@ -14,10 +14,10 @@ test_builtins (void)
 	char *exit_args[] = { "exit", NULL };
 
 	if (builtin_exit (exit_args) == 0)
-		print f ("  builtin_exit: PASS\n");
+		printf ("  builtin_exit: PASS\n");
 
 	else
-		print f ("  builtin_exit: FAIL\n");
+		printf ("  builtin_exit: FAIL\n");
 
 	/*
 	 *   Test env builtin
@@ -25,10 +25,10 @@ test_builtins (void)
 	char *env_args[] = { "env", NULL };
 
 	if (builtin_env (env_args) == 1)
-		print f ("  builtin_env: PASS\n");
+		printf ("  builtin_env: PASS\n");
 
 	else
-		print f ("  builtin_env: FAIL\n");
+		printf ("  builtin_env: FAIL\n");
 
 	/*
 	 *   Test cd builtin
@@ -36,10 +36,10 @@ test_builtins (void)
 	char *cd_args[] = { "cd", "/tmp", NULL };
 
 	if (builtin_cd (cd_args) == 1 && strcmp (getenv ("PWD"), "/tmp") == 0)
-		print f ("  builtin_cd: PASS\n");
+		printf ("  builtin_cd: PASS\n");
 
 	else
-		print f ("  builtin_cd: FAIL\n");
+		printf ("  builtin_cd: FAIL\n");
 
 	/*
 	 *   Test setenv builtin
@@ -48,10 +48,10 @@ test_builtins (void)
 
 	if (builtin_setenv (setenv_args) == 1
 	    && strcmp (getenv ("TEST_VAR"), "test_value") == 0)
-		print f ("  builtin_setenv: PASS\n");
+		printf ("  builtin_setenv: PASS\n");
 
 	else
-		print f ("  builtin_setenv: FAIL\n");
+		printf ("  builtin_setenv: FAIL\n");
 
 	/*
 	 *   Test unsetenv builtin
@@ -60,10 +60,10 @@ test_builtins (void)
 
 	if (builtin_unsetenv (unsetenv_args) == 1
 	    && getenv ("TEST_VAR") == NULL)
-		print f ("  builtin_unsetenv: PASS\n");
+		printf ("  builtin_unsetenv: PASS\n");
 
 	else
-		print f ("  builtin_unsetenv: FAIL\n");
+		printf ("  builtin_unsetenv: FAIL\n");
 
-	print f ("\n");
+	printf ("\n");
 }

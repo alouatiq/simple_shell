@@ -11,14 +11,14 @@ builtin_setenv (char **args, info_t *info)
 {
 	if (args[1] == NULL || args[2] == NULL)
 	{
-		print _error (info, "Usage: setenv VARIABLE VALUE");
+		print_error (info, "Usage: setenv VARIABLE VALUE");
 
 		return (1);;
 	}
 
 	if (_setenv (info->env, args[1], args[2], 1) == -1)
 	{
-		print _error (info, "Failed to set environment variable");
+		print_error (info, "Failed to set environment variable");
 
 		return (1);;
 	}

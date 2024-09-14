@@ -4,9 +4,9 @@
 #include <string.h>
 
 void
-test_string_helpers (void)
+test_string_helpers ()
 {
-	print f ("Testing string helpers...\n");
+	printf ("Testing string helpers...\n");
 
 	/*
 	 *   Test _strlen
@@ -14,19 +14,19 @@ test_string_helpers (void)
 	char *str = "Hello, World!";
 
 	if (_strlen (str) == 13)
-		print f ("  _strlen: PASS\n");
+		printf ("  _strlen: PASS\n");
 
 	else
-		print f ("  _strlen: FAIL\n");
+		printf ("  _strlen: FAIL\n");
 
 	/*
 	 *   Test _strcmp
 	 */
 	if (_strcmp ("hello", "hello") == 0 && _strcmp ("hello", "world") < 0)
-		print f ("  _strcmp: PASS\n");
+		printf ("  _strcmp: PASS\n");
 
 	else
-		print f ("  _strcmp: FAIL\n");
+		printf ("  _strcmp: FAIL\n");
 
 	/*
 	 *   Test _strdup
@@ -34,10 +34,10 @@ test_string_helpers (void)
 	char *dup = _strdup (str);
 
 	if (dup != NULL && strcmp (dup, str) == 0)
-		print f ("  _strdup: PASS\n");
+		printf ("  _strdup: PASS\n");
 
 	else
-		print f ("  _strdup: FAIL\n");
+		printf ("  _strdup: FAIL\n");
 
 	free (dup);
 
@@ -49,10 +49,10 @@ test_string_helpers (void)
 	_strcat (dest, "World!");
 
 	if (strcmp (dest, "Hello, World!") == 0)
-		print f ("  _strcat: PASS\n");
+		printf ("  _strcat: PASS\n");
 
 	else
-		print f ("  _strcat: FAIL\n");
+		printf ("  _strcat: FAIL\n");
 
-	print f ("\n");
+	printf ("\n");
 }

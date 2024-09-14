@@ -25,7 +25,7 @@ builtin_exit (char **args, info_t *info)
 			/*
 			 *  Invalid number
 			 */
-			print _error (info, "Illegal number: ");
+			print_error (info, "Illegal number: ");
 
 			_eputs (args[1]);
 
@@ -38,7 +38,7 @@ builtin_exit (char **args, info_t *info)
 
 		if (exit_status < 0)
 		{
-			print _error (info, "Illegal number: ");
+			print_error (info, "Illegal number: ");
 
 			_eputs (args[1]);
 

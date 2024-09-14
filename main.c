@@ -8,7 +8,7 @@ extern char **environ;
  * Return: Exit status of the shell
  */
 int
-main (void)
+main ()
 {
 	char *line = NULL;
 
@@ -42,14 +42,14 @@ main (void)
 		info.line_count++;
 
 		if (isatty (STDIN_FILENO))
-			print f ("$ ");
+			printf ("$ ");
 
 		read = getline (&line, &len, stdin);
 
 		if (read == -1)
 		{
 			if (isatty (STDIN_FILENO))
-				print f ("\n");
+				printf ("\n");
 
 			break;
 		}
@@ -65,7 +65,7 @@ main (void)
 
 		if (args == NULL)
 		{
-			print _error (&info, "Memory allocation error");
+			print_error (&info, "Memory allocation error");
 
 			continue;
 		}

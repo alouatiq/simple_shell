@@ -7,7 +7,7 @@
  * Return: Point er to the line read from stdin
  */
 char *
-read_line (void)
+read_line ()
 {
 	static char buffer[BUFFER_SIZE];
 
@@ -50,7 +50,7 @@ read_line (void)
 
 			if (!line)
 			{
-				print _error (NULL, "realloc");
+				print_error (NULL, "realloc");
 
 				exit (EXIT_FAILURE);
 			}

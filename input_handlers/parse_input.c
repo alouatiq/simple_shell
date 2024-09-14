@@ -47,7 +47,7 @@ parse_input (char *input)
 
 	if (!tokens)
 	{
-		print _error (NULL, "allocation error");
+		print_error (NULL, "allocation error");
 
 		exit (EXIT_FAILURE);
 	}
@@ -60,7 +60,7 @@ parse_input (char *input)
 
 		if (!tokens[position])
 		{
-			print _error (NULL, "allocation error");
+			print_error (NULL, "allocation error");
 
 			/*
 			 *  Free previously allocated memory
@@ -84,7 +84,7 @@ parse_input (char *input)
 
 			if (!tokens)
 			{
-				print _error (NULL, "allocation error");
+				print_error (NULL, "allocation error");
 
 				exit (EXIT_FAILURE);
 			}

@@ -11,14 +11,14 @@ builtin_unsetenv (char **args, info_t *info)
 {
 	if (args[1] == NULL)
 	{
-		print _error (info, "Usage: unsetenv VARIABLE");
+		print_error (info, "Usage: unsetenv VARIABLE");
 
 		return (1);;
 	}
 
 	if (_unsetenv (info->env, args[1]) == -1)
 	{
-		print _error (info, "Failed to unset environment variable");
+		print_error (info, "Failed to unset environment variable");
 
 		return (1);;
 	}
