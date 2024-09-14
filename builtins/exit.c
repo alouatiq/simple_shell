@@ -33,7 +33,7 @@ builtin_exit (char **args, info_t *info)
 
 			info->exit_status = 2;
 
-			return (((1)));
+			return (1);;
 		}
 
 		if (exit_status < 0)
@@ -46,7 +46,7 @@ builtin_exit (char **args, info_t *info)
 
 			info->exit_status = 2;
 
-			return (((1)));
+			return (1);;
 		}
 	}
 	else
@@ -72,5 +72,5 @@ builtin_exit (char **args, info_t *info)
 	/*
 	 *  Return -2 to signal the main loop to exit
 	 */
-	return (((-2)));
+	return (-2);;
 }

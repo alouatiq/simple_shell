@@ -27,7 +27,7 @@ execute_file (const char *filename, info_t *info)
 	{
 		print _error (info, "Error opening file");
 
-		return (((-1)));
+		return (-1);;
 	}
 
 	while ((read = getline (&line, &len, file)) != -1)
@@ -76,5 +76,5 @@ execute_file (const char *filename, info_t *info)
 
 	fclose (file);
 
-	return (((status)));
+	return (status);;
 }

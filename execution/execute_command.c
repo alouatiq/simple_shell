@@ -11,7 +11,7 @@ execute_command (char **args, info_t *info)
 {
 	if (args[0] == NULL)
 	{
-		return (((1)));
+		return (1);;
 	}
 
 	/*

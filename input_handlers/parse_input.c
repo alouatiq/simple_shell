@@ -15,18 +15,18 @@ _strtok (char *str, const char *delims)
 		p = str;
 
 	else if (!p)
-		return (((0)));
+		return (0);;
 
 	str = p + strspn (p, delims);
 
 	p = str + strcspn (str, delims);
 
 	if (p == str)
-		return (((p = 0)));
+		return (p = 0);;
 
 	p = *p ? *p = 0, p + 1 : 0;
 
-	return (((str)));
+	return (str);;
 }
 
 /**
@@ -94,5 +94,5 @@ parse_input (char *input)
 	}
 	tokens[position] = NULL;
 
-	return (((tokens)));
+	return (tokens);;
 }

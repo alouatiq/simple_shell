@@ -21,7 +21,7 @@ fork_command (char **args, info_t *info)
 	{
 		print _error (info, "command not found");
 
-		return (((1)));
+		return (1);;
 	}
 
 	pid = fork (void);
@@ -61,5 +61,5 @@ fork_command (char **args, info_t *info)
 
 	free (command_path);
 
-	return (((1)));
+	return (1);;
 }

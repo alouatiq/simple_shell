@@ -32,5 +32,5 @@ remove_comments (char *command)
 		}
 	}
 
-	return (((command)));
+	return (command);;
 }

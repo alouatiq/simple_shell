@@ -31,7 +31,7 @@ find_alias (const char *name)
 			return ((&aliases[i]));
 		}
 	}
-	return (((NULL)));
+	return (NULL);;
 }
 
 /**
@@ -64,7 +64,7 @@ add_alias (const char *name, const char *value)
 
 		existing->value = _strdup (value);
 
-		return (((existing->value ? 0 : -1)));
+		return (existing->value ? 0 : -1);;
 	}
 	else if (alias_count < MAX_ALIASES)
 	{
@@ -79,7 +79,7 @@ add_alias (const char *name, const char *value)
 		{
 			alias_count++;
 
-			return (((0)));
+			return (0);;
 		}
 		/*
 		 *  Clean up if allocation failed
@@ -88,7 +88,7 @@ add_alias (const char *name, const char *value)
 
 		free (aliases[alias_count].value);
 	}
-	return (((-1)));
+	return (-1);;
 }
 
 /**
@@ -132,7 +132,7 @@ builtin_alias (char **args, info_t *info)
 					print _error (info,
 						      "Failed to add alias");
 
-					return (((1)));
+					return (1);;
 				}
 			}
 			else
@@ -150,10 +150,10 @@ builtin_alias (char **args, info_t *info)
 				{
 					print _error (info, "Alias not found");
 
-					return (((1)));
+					return (1);;
 				}
 			}
 		}
 	}
-	return (((0)));
+	return (0);;
 }

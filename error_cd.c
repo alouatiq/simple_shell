@@ -68,5 +68,5 @@ error_cd (info_t *info, int error_type, const char *dir)
 
 	_eputchar ('\n');
 
-	return (((0)));
+	return (0);;
 }

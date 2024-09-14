@@ -23,7 +23,7 @@ builtin_cd (char **args, info_t *info)
 		{
 			print _error (info, "cd: HOME not set");
 
-			return (((1)));
+			return (1);;
 		}
 		dir = home;
 	}
@@ -35,7 +35,7 @@ builtin_cd (char **args, info_t *info)
 		{
 			print _error (info, "cd: OLDPWD not set");
 
-			return (((1)));
+			return (1);;
 		}
 		_eputs (dir);
 
@@ -46,36 +46,36 @@ builtin_cd (char **args, info_t *info)
 	{
 		print _error (info, "cd: couldn't get current directory");
 
-		return (((1)));
+		return (1);;
 	}
 
 	if (chdir (dir) == -1)
 	{
 		print _error (info, "cd: couldn't change directory");
 
-		return (((1)));
+		return (1);;
 	}
 
 	if (_setenv (info->env, "OLDPWD", cwd, 1) == -1)
 	{
 		print _error (info, "cd: couldn't set OLDPWD");
 
-		return (((1)));
+		return (1);;
 	}
 
 	if (getcwd (cwd, sizeof (cwd)) == NULL)
 	{
 		print _error (info, "cd: couldn't get new directory");
 
-		return (((1)));
+		return (1);;
 	}
 
 	if (_setenv (info->env, "PWD", cwd, 1) == -1)
 	{
 		print _error (info, "cd: couldn't set PWD");
 
-		return (((1)));
+		return (1);;
 	}
 
-	return (((0)));
+	return (0);;
 }

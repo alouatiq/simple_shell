@@ -22,7 +22,7 @@ expand_variables (char *command, info_t *info)
 	char *value;
 
 	if (!expanded)
-		return (((NULL)));
+		return (NULL);;
 
 	while (*ptr)
 	{
@@ -71,5 +71,5 @@ expand_variables (char *command, info_t *info)
 	}
 	expanded[i] = '\0';
 
-	return (((expanded)));
+	return (expanded);;
 }

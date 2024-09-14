@@ -43,7 +43,7 @@ find_command (char *command)
 			{
 				free (path_copy);
 
-				return (((file_path)));
+				return (file_path);;
 			}
 			else
 			{
@@ -58,7 +58,7 @@ find_command (char *command)
 		{
 			return (((strdup (command))));
 		}
-		return (((NULL)));
+		return (NULL);;
 	}
-	return (((NULL)));
+	return (NULL);;
 }

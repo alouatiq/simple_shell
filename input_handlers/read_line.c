@@ -36,7 +36,7 @@ read_line (void)
 				if (line_size > 0)
 					break;
 
-				return (((NULL)));
+				return (NULL);;
 			}
 		}
 
@@ -64,9 +64,9 @@ read_line (void)
 			    = '\0'; /*
 				     *  Replace newline with null terminator
 				     */
-			return (((line)));
+			return (line);;
 		}
 	}
 
-	return (((line)));
+	return (line);;
 }

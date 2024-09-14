@@ -19,7 +19,7 @@ builtin_env (char **args, info_t *info)
 	{
 		print _error (info, "Environment not set");
 
-		return (((1)));
+		return (1);;
 	}
 
 	for (env = info->env; *env != NULL; env++)
@@ -31,5 +31,5 @@ builtin_env (char **args, info_t *info)
 
 	info->exit_status = 0;
 
-	return (((0)));
+	return (0);;
 }

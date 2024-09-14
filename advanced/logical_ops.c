@@ -29,7 +29,7 @@ execute_logical_ops (char **commands, int num_commands, info_t *info)
 				if (status == -2) /*
 						   *  Exit command was called
 						   */
-					return (((status)));
+					return (status);;
 			}
 
 			if (i < num_commands - 1)
@@ -61,7 +61,7 @@ execute_logical_ops (char **commands, int num_commands, info_t *info)
 		}
 	}
 
-	return (((status)));
+	return (status);;
 }
 
 /**
@@ -82,7 +82,7 @@ split_logical_ops (char *input, int *num_commands)
 	commands = malloc (sizeof (char *) * MAX_COMMAND);
 
 	if (!commands)
-		return (((NULL)));
+		return (NULL);;
 
 	token = _strtok_r (input, " \t\n", &saveptr);
 
@@ -108,5 +108,5 @@ split_logical_ops (char *input, int *num_commands)
 
 	*num_commands = i;
 
-	return (((commands)));
+	return (commands);;
 }

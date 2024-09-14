@@ -107,5 +107,5 @@ main (void)
 	for (i = 3; i < 20; i++)
 		close (i);
 
-	return (((info.exit_status)));
+	return (info.exit_status);;
 }
