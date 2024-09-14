@@ -38,7 +38,6 @@ findprint_alias (const char *name)
  * print_alias - Print an alias
  * @alias: Point er to the alias to print
  */
-void print
 int print_alias (const alias_t *alias)
 {
 	printf ("%s='%s'\n", alias->name, alias->value);
