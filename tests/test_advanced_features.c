@@ -60,7 +60,7 @@ test_advanced_features ()
 	/*
 	 *   Test file input (this test assumes you have a test script file)
 	 */
-	if (execute_file ("test_script.sh") == 0)
+	if (execute_file("test_script.sh", &info) == 0)
 		printf ("  execute_file: PASS\n");
 
 	else

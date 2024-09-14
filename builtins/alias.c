@@ -41,6 +41,7 @@ findprint_alias (const char *name)
 int print_alias (const alias_t *alias)
 {
 	printf ("%s='%s'\n", alias->name, alias->value);
+    return 0;
 }
 
 /**

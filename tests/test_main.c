@@ -143,7 +143,7 @@ test_execution ()
 	 */
 	char *args[] = { "ls", "-l", "/tmp", NULL };
 
-	int status = execute_command (args);
+	int status = execute_command(args, &info);
 
 	if (status == 0)
 		printf ("  execute_command: PASS\n");
@@ -170,7 +170,7 @@ test_builtins ()
 	 */
 	char *args[] = { "cd", "/tmp", NULL };
 
-	int status = builtin_cd (args);
+	int status = builtin_cd(args, &info);
 
 	if (status == 1 && strcmp (getenv ("PWD"), "/tmp") == 0)
 		printf ("  builtin_cd: PASS\n");
