@@ -37,7 +37,7 @@ _strcmp (const char *s1, const char *s2)
 /**
  * _strdup - Duplicate a string
  * @str: The string to duplicate
- * Return: Pointer to the duplicated string, or NULL if insufficient memory
+ * Return: Point er to the duplicated string, or NULL if insufficient memory
  */
 char *
 _strdup (const char *str)
@@ -66,7 +66,7 @@ _strdup (const char *str)
  * _strcat - Concatenate two strings
  * @dest: The destination string
  * @src: The source string
- * Return: Pointer to the resulting string dest
+ * Return: Point er to the resulting string dest
  */
 char *
 _strcat (char *dest, const char *src)

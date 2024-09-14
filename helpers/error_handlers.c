@@ -2,10 +2,10 @@
 
 /**
  * _realloc - Reallocate a memory block
- * @ptr: Pointer to the memory previously allocated
+ * @ptr: Point er to the memory previously allocated
  * @old_size: Size of the allocated space for ptr
  * @new_size: New size of the new memory block
- * Return: Pointer to the newly allocated memory, or NULL if it fails
+ * Return: Point er to the newly allocated memory, or NULL if it fails
  */
 void *
 _realloc (void *ptr, unsigned int old_size, unsigned int new_size)
@@ -52,7 +52,7 @@ _realloc (void *ptr, unsigned int old_size, unsigned int new_size)
  * @s: Memory area to fill
  * @b: Constant byte to fill with
  * @n: Number of bytes to fill
- * Return: Pointer to the memory area s
+ * Return: Point er to the memory area s
  */
 void *
 _memset (void *s, int b, unsigned int n)

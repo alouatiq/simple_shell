@@ -14,7 +14,9 @@ remove_comments (char *command)
 
 	for (i = 0; command[i] != '\0'; i++)
 	{
-		/* Check if # is at the start or has a space before it */
+		/*
+		 *  Check if # is at the start or has a space before it
+		 */
 		if (command[i] == '#' && (i == 0 || command[i - 1] == ' '))
 		{
 			if (!in_quotes)

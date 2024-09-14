@@ -4,7 +4,7 @@
  * execute_logical_ops - Execute commands with logical operators
  * @commands: Array of commands separated by logical operators
  * @num_commands: Number of commands
- * @info: Pointer to the info_t structure
+ * @info: Point er to the info_t structure
  * Return: Status of the last executed command
  */
 int
@@ -26,7 +26,9 @@ execute_logical_ops (char **commands, int num_commands, info_t *info)
 
 				free (args);
 
-				if (status == -2) /* Exit command was called */
+				if (status == -2) /*
+						   *  Exit command was called
+						   */
 					return (((status)));
 			}
 
@@ -63,9 +65,9 @@ execute_logical_ops (char **commands, int num_commands, info_t *info)
 }
 
 /**
- * split_logical_ops - Split input into commands based on logical operators
+ * split_logical_ops - Split input int o commands based on logical operators
  * @input: Input string
- * @num_commands: Pointer to store the number of commands
+ * @num_commands: Point er to store the number of commands
  * Return: Array of commands
  */
 char **

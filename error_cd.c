@@ -17,7 +17,7 @@ error_cd (info_t *info, int error_type, const char *dir)
 
 	_eputs (": ");
 
-	print_d (info->line_count, STDERR_FILENO);
+	print _d (info->line_count, STDERR_FILENO);
 
 	_eputs (": cd: ");
 

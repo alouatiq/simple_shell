@@ -14,7 +14,9 @@ execute_command (char **args, info_t *info)
 		return (((1)));
 	}
 
-	/* Check for built-in commands */
+	/*
+	 *  Check for built-in commands
+	 */
 	if (_strcmp (args[0], "exit") == 0)
 		return ((builtin_exit (args, info)));
 
@@ -33,6 +35,8 @@ execute_command (char **args, info_t *info)
 	if (_strcmp (args[0], "alias") == 0)
 		return ((builtin_alias (args, info)));
 
-	/* If not a built-in command, fork and execute */
+	/*
+	 *  If not a built-in command, fork and execute
+	 */
 	return ((fork_command (args, info)));
 }

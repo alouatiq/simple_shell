@@ -3,7 +3,7 @@
 /**
  * expand_variables - Expand variables in the command
  * @command: Command string to expand
- * @info: Pointer to the info_t structure
+ * @info: Point er to the info_t structure
  * Return: Expanded command string
  */
 char *
@@ -35,7 +35,7 @@ expand_variables (char *command, info_t *info)
 		}
 		else if (*ptr == '$' && *(ptr + 1) == '$')
 		{
-			_itoa (getpid (), pid_str, 10);
+			_itoa (getpid (void), pid_str, 10);
 
 			for (j = 0; pid_str[j]; j++)
 				expanded[i++] = pid_str[j];

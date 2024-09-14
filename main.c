@@ -20,28 +20,36 @@ main (void)
 
 	int status = 1;
 
-	info_t info = { 0 }; /* Initialize info structure */
+	info_t info = { 0 }; /*
+			      *  Initialize info structure
+			      */
 	int i;
 
-	/* Initialize the info structure */
-	info.fname = "hsh"; /* Or whatever your shell's name is */
+	/*
+	 *  Initialize the info structure
+	 */
+	info.fname = "hsh"; /*
+			     *  Or whatever your shell's name is
+			     */
 	info.argv = NULL;   /* Set this if you pass command line arguments to
 			       your shell */
-	info.env = environ; /* Use the global environ */
+	info.env = environ; /*
+			     *  Use the global environ
+			     */
 
 	while (status)
 	{
 		info.line_count++;
 
 		if (isatty (STDIN_FILENO))
-			printf ("$ ");
+			print f ("$ ");
 
 		read = getline (&line, &len, stdin);
 
 		if (read == -1)
 		{
 			if (isatty (STDIN_FILENO))
-				printf ("\n");
+				print f ("\n");
 
 			break;
 		}
@@ -49,13 +57,15 @@ main (void)
 		info.input_line = line;
 
 		if (read > 0 && line[read - 1] == '\n')
-			line[read - 1] = '\0'; /* Remove newline character */
+			line[read - 1] = '\0'; /*
+						*  Remove newline char acter
+						*/
 
 		args = parse_input (line);
 
 		if (args == NULL)
 		{
-			print_error (&info, "Memory allocation error");
+			print _error (&info, "Memory allocation error");
 
 			continue;
 		}
@@ -66,7 +76,9 @@ main (void)
 
 			if (status == -2)
 			{
-				/* Exit command was called */
+				/*
+				 *  Exit command was called
+				 */
 				free (args);
 
 				break;
@@ -78,7 +90,9 @@ main (void)
 
 	free (line);
 
-	/* Perform any final cleanup */
+	/*
+	 *  Perform any final cleanup
+	 */
 	if (info.env != environ)
 	{
 		for (i = 0; info.env[i]; i++)
@@ -87,7 +101,9 @@ main (void)
 		free (info.env);
 	}
 
-	/* Close any open file descriptors */
+	/*
+	 *  Close any open file descriptors
+	 */
 	for (i = 3; i < 20; i++)
 		close (i);
 

@@ -3,7 +3,7 @@
 /**
  * builtin_env - Implements the env builtin command
  * @args: Arguments (unused)
- * @info: Pointer to the shell info structure
+ * @info: Point er to the shell info structure
  * Return: 0 on success, 1 on error
  */
 int
@@ -11,11 +11,13 @@ builtin_env (char **args, info_t *info)
 {
 	char **env;
 
-	(void)args; /* Unused parameter */
+	(void)args; /*
+		     *  Unused parameter
+		     */
 
 	if (!info->env)
 	{
-		print_error (info, "Environment not set");
+		print _error (info, "Environment not set");
 
 		return (((1)));
 	}

@@ -35,5 +35,7 @@ builtin_handler (char **args, info_t *info)
 		}
 	}
 
-	return (((-1))); /* Not a builtin command */
+	return (((-1))); /*
+			  *  Not a builtin command
+			  */
 }

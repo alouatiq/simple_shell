@@ -4,16 +4,16 @@
 
 /**
  * read_line - Custom getline function
- * Return: Pointer to the line read from stdin
+ * Return: Point er to the line read from stdin
  */
 char *
 read_line (void)
 {
 	static char buffer[BUFFER_SIZE];
 
-	static int buf_pos = 0;
+	static int buf_pos;
 
-	static int buf_size = 0;
+	static int buf_size;
 
 	char *line = NULL;
 
@@ -50,7 +50,7 @@ read_line (void)
 
 			if (!line)
 			{
-				print_error (NULL, "realloc");
+				print _error (NULL, "realloc");
 
 				exit (EXIT_FAILURE);
 			}
@@ -61,7 +61,9 @@ read_line (void)
 		if (c == '\n')
 		{
 			line[line_pos - 1]
-			    = '\0'; /* Replace newline with null terminator */
+			    = '\0'; /*
+				     *  Replace newline with null terminator
+				     */
 			return (((line)));
 		}
 	}

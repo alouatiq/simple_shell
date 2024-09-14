@@ -3,8 +3,8 @@
 /**
  * _strtok - Custom strtok function
  * @str: String to tokenize
- * @delims: String of delimiter characters
- * Return: Pointer to the next token or NULL
+ * @delims: String of delimiter char acters
+ * Return: Point er to the next token or NULL
  */
 static char *
 _strtok (char *str, const char *delims)
@@ -47,7 +47,7 @@ parse_input (char *input)
 
 	if (!tokens)
 	{
-		print_error (NULL, "allocation error");
+		print _error (NULL, "allocation error");
 
 		exit (EXIT_FAILURE);
 	}
@@ -60,9 +60,11 @@ parse_input (char *input)
 
 		if (!tokens[position])
 		{
-			print_error (NULL, "allocation error");
+			print _error (NULL, "allocation error");
 
-			/* Free previously allocated memory */
+			/*
+			 *  Free previously allocated memory
+			 */
 			for (i = 0; i < position; i++)
 				free (tokens[i]);
 
@@ -82,7 +84,7 @@ parse_input (char *input)
 
 			if (!tokens)
 			{
-				print_error (NULL, "allocation error");
+				print _error (NULL, "allocation error");
 
 				exit (EXIT_FAILURE);
 			}

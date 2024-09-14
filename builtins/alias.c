@@ -17,7 +17,7 @@ int alias_count = 0;
 /**
  * find_alias - Find an alias by name
  * @name: Name of the alias to find
- * Return: Pointer to the alias if found, NULL otherwise
+ * Return: Point er to the alias if found, NULL otherwise
  */
 alias_t *
 find_alias (const char *name)
@@ -35,13 +35,13 @@ find_alias (const char *name)
 }
 
 /**
- * print_alias - Print an alias
- * @alias: Pointer to the alias to print
+ * print _alias - Print an alias
+ * @alias: Point er to the alias to print
  */
-void
-print_alias (const alias_t *alias)
+void print
+_alias (const alias_t *alias)
 {
-	printf ("%s='%s'\n", alias->name, alias->value);
+	print f ("%s='%s'\n", alias->name, alias->value);
 }
 
 /**
@@ -57,7 +57,9 @@ add_alias (const char *name, const char *value)
 
 	if (existing)
 	{
-		/* Update existing alias */
+		/*
+		 *  Update existing alias
+		 */
 		free (existing->value);
 
 		existing->value = _strdup (value);
@@ -66,7 +68,9 @@ add_alias (const char *name, const char *value)
 	}
 	else if (alias_count < MAX_ALIASES)
 	{
-		/* Add new alias */
+		/*
+		 *  Add new alias
+		 */
 		aliases[alias_count].name = _strdup (name);
 
 		aliases[alias_count].value = _strdup (value);
@@ -77,7 +81,9 @@ add_alias (const char *name, const char *value)
 
 			return (((0)));
 		}
-		/* Clean up if allocation failed */
+		/*
+		 *  Clean up if allocation failed
+		 */
 		free (aliases[alias_count].name);
 
 		free (aliases[alias_count].value);
@@ -100,10 +106,12 @@ builtin_alias (char **args, info_t *info)
 
 	if (args[1] == NULL)
 	{
-		/* Print all aliases */
+		/*
+		 *  Print all aliases
+		 */
 		for (i = 0; i < alias_count; i++)
 		{
-			print_alias (&aliases[i]);
+			print _alias (&aliases[i]);
 		}
 	}
 	else
@@ -114,29 +122,33 @@ builtin_alias (char **args, info_t *info)
 
 			if (equals_sign)
 			{
-				/* Define a new alias */
+				/*
+				 *  Define a new alias
+				 */
 				*equals_sign = '\0';
 
 				if (add_alias (args[i], equals_sign + 1) == -1)
 				{
-					print_error (info,
-						     "Failed to add alias");
+					print _error (info,
+						      "Failed to add alias");
 
 					return (((1)));
 				}
 			}
 			else
 			{
-				/* Print specific alias */
+				/*
+				 *  Print specific alias
+				 */
 				alias_t *alias = find_alias (args[i]);
 
 				if (alias)
 				{
-					print_alias (alias);
+					print _alias (alias);
 				}
 				else
 				{
-					print_error (info, "Alias not found");
+					print _error (info, "Alias not found");
 
 					return (((1)));
 				}
