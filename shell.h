@@ -20,6 +20,8 @@
 #define ERR_OLDPWD_NOT_SET 4
 #define ERR_TOO_MANY_ARGS 5
 
+int _putchar(char c);
+
 /*
  *  Constants
  */
