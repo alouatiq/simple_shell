@@ -113,11 +113,19 @@ int _strlen(const char *s);
 
 int _strcmp(const char *s1, const char *s2);
 
+int _strncmp(const char *s1, const char *s2, size_t n);
+
 char *_strdup(const char *str);
 
 char *_strcat(char *dest, const char *src);
 
 char *_strchr(char *s, char c);
+
+char *_strcpy(char *dest, const char *src);
+
+size_t _strspn(const char *s, const char *accept);
+
+size_t _strcspn(const char *s, const char *reject);
 
 /*
  *  Memory helpers
@@ -150,6 +158,7 @@ void print_error(info_t *info, char *estr);
 int execute_logical_ops(char **commands, int num_commands, info_t *info);
 
 char **split_logical_ops(char *input, int *num_commands);
+void free_commands(char **commands, int num_commands);
 
 /*
  *  Variable expansion
@@ -179,5 +188,9 @@ int _unsetenv(char **env, const char *name);
  *  Main loop
  */
 void shell_loop(info_t *info);
+
+void free_tokens(char **tokens);
+void free_strdup(char *str);
+extern char **environ;
 
 #endif /* SHELL_H */

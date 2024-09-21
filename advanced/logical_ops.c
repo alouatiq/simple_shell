@@ -61,6 +61,7 @@ execute_logical_ops (char **commands, int num_commands, info_t *info)
 		}
 	}
 
+	free_commands(commands, num_commands);
 	return (status);;
 }
 
@@ -109,4 +110,23 @@ split_logical_ops (char *input, int *num_commands)
 	*num_commands = i;
 
 	return (commands);;
+}
+
+/**
+ * free_commands - Free memory allocated for commands
+ * @commands: Array of command strings
+ * @num_commands: Number of commands
+ */
+void free_commands(char **commands, int num_commands)
+{
+	int i;
+
+	if (commands == NULL)
+		return;
+
+	for (i = 0; i < num_commands; i++)
+	{
+		free(commands[i]);
+	}
+	free(commands);
 }

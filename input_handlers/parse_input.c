@@ -3,30 +3,28 @@
 /**
  * _strtok - Custom strtok function
  * @str: String to tokenize
- * @delims: String of delimiter char acters
- * Return: Point er to the next token or NULL
+ * @delims: String of delimiter characters
+ * Return: Pointer to the next token or NULL
  */
 static char *
-_strtok (char *str, const char *delims)
+_strtok(char *str, const char *delims)
 {
-	static char *p;
+    static char *p;
 
-	if (str)
-		p = str;
+    if (str)
+        p = str;
+    else if (!p)
+        return (0);
 
-	else if (!p)
-		return (0);;
+    str = p + strspn(p, delims);
+    p = str + strcspn(str, delims);
 
-	str = p + strspn (p, delims);
+    if (p == str)
+        return (p = 0);
 
-	p = str + strcspn (str, delims);
+    p = *p ? *p = 0, p + 1 : 0;
 
-	if (p == str)
-		return (p = 0);;
-
-	p = *p ? *p = 0, p + 1 : 0;
-
-	return (str);;
+    return (str);
 }
 
 /**
@@ -35,64 +33,77 @@ _strtok (char *str, const char *delims)
  * Return: Array of strings (tokens)
  */
 char **
-parse_input (char *input)
+parse_input(char *input)
 {
-	int bufsize = MAX_ARGS, position = 0;
+    int bufsize = MAX_ARGS, position = 0, i;
+    char **tokens = NULL;
+    char *token = NULL;
+    char *input_copy = NULL;
+    char **new_tokens = NULL;
 
-	char **tokens = malloc (bufsize * sizeof (char *));
+    tokens = malloc(bufsize * sizeof(char *));
+    input_copy = _strdup(input);
 
-	char *token;
+    if (!tokens || !input_copy)
+    {
+        free_strdup(input_copy);
+        free(tokens);
+        print_error(NULL, "allocation error");
+        return NULL;
+    }
 
-	int i;
+    token = _strtok(input_copy, " \t\r\n\a");
+    while (token != NULL)
+    {
+        tokens[position] = _strdup(token);
+        if (!tokens[position])
+        {
+            print_error(NULL, "allocation error");
+            for (i = 0; i < position; i++)
+                free_strdup(tokens[i]);
+            free(tokens);
+            free_strdup(input_copy);
+            return NULL;
+        }
+        position++;
 
-	if (!tokens)
-	{
-		print_error (NULL, "allocation error");
+        if (position >= bufsize)
+        {
+            bufsize += MAX_ARGS;
+            new_tokens = _realloc(tokens, bufsize * sizeof(char *),
+                                  (bufsize - MAX_ARGS) * sizeof(char *));
+            if (!new_tokens)
+            {
+                print_error(NULL, "allocation error");
+                for (i = 0; i < position; i++)
+                    free_strdup(tokens[i]);
+                free(tokens);
+                free_strdup(input_copy);
+                return NULL;
+            }
+            tokens = new_tokens;
+        }
+        token = _strtok(NULL, " \t\r\n\a");
+    }
+    tokens[position] = NULL;
+    free_strdup(input_copy);
+    return tokens;
+}
 
-		exit (EXIT_FAILURE);
-	}
+/**
+ * free_tokens - Free memory allocated for tokens
+ * @tokens: Array of strings to free
+ */
+void free_tokens(char **tokens)
+{
+    int i;
 
-	token = _strtok (input, " \t\r\n\a");
+    if (tokens == NULL)
+        return;
 
-	while (token != NULL)
-	{
-		tokens[position] = _strdup (token);
-
-		if (!tokens[position])
-		{
-			print_error (NULL, "allocation error");
-
-			/*
-			 *  Free previously allocated memory
-			 */
-			for (i = 0; i < position; i++)
-				free (tokens[i]);
-
-			free (tokens);
-
-			exit (EXIT_FAILURE);
-		}
-		position++;
-
-		if (position >= bufsize)
-		{
-			bufsize += MAX_ARGS;
-
-			tokens = _realloc (tokens, bufsize * sizeof (char *),
-					   (bufsize - MAX_ARGS)
-					       * sizeof (char *));
-
-			if (!tokens)
-			{
-				print_error (NULL, "allocation error");
-
-				exit (EXIT_FAILURE);
-			}
-		}
-
-		token = _strtok (NULL, " \t\r\n\a");
-	}
-	tokens[position] = NULL;
-
-	return (tokens);;
+    for (i = 0; tokens[i] != NULL; i++)
+    {
+        free_strdup(tokens[i]);
+    }
+    free(tokens);
 }

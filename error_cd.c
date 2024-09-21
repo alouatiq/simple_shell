@@ -1,6 +1,31 @@
 #include "shell.h"
 
 /**
+ * print_error_prefix - Prints the error prefix
+ * @info: The parameter & return info struct
+ */
+static void print_error_prefix(info_t *info)
+{
+	_eputs(info->fname);
+	_eputs(": ");
+	print_d(info->line_count, STDERR_FILENO);
+	_eputs(": cd: ");
+}
+
+/**
+ * print_error_message - Prints the error message
+ * @error_msg: The error message to print
+ * @dir: The directory involved in the error (can be NULL)
+ */
+static void print_error_message(const char *error_msg, const char *dir)
+{
+	_eputs(error_msg);
+	if (dir)
+		_eputs(dir);
+	_eputchar('\n');
+}
+
+/**
  * error_cd - Handles various cd command errors
  * @info: The parameter & return info struct
  * @error_type: The type of error encountered
@@ -8,65 +33,30 @@
  *
  * Return: Always returns 0
  */
-int
-error_cd (info_t *info, int error_type, const char *dir)
+int error_cd(info_t *info, int error_type, const char *dir)
 {
-	char *error_msg;
-
-	_eputs (info->fname);
-
-	_eputs (": ");
-
-	print_d (info->line_count, STDERR_FILENO);
-
-	_eputs (": cd: ");
+	print_error_prefix(info);
 
 	switch (error_type)
 	{
 	case ERR_NO_DIR:
-		error_msg = "can't cd to ";
-
-		_eputs (error_msg);
-
-		_eputs (dir); /* dir is already const char *, no need for
-				 casting */
+		print_error_message("can't cd to ", dir);
 		break;
-
 	case ERR_PERMISSION:
-		error_msg = "Permission denied";
-
-		_eputs (error_msg);
-
+		print_error_message("Permission denied", NULL);
 		break;
-
 	case ERR_HOME_NOT_SET:
-		error_msg = "HOME not set";
-
-		_eputs (error_msg);
-
+		print_error_message("HOME not set", NULL);
 		break;
-
 	case ERR_OLDPWD_NOT_SET:
-		error_msg = "OLDPWD not set";
-
-		_eputs (error_msg);
-
+		print_error_message("OLDPWD not set", NULL);
 		break;
-
 	case ERR_TOO_MANY_ARGS:
-		error_msg = "too many arguments";
-
-		_eputs (error_msg);
-
+		print_error_message("too many arguments", NULL);
 		break;
-
 	default:
-		error_msg = "Unknown error";
-
-		_eputs (error_msg);
+		print_error_message("Unknown error", NULL);
 	}
 
-	_eputchar ('\n');
-
-	return (0);;
+	return (0);
 }
