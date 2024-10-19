@@ -13,13 +13,13 @@ void execute(char **args)
         perror("Error");
         return;
     }
-    if (pid == 0)  // Child process
+    if (pid == 0)  /* Child process */
     {
         if (execve(args[0], args, environ) == -1)
             perror(args[0]);
         exit(EXIT_FAILURE);
     }
-    else  // Parent process
+    else  /* Parent process */
     {
         wait(NULL);
     }
