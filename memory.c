@@ -6,7 +6,9 @@
  */
 void free_memory(char **args)
 {
-    for (int i = 0; args[i]; i++)
+    int i;
+
+    for (i = 0; args[i]; i++)
         free(args[i]);
     free(args);
 }
