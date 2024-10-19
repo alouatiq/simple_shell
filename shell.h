@@ -11,6 +11,9 @@
 #include <fcntl.h>
 #include <errno.h>
 
+/* External global variable for environment */
+extern char **environ;
+
 /* Function prototypes */
 void prompt(void);
 void execute(char **args);
@@ -19,7 +22,6 @@ char **parse_command(char *command);
 char *find_in_path(char *command);
 int handle_builtin(char **args);
 void free_memory(char **args);
-
-extern char **environ;
+void print_error(char *msg);
 
 #endif /* SHELL_H */
