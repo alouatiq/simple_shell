@@ -1,47 +1,40 @@
-# Compiler
-CC = gcc
-
-# Compiler flags
-CFLAGS = -Wall -Werror -Wextra -pedantic -std=gnu89
-
 # Name of the executable
 NAME = hsh
 
-# Source files
-SRC = $(wildcard *.c) \
-	  $(wildcard builtins/*.c) \
-	  $(wildcard execution/*.c) \
-	  $(wildcard helpers/*.c) \
-	  $(wildcard advanced/*.c) \
-	  $(wildcard input_handlers/*.c)
+# Compiler and compilation flags
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra -pedantic -std=gnu89
 
-# Object files
+# List of source files
+SRC = main.c shell.c exec.c path.c builtins.c env.c prompt.c error.c getline.c str_functions.c memory.c
+
+# List of object files (replace .c with .o)
 OBJ = $(SRC:.c=.o)
 
-# Header files
-HEADERS = shell.h
-
-# Default target
+# Default target to build the executable
 all: $(NAME)
 
-# Rule to build the executable
+# Rule to build the executable from object files
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
-# Rule to compile source files
-%.o: %.c $(HEADERS)
+# Rule to build object files from source files
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean target to remove object files
+# Clean up object files and the executable
 clean:
-	$(RM) $(OBJ)
+	rm -f $(OBJ)
 
-# Full clean (fclean) to remove object files and the executable
 fclean: clean
-	$(RM) $(NAME)
+	rm -f $(NAME)
 
-# Rebuild the project
+# Recompile everything from scratch
 re: fclean all
 
-# Phony targets
-.PHONY: all clean fclean re
+# Test script target
+test: all
+	./tests/test_shell.sh
+
+# Phony targets (these targets are not files)
+.PHONY: all clean fclean re test
