@@ -6,9 +6,9 @@ char *resolve_path(char *command)
 	struct stat st;
 
 	if (!path)
-	return NULL;
+	return (NULL);
 	if (stat(command, &st) == 0)
-	return strdup(command);
+	return (strdup(command));
 
 	token = strtok(path, ":");
 	while (token)
@@ -17,10 +17,10 @@ char *resolve_path(char *command)
 	sprintf(full_path, "%s/%s", token, command);
 	
 	if (stat(full_path, &st) == 0)
-	return full_path;
+	return (full_path);
 
 	free(full_path);
 	token = strtok(NULL, ":");
 	}
-	return NULL;
+	return (NULL);
 }
