@@ -15,7 +15,7 @@ int _strlen(const char *s)
 
 	while (s && s[len])
 	len++;
-	return len;
+	return (len);
 }
 
 /**
@@ -23,7 +23,8 @@ int _strlen(const char *s)
 	* @s1: The first string.
 	* @s2: The second string.
 	*
-	* Return: 0 if the strings are equal, negative if s1 < s2, positive if s1 > s2.
+	* Return: 0 if the strings are equal
+ 	* negative if s1 < s2, positive if s1 > s2.
 	*/
 int _strcmp(const char *s1, const char *s2)
 {
@@ -32,7 +33,7 @@ int _strcmp(const char *s1, const char *s2)
 	s1++;
 	s2++;
 	}
-	return *(const unsigned char *)s1 - *(const unsigned char *)s2;
+	return (*(const unsigned char *)s1 - *(const unsigned char *)s2);
 }
 
 /**
@@ -49,14 +50,15 @@ char *_strcpy(char *dest, const char *src)
 	while (*src)
 	*dest++ = *src++;
 	*dest = '\0';
-	return start;
+	return (start);
 }
 
 /**
 	* _strdup - Duplicates a string.
 	* @s: The input string to duplicate.
 	*
-	* Return: A pointer to the duplicated string, or NULL if memory allocation fails.
+	* Return: A pointer to the duplicated string
+ 	* or NULL if memory allocation fails.
 	*/
 char *_strdup(const char *s)
 {
@@ -64,15 +66,15 @@ char *_strdup(const char *s)
 	int len;
 
 	if (!s)
-	return NULL;
+	return (NULL);
 
 	len = _strlen(s);
 	dup = malloc(sizeof(char) * (len + 1));
 	if (!dup)
-	return NULL;
+	return (NULL);
 
 	_strcpy(dup, s);
-	return dup;
+	return (dup);
 }
 
 /**
@@ -89,5 +91,5 @@ char *_strcat(char *dest, const char *src)
 	while (*src)
 	*ptr++ = *src++;
 	*ptr = '\0';
-	return dest;
+	return (dest);
 }
