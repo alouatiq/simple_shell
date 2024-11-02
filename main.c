@@ -19,7 +19,7 @@ int main(void)
             break;
         }
         
-        line[read_len - 1] = '\0'; // Remove newline character
+        line[read_len - 1] = '\0'; /* Remove newline character */
         status = execute_line(line);
     }
     
