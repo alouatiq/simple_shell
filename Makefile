@@ -6,8 +6,8 @@ CFLAGS = -Wall -Werror -Wextra -pedantic -std=gnu89
 TARGET = hsh
 
 # Source files
-SRCS = main.c builtins.c tokenizer.c getline_custom.c expand_vars.c exec_cmd.c \
-       path_resolver.c builtins_handler.c string_helpers.c error_handlers.c memory_helpers.c
+SRCS = main.c builtins.c tokenizer.c exec_cmd.c path_resolver.c \
+       builtins_handler.c string_helpers.c error_handlers.c memory_helpers.c
 
 # Object files (replace .c with .o)
 OBJS = $(SRCS:.c=.o)
