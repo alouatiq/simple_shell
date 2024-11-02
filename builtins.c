@@ -44,6 +44,5 @@ int check_builtin(char **args)
 	return (shell_exit(args));
 	else if (strcmp(args[0], "env") == 0)
 	return (shell_env(args));
-	
 	return (0);
 }
