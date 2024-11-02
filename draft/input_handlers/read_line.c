@@ -3,9 +3,9 @@
 #define BUFFER_SIZE 1024
 
 /**
- * read_line - Custom getline function
- * Return: Point er to the line read from stdin
- */
+	* read_line - Custom getline function
+	* Return: Point er to the line read from stdin
+	*/
 char *
 read_line ()
 {
@@ -25,47 +25,47 @@ read_line ()
 
 	while (1)
 	{
-		if (buf_pos >= buf_size)
-		{
-			buf_size = read (STDIN_FILENO, buffer, BUFFER_SIZE);
+	if (buf_pos >= buf_size)
+	{
+	buf_size = read (STDIN_FILENO, buffer, BUFFER_SIZE);
 
-			buf_pos = 0;
+	buf_pos = 0;
 
-			if (buf_size <= 0)
-			{
-				if (line_size > 0)
-					break;
+	if (buf_size <= 0)
+	{
+	if (line_size > 0)
+	break;
 
-				return (NULL);;
-			}
-		}
+	return (NULL);;
+	}
+	}
 
-		c = buffer[buf_pos++];
+	c = buffer[buf_pos++];
 
-		if (line_pos >= line_size)
-		{
-			line_size += 32;
+	if (line_pos >= line_size)
+	{
+	line_size += 32;
 
-			line = _realloc (line, line_size, line_size - 32);
+	line = _realloc (line, line_size, line_size - 32);
 
-			if (!line)
-			{
-				print_error (NULL, "realloc");
+	if (!line)
+	{
+	print_error (NULL, "realloc");
 
-				exit (EXIT_FAILURE);
-			}
-		}
+	exit (EXIT_FAILURE);
+	}
+	}
 
-		line[line_pos++] = c;
+	line[line_pos++] = c;
 
-		if (c == '\n')
-		{
-			line[line_pos - 1]
-			    = '\0'; /*
-				     *  Replace newline with null terminator
-				     */
-			return (line);;
-		}
+	if (c == '\n')
+	{
+	line[line_pos - 1]
+	= '\0'; /*
+	*  Replace newline with null terminator
+	*/
+	return (line);;
+	}
 	}
 
 	return (line);;

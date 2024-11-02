@@ -1,11 +1,11 @@
 #include "../shell.h"
 
 /**
- * fork_command - Create a child process and execute the command
- * @args: Null terminated array of command arguments
- * @info: Shell info structure
- * Return: 1 if the shell should continue, 0 if it should terminate
- */
+	* fork_command - Create a child process and execute the command
+	* @args: Null terminated array of command arguments
+	* @info: Shell info structure
+	* Return: 1 if the shell should continue, 0 if it should terminate
+	*/
 int
 fork_command (char **args, info_t *info)
 {
@@ -19,44 +19,44 @@ fork_command (char **args, info_t *info)
 
 	if (command_path == NULL)
 	{
-		print_error (info, "command not found");
+	print_error (info, "command not found");
 
-		return (1);;
+	return (1);;
 	}
 
 	pid = fork ();
 
 	if (pid == 0)
 	{
-		/*
-		 *  Child process
-		 */
-		if (execve (command_path, args, info->env) == -1)
-		{
-			print_error (info, "execve failed");
+	/*
+	*  Child process
+	*/
+	if (execve (command_path, args, info->env) == -1)
+	{
+	print_error (info, "execve failed");
 
-			free (command_path);
+	free (command_path);
 
-			exit (EXIT_FAILURE);
-		}
+	exit (EXIT_FAILURE);
+	}
 	}
 	else if (pid < 0)
 	{
-		/*
-		 *  Error forking
-		 */
-		print_error (info, "fork failed");
+	/*
+	*  Error forking
+	*/
+	print_error (info, "fork failed");
 	}
 	else
 	{
-		/*
-		 *  Parent process
-		 */
-		do
-		{
-			waitpid (pid, &status, WUNTRACED);
+	/*
+	*  Parent process
+	*/
+	do
+	{
+	waitpid (pid, &status, WUNTRACED);
 
-		} while (!WIFEXITED (status) && !WIFSIGNALED (status));
+	} while (!WIFEXITED (status) && !WIFSIGNALED (status));
 	}
 
 	free (command_path);

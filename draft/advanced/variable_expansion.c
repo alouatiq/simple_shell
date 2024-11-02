@@ -1,11 +1,11 @@
 #include "../shell.h"
 
 /**
- * expand_variables - Expand variables in the command
- * @command: Command string to expand
- * @info: Point er to the info_t structure
- * Return: Expanded command string
- */
+	* expand_variables - Expand variables in the command
+	* @command: Command string to expand
+	* @info: Point er to the info_t structure
+	* Return: Expanded command string
+	*/
 char *
 expand_variables (char *command, info_t *info)
 {
@@ -22,52 +22,52 @@ expand_variables (char *command, info_t *info)
 	char *value;
 
 	if (!expanded)
-		return (NULL);;
+	return (NULL);;
 
 	while (*ptr)
 	{
-		if (*ptr == '$' && *(ptr + 1) == '?')
-		{
-			i += _strlen (
-			    _itoa (info->exit_status, expanded + i, 10));
+	if (*ptr == '$' && *(ptr + 1) == '?')
+	{
+	i += _strlen (
+	_itoa (info->exit_status, expanded + i, 10));
 
-			ptr += 2;
-		}
-		else if (*ptr == '$' && *(ptr + 1) == '$')
-		{
-			_itoa (getpid (), pid_str, 10);
+	ptr += 2;
+	}
+	else if (*ptr == '$' && *(ptr + 1) == '$')
+	{
+	_itoa (getpid (), pid_str, 10);
 
-			for (j = 0; pid_str[j]; j++)
-				expanded[i++] = pid_str[j];
+	for (j = 0; pid_str[j]; j++)
+	expanded[i++] = pid_str[j];
 
-			ptr += 2;
-		}
-		else if (*ptr == '$')
-		{
-			j = 0;
+	ptr += 2;
+	}
+	else if (*ptr == '$')
+	{
+	j = 0;
 
-			ptr++;
+	ptr++;
 
-			while ((*ptr >= 'A' && *ptr <= 'Z')
-			       || (*ptr >= 'a' && *ptr <= 'z')
-			       || (*ptr >= '0' && *ptr <= '9') || *ptr == '_')
-			{
-				var_name[j++] = *ptr++;
-			}
-			var_name[j] = '\0';
+	while ((*ptr >= 'A' && *ptr <= 'Z')
+	|| (*ptr >= 'a' && *ptr <= 'z')
+	|| (*ptr >= '0' && *ptr <= '9') || *ptr == '_')
+	{
+	var_name[j++] = *ptr++;
+	}
+	var_name[j] = '\0';
 
-			value = _getenv (var_name, info->env);
+	value = _getenv (var_name, info->env);
 
-			if (value)
-			{
-				for (j = 0; value[j]; j++)
-					expanded[i++] = value[j];
-			}
-		}
-		else
-		{
-			expanded[i++] = *ptr++;
-		}
+	if (value)
+	{
+	for (j = 0; value[j]; j++)
+	expanded[i++] = value[j];
+	}
+	}
+	else
+	{
+	expanded[i++] = *ptr++;
+	}
 	}
 	expanded[i] = '\0';
 
