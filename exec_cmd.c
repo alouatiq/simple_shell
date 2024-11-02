@@ -10,7 +10,7 @@ int execute_command(char **args)
 	if (!command_path)
 	{
 	fprintf(stderr, "%s: command not found\n", args[0]);
-	return 1;
+	return (1);
 	}
 
 	pid = fork();
@@ -30,5 +30,5 @@ int execute_command(char **args)
 	}
 
 	free(command_path);
-	return 1;
+	return (1);
 }
