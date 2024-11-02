@@ -24,7 +24,6 @@ int _strlen(const char *s)
 	* @s2: The second string.
 	*
 	* Return: 0 if the strings are equal
- 	* negative if s1 < s2, positive if s1 > s2.
 	*/
 int _strcmp(const char *s1, const char *s2)
 {
@@ -58,7 +57,6 @@ char *_strcpy(char *dest, const char *src)
 	* @s: The input string to duplicate.
 	*
 	* Return: A pointer to the duplicated string
- 	* or NULL if memory allocation fails.
 	*/
 char *_strdup(const char *s)
 {
