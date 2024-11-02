@@ -6,20 +6,20 @@ CFLAGS = -Wall -Werror -Wextra -pedantic -std=gnu89
 TARGET = hsh
 
 # Source files
-SRCS = main.c execute_line.c tokenizer.c execute_command.c resolve_path.c \
-       builtins.c string_helpers.c error_handlers.c memory_helpers.c
+SRCS = main.c builtins.c tokenizer.c getline_custom.c expand_vars.c exec_cmd.c \
+       path_resolver.c builtins_handler.c string_helpers.c error_handlers.c memory_helpers.c
 
-# Object files (automatically derived from source files)
+# Object files (replace .c with .o)
 OBJS = $(SRCS:.c=.o)
 
-# Header files (to ensure changes to headers trigger recompilation)
+# Header files
 HEADERS = shell.h
 
-# Default target: build the executable only if dependencies are met
+# Default target: build the executable
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET)
 
-# Rule for object files, ensuring each file compiles independently
+# Rule to build object files
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -27,9 +27,9 @@ $(TARGET): $(OBJS)
 clean:
 	rm -f $(OBJS) $(TARGET)
 
-# Run the shell after building
+# Run the shell
 run: $(TARGET)
 	./$(TARGET)
 
-# Define phony targets to avoid conflicts with files named 'all', 'clean', or 'run'
+# Phony targets (not real files)
 .PHONY: all clean run
