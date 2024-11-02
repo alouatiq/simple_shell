@@ -11,18 +11,15 @@ int main(void)
 	{
 	if (isatty(STDIN_FILENO))
 	printf("$ ");
-	
 	read_len = getline(&line, &len, stdin);
 	if (read_len == -1)
 	{
 	free(line);
 	break;
 	}
-	
 	line[read_len - 1] = '\0'; /* Remove newline character */
 	status = execute_line(line);
 	}
-	
 	free(line);
 	return 0;
 }
