@@ -1,6 +1,4 @@
 #include "shell.h"
-#include <stdlib.h>
-#include <string.h>
 
 /**
  * tokenize_line - Splits a line into tokens (words) based on spaces.
@@ -16,7 +14,7 @@ char **tokenize_line(char *line)
 
     tokens = malloc(sizeof(char *) * bufsize);
     if (!tokens)
-        return NULL;
+        return (NULL);
 
     token = strtok(line, " ");
     while (token)
@@ -27,12 +25,12 @@ char **tokenize_line(char *line)
             bufsize += 64;
             tokens = realloc(tokens, sizeof(char *) * bufsize);
             if (!tokens)
-                return NULL;
+                return (NULL);
         }
         token = strtok(NULL, " ");
     }
     tokens[i] = NULL;
-    return tokens;
+    return (tokens);
 }
 
 /**
@@ -41,7 +39,7 @@ char **tokenize_line(char *line)
  */
 void free_tokens(char **tokens)
 {
-    int i; /* Move the variable declaration outside the for loop */
+    int i;
 
     if (tokens)
     {
