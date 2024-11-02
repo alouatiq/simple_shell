@@ -21,7 +21,7 @@ void free_tokens(char **tokens);
 
 /* Custom getline implementation if needed */
 ssize_t getline_custom(char **lineptr, size_t *n, FILE *stream);
-int expand_variables(char **args); /* Task 14 (advanced) for variable expansion */
+int expand_variables(char **args); 
 
 /* External environment variable */
 extern char **environ;
