@@ -1,6 +1,0 @@
-BasedOnStyle: GNU
-IndentWidth: 8
-TabWidth: 8
-UseTab: Always
-BreakBeforeBraces: Allman
-AllowShortFunctionsOnASingleLine: None
