@@ -1,24 +1,28 @@
 #include "shell.h"
 
-int check_builtin(char **args)
-{
-    if (strcmp(args[0], "exit") == 0)
-        return shell_exit(args);
-    else if (strcmp(args[0], "env") == 0)
-        return shell_env(args);
-    
-    return 0;
-}
-
+/**
+ * shell_exit - Built-in command to exit the shell.
+ * @args: Argument list (not used in this function).
+ *
+ * Return: 0 to signal exit in the main loop.
+ */
 int shell_exit(char **args)
 {
-    (void)args;
-    return 0; // Return 0 to signal exit in main loop
+    (void)args; /* Suppress unused parameter warning */
+    return 0; /* Return 0 to signal exit in main loop */
 }
 
+/**
+ * shell_env - Built-in command to print environment variables.
+ * @args: Argument list (not used in this function).
+ *
+ * Return: 1 to continue the shell loop.
+ */
 int shell_env(char **args)
 {
     char **env = environ;
+
+    (void)args; /* Suppress unused parameter warning */
 
     while (*env)
     {
