@@ -15,7 +15,6 @@ char *resolve_path(char *command)
 	{
 	full_path = malloc(strlen(token) + strlen(command) + 2);
 	sprintf(full_path, "%s/%s", token, command);
-	
 	if (stat(full_path, &st) == 0)
 	return (full_path);
 
