@@ -19,6 +19,11 @@ int shell_env(char **args);
 char *resolve_path(char *command);
 void free_tokens(char **tokens);
 
+/* Custom getline implementation if needed */
+ssize_t getline_custom(char **lineptr, size_t *n, FILE *stream);
+int expand_variables(char **args); /* Task 14 (advanced) for variable expansion */
+
+/* External environment variable */
 extern char **environ;
 
 #endif /* SHELL_H */
