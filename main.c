@@ -21,5 +21,5 @@ int main(void)
 	status = execute_line(line);
 	}
 	free(line);
-	return 0;
+	return (0);
 }
