@@ -9,17 +9,17 @@ TARGET = hsh
 SRCS = main.c execute_line.c tokenizer.c execute_command.c resolve_path.c \
        builtins.c string_helpers.c error_handlers.c memory_helpers.c
 
-# Object files (replace .c with .o)
+# Object files (automatically derived from source files)
 OBJS = $(SRCS:.c=.o)
 
-# Header files
+# Header files (to ensure changes to headers trigger recompilation)
 HEADERS = shell.h
 
-# Default target: build the executable
+# Default target: build the executable only if dependencies are met
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET)
 
-# Rule to build object files
+# Rule for object files, ensuring each file compiles independently
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -27,9 +27,9 @@ $(TARGET): $(OBJS)
 clean:
 	rm -f $(OBJS) $(TARGET)
 
-# Run the shell
+# Run the shell after building
 run: $(TARGET)
 	./$(TARGET)
 
-# Phony targets (not real files)
+# Define phony targets to avoid conflicts with files named 'all', 'clean', or 'run'
 .PHONY: all clean run
