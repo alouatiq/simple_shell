@@ -18,7 +18,7 @@ int main(void)
 	break;
 	}
 	line[read_len - 1] = '\0'; /* Remove newline character */
-	status = execute_line(line);
+	status = exec_command(line);
 	}
 	free(line);
 	return (0);
